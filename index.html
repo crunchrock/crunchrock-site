@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Shrooms — Crunchrock Games</title>
+<meta name="description" content="Bad Shrooms: a co-op minigame gauntlet. Coming soon to Steam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1409;
+    --moss:#1b2414;
+    --cap:#e23d2e;
+    --spore:#f0ead8;
+    --toxin:#b8e92e;
+    --dim:#8b957c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--ink);color:var(--spore);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+  ::selection{background:var(--toxin);color:var(--ink)}
+  .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;padding:2rem 1rem;text-align:center;
+    background:radial-gradient(ellipse 120% 60% at 50% 110%, #223018 0%, var(--ink) 60%)}
+  .studio-tab{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);margin-bottom:2rem}
+  .studio-tab b{color:var(--toxin);font-weight:400}
+  .wordmark{font-family:'Bungee',cursive;line-height:.92;text-transform:uppercase;transform:rotate(-3deg);user-select:none}
+  .wordmark .l1{display:block;font-size:clamp(2.6rem,10vw,7rem);color:var(--spore);text-shadow:4px 4px 0 var(--moss)}
+  .wordmark .l2{display:block;font-size:clamp(3.4rem,14vw,10rem);color:var(--cap);text-shadow:6px 6px 0 #5e150d;letter-spacing:.01em}
+  .cap-o{display:inline-block;width:.86em;height:.8em;vertical-align:-0.02em;position:relative}
+  .cap-o svg{width:100%;height:100%;display:block;overflow:visible}
+  .tagline{margin-top:1.6rem;font-size:clamp(1rem,2.4vw,1.35rem);color:var(--spore);max-width:34ch}
+  .tagline em{font-style:normal;color:var(--toxin)}
+  .sub{margin-top:.5rem;color:var(--dim);font-size:.95rem}
+  .spore-field{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .spore{position:absolute;bottom:-12px;border-radius:50%;background:var(--toxin);opacity:.5;animation:drift linear infinite}
+  @keyframes drift{to{transform:translateY(-110vh) translateX(6vw);opacity:0}}
+  @media (prefers-reduced-motion: reduce){.spore{animation:none;display:none}}
+  footer{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1.25rem;text-align:center;color:var(--dim);font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.1em}
+  footer a{color:var(--toxin);text-decoration:none}
+  footer a:focus-visible{outline:2px solid var(--toxin);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="spore-field" aria-hidden="true">
+    <i class="spore" style="left:8%;width:5px;height:5px;animation-duration:16s;animation-delay:0s"></i>
+    <i class="spore" style="left:22%;width:3px;height:3px;animation-duration:22s;animation-delay:4s"></i>
+    <i class="spore" style="left:41%;width:6px;height:6px;animation-duration:14s;animation-delay:2s"></i>
+    <i class="spore" style="left:58%;width:4px;height:4px;animation-duration:19s;animation-delay:7s"></i>
+    <i class="spore" style="left:73%;width:5px;height:5px;animation-duration:17s;animation-delay:1s"></i>
+    <i class="spore" style="left:89%;width:3px;height:3px;animation-duration:24s;animation-delay:5s"></i>
+  </div>
+
+  <p class="studio-tab"><b>crunchrock games</b> presents</p>
+
+  <h1 class="wordmark" aria-label="Bad Shrooms">
+    <span class="l1" aria-hidden="true">BAD</span>
+    <span class="l2" aria-hidden="true">SHR<span class="cap-o"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C18 6 4 34 4 50 C4 58 12 62 50 62 C88 62 96 58 96 50 C96 34 82 6 50 6 Z" fill="#e23d2e" stroke="#5e150d" stroke-width="6"/><circle cx="30" cy="32" r="7" fill="#f0ead8"/><circle cx="58" cy="22" r="5" fill="#f0ead8"/><circle cx="72" cy="42" r="6" fill="#f0ead8"/><rect x="36" y="60" width="28" height="34" rx="10" fill="#f0ead8" stroke="#5e150d" stroke-width="6"/></svg></span><span class="cap-o"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C18 6 4 34 4 50 C4 58 12 62 50 62 C88 62 96 58 96 50 C96 34 82 6 50 6 Z" fill="#b8e92e" stroke="#3c4d10" stroke-width="6"/><circle cx="34" cy="30" r="6" fill="#0f1409"/><circle cx="62" cy="24" r="5" fill="#0f1409"/><circle cx="70" cy="44" r="7" fill="#0f1409"/><rect x="36" y="60" width="28" height="34" rx="10" fill="#f0ead8" stroke="#3c4d10" stroke-width="6"/></svg></span>MS</span>
+  </h1>
+
+  <p class="tagline">A co-op minigame gauntlet. <em>Your friends are the difficulty setting.</em></p>
+  <p class="sub">coming soon to Steam</p>
+
+  <footer>
+    © 2026 Crunchrock Games · <a href="mailto:contact@crunchrock.games">contact</a> · <a href="privacy.html">privacy</a> · <a href="eula.html">eula</a>
+  </footer>
+</header>
+
+</body>
+</html>
