@@ -4,78 +4,114 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bad Shrooms — Crunchrock Games</title>
-<meta name="description" content="Bad Shrooms: a co-op minigame gauntlet. Your friends are the difficulty setting. Wishlist on Steam.">
+<meta name="description" content="Bad Shrooms: a split-screen party FPS in a one-bedroom apartment. Two players, one couch, an alien named Zlorp. Early Access — wishlist on Steam.">
+<link rel="icon" type="image/png" href="img/favicon_shroom.png">
+<meta property="og:title" content="Bad Shrooms — Crunchrock Games">
+<meta property="og:description" content="A split-screen party FPS in a one-bedroom apartment. Two players, one couch, an alien named Zlorp. Early Access — wishlist on Steam.">
+<meta property="og:image" content="https://crunchrock.games/img/cover_dusk_house.jpg">
+<meta property="og:url" content="https://crunchrock.games/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0f1409;
-    --moss:#1b2414;
-    --cap:#e23d2e;
-    --spore:#f0ead8;
-    --toxin:#b8e92e;
-    --dim:#8b957c;
+    --cave:#14102B;      /* CaveInk — marketing near-black */
+    --navy:#241E4E;      /* DeepTripNavy */
+    --lime:#B7E561;      /* ToxicLime */
+    --purple:#6A3FA0;    /* ShroomPurple */
+    --orange:#F2913D;    /* SunsetOrange */
+    --cream:#F6EFDD;     /* BoneCream */
+    --teal:#3FBFAD;      /* AlienTeal — Zlorp only */
+    --dim:rgba(246,239,221,.62);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--ink);color:var(--spore);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
-  ::selection{background:var(--toxin);color:var(--ink)}
+  body{background:var(--cave);color:var(--cream);font-family:'Baloo 2','Nunito',system-ui,sans-serif;overflow-x:hidden}
+  ::selection{background:var(--lime);color:var(--navy)}
+  img{max-width:100%;height:auto;display:block}
+
+  h2{font-family:'Titan One','Fredoka','Baloo 2',system-ui,sans-serif;font-weight:400;font-size:clamp(1.5rem,4vw,2.3rem);text-transform:uppercase;color:var(--cream);margin-bottom:1.1rem}
+  .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);margin-bottom:.9rem}
+  p{color:var(--dim);line-height:1.7;max-width:62ch}
+  p + p{margin-top:1rem}
+  p strong{color:var(--cream);font-weight:600}
 
   /* ---------- HERO ---------- */
-  .hero{min-height:92svh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;padding:2rem 1rem;text-align:center;
-    background:radial-gradient(ellipse 120% 60% at 50% 110%, #223018 0%, var(--ink) 60%)}
-  .studio-tab{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);margin-bottom:2rem}
-  .studio-tab b{color:var(--toxin);font-weight:400}
-  .wordmark{font-family:'Bungee',cursive;line-height:.92;text-transform:uppercase;transform:rotate(-3deg);user-select:none}
-  .wordmark .l1{display:block;font-size:clamp(2.6rem,10vw,7rem);color:var(--spore);text-shadow:4px 4px 0 var(--moss)}
-  .wordmark .l2{display:block;font-size:clamp(3.4rem,14vw,10rem);color:var(--cap);text-shadow:6px 6px 0 #5e150d;letter-spacing:.01em}
-  .cap-o{display:inline-block;width:.86em;height:.8em;vertical-align:-0.02em;position:relative}
-  .cap-o svg{width:100%;height:100%;display:block;overflow:visible}
-  .tagline{margin-top:1.6rem;font-size:clamp(1rem,2.4vw,1.35rem);color:var(--spore);max-width:34ch}
-  .tagline em{font-style:normal;color:var(--toxin)}
-  .sub{margin-top:.5rem;color:var(--dim);font-size:.95rem}
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3rem 1.25rem 4rem;isolation:isolate}
+  .hero-bg{position:absolute;inset:0;z-index:-2;background:url('img/cover_dusk_house.jpg') center 30%/cover no-repeat}
+  .hero-scrim{position:absolute;inset:0;z-index:-1;background:
+    linear-gradient(180deg, rgba(20,16,43,.55) 0%, rgba(20,16,43,.35) 38%, rgba(20,16,43,.82) 78%, var(--cave) 100%)}
+  .presents{display:flex;flex-direction:column;align-items:center;gap:.55rem;margin-bottom:1.6rem}
+  .presents img{width:clamp(120px,18vw,180px)}
+  .presents span{font-size:.75rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+  .wordmark{width:min(88vw,560px);filter:drop-shadow(0 10px 28px rgba(20,16,43,.85))}
+  .tagline{margin-top:1.5rem;font-size:clamp(1.05rem,2.6vw,1.4rem);color:var(--cream);font-weight:600;max-width:36ch}
+  .facts{margin-top:.6rem;font-size:.95rem;color:var(--dim);font-weight:500}
+  .facts b{color:var(--lime);font-weight:600}
 
-  .cta-row{margin-top:2.2rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-  .btn{font-family:'Bungee',cursive;text-transform:uppercase;text-decoration:none;font-size:1rem;padding:.9rem 1.6rem;border-radius:14px;display:inline-block;transform:rotate(-1deg);transition:transform .12s ease, box-shadow .12s ease}
-  .btn:focus-visible{outline:3px solid var(--toxin);outline-offset:3px}
-  .btn-steam{background:var(--cap);color:var(--spore);box-shadow:0 6px 0 #5e150d}
-  .btn-steam:hover{transform:rotate(-1deg) translateY(-3px);box-shadow:0 9px 0 #5e150d}
+  .cta-row{margin-top:2.1rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;text-transform:uppercase;text-decoration:none;font-size:1.02rem;padding:.95rem 1.7rem;border-radius:16px;display:inline-block;transition:transform .12s ease, box-shadow .12s ease}
+  .btn:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+  .btn-wishlist{background:var(--lime);color:var(--navy);box-shadow:0 6px 0 rgba(20,16,43,.55)}
+  .btn-wishlist:hover{transform:translateY(-3px);box-shadow:0 9px 0 rgba(20,16,43,.55)}
+  .btn-ghost{background:rgba(36,30,78,.55);color:var(--cream);border:2px solid rgba(246,239,221,.35)}
+  .btn-ghost:hover{transform:translateY(-3px);border-color:var(--cream)}
 
-  .spore-field{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-  .spore{position:absolute;bottom:-12px;border-radius:50%;background:var(--toxin);opacity:.5;animation:drift linear infinite}
+  /* drifting spores */
+  .spore-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .spore{position:absolute;bottom:-12px;border-radius:50%;background:var(--lime);opacity:.45;animation:drift linear infinite}
   @keyframes drift{to{transform:translateY(-110vh) translateX(6vw);opacity:0}}
+  @media (prefers-reduced-motion: reduce){.spore{animation:none;display:none}.btn{transition:none}}
 
-  /* ---------- THE GAUNTLET LOOP ---------- */
-  .gauntlet{max-width:820px;margin:0 auto;padding:4.5rem 1.25rem 2rem;text-align:center}
-  .eyebrow{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--toxin);margin-bottom:1rem}
-  .loop-stage{position:relative;min-height:11.5rem;display:flex;align-items:center;justify-content:center}
-  .loop-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;opacity:0;transform:translateY(14px) rotate(-.5deg);transition:opacity .55s ease, transform .55s ease;pointer-events:none}
-  .loop-card.on{opacity:1;transform:translateY(0) rotate(-.5deg);pointer-events:auto}
-  .loop-card h3{font-family:'Bungee',cursive;font-size:clamp(1.7rem,6vw,3.2rem);text-transform:uppercase;color:var(--spore);text-shadow:4px 4px 0 var(--moss)}
-  .loop-card.alt h3{color:var(--toxin);text-shadow:4px 4px 0 #2c3a12}
-  .loop-card p{font-family:'Space Mono',monospace;color:var(--dim);font-size:clamp(.85rem,2vw,1rem);max-width:46ch}
-  .loop-dots{display:flex;gap:.6rem;justify-content:center;margin-top:1.4rem}
-  .loop-dots button{width:11px;height:11px;border-radius:50%;border:2px solid var(--dim);background:transparent;cursor:pointer;padding:0}
-  .loop-dots button.on{background:var(--toxin);border-color:var(--toxin)}
-  .loop-dots button:focus-visible{outline:2px solid var(--toxin);outline-offset:2px}
-  .gauntlet .cta-row{margin-top:2.6rem}
-  .wl-note{margin-top:.8rem;font-family:'Space Mono',monospace;font-size:.78rem;color:var(--dim)}
+  /* ---------- SECTIONS ---------- */
+  section{max-width:960px;margin:0 auto;padding:4.5rem 1.25rem}
+  .panel{background:var(--navy);border-radius:20px;padding:1.6rem 1.7rem}
 
-  @media (prefers-reduced-motion: reduce){
-    .spore{animation:none;display:none}
-    .btn{transition:none}
-    .loop-card{transition:none}
-  }
+  /* gauntlet cards */
+  .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.6rem}
+  .game{background:var(--navy);border-radius:20px;padding:1.5rem 1.5rem 1.6rem;border-top:5px solid var(--purple)}
+  .game:nth-child(2){border-top-color:var(--orange)}
+  .game:nth-child(3){border-top-color:var(--lime)}
+  .game h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.25rem;text-transform:uppercase;color:var(--cream);margin-bottom:.55rem}
+  .game p{font-size:.98rem}
+  .cooking{margin-top:1.5rem;font-size:.88rem;color:var(--dim)}
+  .cooking b{color:var(--cream);font-weight:600}
 
-  footer{padding:3rem 1.25rem 3rem;text-align:center;color:var(--dim);font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.1em}
-  footer a{color:var(--toxin);text-decoration:none}
-  footer a:focus-visible{outline:2px solid var(--toxin);outline-offset:2px}
+  /* screenshots */
+  .shots{display:grid;gap:1.1rem;margin-top:1.6rem}
+  .shot{background:var(--navy);border-radius:20px;overflow:hidden}
+  .shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
+  .shot figcaption{padding:.85rem 1.2rem;font-size:.92rem;color:var(--dim)}
+  .shot-note{margin-top:.9rem;font-size:.8rem;color:var(--dim);letter-spacing:.06em}
+  @media (min-width:720px){.shots{grid-template-columns:1fr 1fr}.shots .shot:first-child{grid-column:1 / -1}}
+
+  /* apartment list */
+  .apt-list{list-style:none;margin-top:1.4rem;display:grid;gap:.8rem;max-width:62ch}
+  .apt-list li{background:var(--navy);border-radius:14px;padding:.9rem 1.2rem;color:var(--dim);line-height:1.55}
+  .apt-list li::before{content:'🍄';margin-right:.6rem}
+  .apt-list li b{color:var(--cream);font-weight:600}
+  .zlorp-line{color:var(--teal);font-weight:600}
+
+  /* field notes */
+  .field-notes{background:var(--navy);border-radius:20px;padding:1.5rem 1.6rem;font-size:.92rem;line-height:2;color:var(--cream)}
+  .field-notes span{color:var(--lime);font-weight:600}
+
+  .closer{text-align:center;padding-bottom:5rem}
+  .closer .wl-note{margin:.85rem auto 0;font-size:.82rem;color:var(--dim)}
+
+  footer{padding:3rem 1.25rem 4rem;text-align:center;color:var(--dim);font-size:.85rem}
+  footer img{width:150px;margin:0 auto 1.2rem;opacity:.9}
+  footer a{color:var(--lime);text-decoration:none}
+  footer a:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
 </style>
 </head>
 <body>
 
 <header class="hero">
+  <div class="hero-bg" role="img" aria-label="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
   <div class="spore-field" aria-hidden="true">
     <i class="spore" style="left:8%;width:5px;height:5px;animation-duration:16s;animation-delay:0s"></i>
     <i class="spore" style="left:22%;width:3px;height:3px;animation-duration:22s;animation-delay:4s"></i>
@@ -85,96 +121,107 @@
     <i class="spore" style="left:89%;width:3px;height:3px;animation-duration:24s;animation-delay:5s"></i>
   </div>
 
-  <p class="studio-tab"><b>crunchrock games</b> presents</p>
+  <div class="presents">
+    <img src="img/logo_crunchrock.png" alt="Crunchrock Games">
+    <span>presents</span>
+  </div>
 
-  <h1 class="wordmark" aria-label="Bad Shrooms">
-    <span class="l1" aria-hidden="true">BAD</span>
-    <span class="l2" aria-hidden="true">SHR<span class="cap-o"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C18 6 4 34 4 50 C4 58 12 62 50 62 C88 62 96 58 96 50 C96 34 82 6 50 6 Z" fill="#e23d2e" stroke="#5e150d" stroke-width="6"/><circle cx="30" cy="32" r="7" fill="#f0ead8"/><circle cx="58" cy="22" r="5" fill="#f0ead8"/><circle cx="72" cy="42" r="6" fill="#f0ead8"/><rect x="36" y="60" width="28" height="34" rx="10" fill="#f0ead8" stroke="#5e150d" stroke-width="6"/></svg></span><span class="cap-o"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C18 6 4 34 4 50 C4 58 12 62 50 62 C88 62 96 58 96 50 C96 34 82 6 50 6 Z" fill="#b8e92e" stroke="#3c4d10" stroke-width="6"/><circle cx="34" cy="30" r="6" fill="#0f1409"/><circle cx="62" cy="24" r="5" fill="#0f1409"/><circle cx="70" cy="44" r="7" fill="#0f1409"/><rect x="36" y="60" width="28" height="34" rx="10" fill="#f0ead8" stroke="#3c4d10" stroke-width="6"/></svg></span>MS</span>
-  </h1>
+  <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
 
-  <p class="tagline">A co-op minigame gauntlet. <em>Your friends are the difficulty setting.</em></p>
-  <p class="sub">coming soon to Steam</p>
+  <p class="tagline">Your friend is the difficulty setting.</p>
+  <p class="facts"><b>2 players</b> · one couch · split-screen FPS party · <b>online 1v1</b> · Early Access</p>
 
   <div class="cta-row">
-    <a class="btn btn-steam" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+    <a class="btn btn-wishlist" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+    <a class="btn btn-ghost" href="#game">What is this</a>
   </div>
 </header>
 
-<section class="gauntlet" aria-label="Tonight's gauntlet">
-  <p class="eyebrow">tonight's gauntlet</p>
+<section id="game">
+  <p class="eyebrow">the game</p>
+  <h2>What is this</h2>
+  <p><strong>Bad Shrooms</strong> is a split-screen party FPS set in a cramped one-bedroom apartment. You and one friend ate mushrooms that were not, in fact, fine. An alien named <strong>Zlorp</strong> unfolded out of the living-room air, moved in, and started running the night like a game show — minigames built from whatever's lying around the apartment.</p>
+  <p>The screen is split down the middle, so nobody can lie about what they just did to you. Online is 1v1 and full-screen — different bit, same housemate.</p>
+  <p>We're a small studio polishing every minigame until it's exactly the right amount of unfair. Early Access, honestly: three minigames are playable start to finish tonight, and more are still cooking.</p>
+</section>
 
-  <div class="loop-stage" id="loopStage">
-    <div class="loop-card on">
+<section>
+  <p class="eyebrow">tonight's gauntlet</p>
+  <h2>The minigames</h2>
+  <div class="games">
+    <div class="game">
+      <h3>Monkey Bowls</h3>
+      <p>Bowling in the living room. The pins are bananas. The foul line is enforced.</p>
+    </div>
+    <div class="game">
+      <h3>Floor Is Lava</h3>
+      <p>Zlorp shrinks you to flea size and the floor stops being a floor. The furniture won the last three rounds.</p>
+    </div>
+    <div class="game">
       <h3>Zlorp Dash</h3>
       <p>Fine dining. The dish leaves through the microwave.</p>
     </div>
-    <div class="loop-card alt">
-      <h3>Floor Is Lava</h3>
-      <p>House rules. The floor won the last three rounds.</p>
-    </div>
-    <div class="loop-card">
-      <h3>Gun Box Gallery</h3>
-      <p>Everything in the box is technically a prize.</p>
-    </div>
-    <div class="loop-card alt">
-      <h3>Shrunk Race</h3>
-      <p>You are two inches tall. The room was not informed.</p>
-    </div>
-    <div class="loop-card">
-      <h3>Window Artillery</h3>
-      <p>The window opens. That's all we're saying.</p>
-    </div>
   </div>
+  <p class="cooking">Still in the workshop, not playable yet: <b>Bathtub Armada</b>, <b>Pillow Justice</b>, <b>Mecha Chameleon</b>, <b>Carpet Golf Open</b>. We'll tell you when they're real.</p>
+</section>
 
-  <div class="loop-dots" id="loopDots" role="tablist" aria-label="Minigames"></div>
+<section>
+  <p class="eyebrow">exhibit a</p>
+  <h2>The evidence</h2>
+  <div class="shots">
+    <figure class="shot">
+      <img src="img/shot_apartment_live.jpg" alt="Two players standing in the apartment kitchen while the ceiling TV shows the Bad Shrooms Live scoreboard" loading="lazy">
+      <figcaption>The apartment. The broadcast never stops.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="img/shot_zlorp_dash_brief.jpg" alt="The Zlorp Dash briefing card: pack food into the box, ship through the hatch" loading="lazy">
+      <figcaption>Every game gets a briefing. Nobody has finished reading one.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="img/shot_microwave_portal.jpg" alt="A microwave on the kitchen counter with its door open, glowing teal from inside" loading="lazy">
+      <figcaption>The shipping department.</figcaption>
+    </figure>
+  </div>
+  <p class="shot-note">early access build · captured in-engine</p>
+</section>
 
+<section>
+  <p class="eyebrow">between rounds</p>
+  <h2>The apartment</h2>
+  <p>There's no lobby menu. Between minigames you're loose in the apartment, and the apartment is not ready for you.</p>
+  <ul class="apt-list">
+    <li><b>Everything has physics.</b> Grab it, throw it, wear it, regret it.</li>
+    <li><b>The toilet and the bidet are both interactive.</b> That's all we're saying.</li>
+    <li><span class="zlorp-line">Zlorp runs a shop.</span> He sells joke guns and skins, and he never lets you forget what you paid for them.</li>
+    <li><b>The bedroom radio gets 8 stations.</b> Doomshroom FM is somehow on all of them.</li>
+  </ul>
+</section>
+
+<section>
+  <p class="eyebrow">field notes</p>
+  <h2>From the lab</h2>
+  <div class="field-notes">
+    <span>[07.24]</span> the microwave door now opens out into the kitchen instead of into itself. this took two design locks.<br>
+    <span>[07.23]</span> minigame briefings are now centered and readable. players still skip them.<br>
+    <span>[07.22]</span> renamed 53 foods so the order tickets stop lying. no two dishes share a name anymore.<br>
+    <span>[07.21]</span> floor is lava: made the furniture less sticky. jumping off a couch now feels like jumping off a couch.<br>
+    <span>&gt;</span> updated whenever something happens. something always happens.
+  </div>
+</section>
+
+<section class="closer">
+  <h2>It's shroom o'clock</h2>
   <div class="cta-row">
-    <a class="btn btn-steam" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+    <a class="btn btn-wishlist" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
   </div>
   <p class="wl-note">wishlists tell us you want this.</p>
 </section>
 
 <footer>
+  <img src="img/logo_crunchrock.png" alt="Crunchrock Games">
   © 2026 Crunchrock Games · <a href="mailto:jamesdouglaschaney@gmail.com">contact</a> · <a href="privacy.html">privacy</a> · <a href="eula.html">eula</a><br><br>
   crunchrock.games
 </footer>
-
-<script>
-(function(){
-  var cards = Array.prototype.slice.call(document.querySelectorAll('#loopStage .loop-card'));
-  var dotsWrap = document.getElementById('loopDots');
-  var idx = 0, timer = null;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  cards.forEach(function(_, i){
-    var b = document.createElement('button');
-    b.setAttribute('aria-label', 'Show minigame ' + (i + 1));
-    if (i === 0) b.className = 'on';
-    b.addEventListener('click', function(){ show(i); restart(); });
-    dotsWrap.appendChild(b);
-  });
-  var dots = Array.prototype.slice.call(dotsWrap.children);
-
-  function show(i){
-    cards[idx].classList.remove('on');
-    dots[idx].classList.remove('on');
-    idx = i;
-    cards[idx].classList.add('on');
-    dots[idx].classList.add('on');
-  }
-  function next(){ show((idx + 1) % cards.length); }
-  function restart(){
-    if (reduced) return;
-    clearInterval(timer);
-    timer = setInterval(next, 3800);
-  }
-
-  var stage = document.getElementById('loopStage');
-  stage.addEventListener('mouseenter', function(){ clearInterval(timer); });
-  stage.addEventListener('mouseleave', restart);
-  restart();
-})();
-</script>
 
 </body>
 </html>
