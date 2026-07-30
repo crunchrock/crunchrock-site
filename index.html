@@ -103,7 +103,7 @@
   .shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
   .shot figcaption{padding:.85rem 1.2rem;font-size:.92rem;color:var(--dim)}
   .shot-note{margin-top:.9rem;font-size:.8rem;color:var(--dim);letter-spacing:.06em}
-  @media (min-width:720px){.shots{grid-template-columns:1fr 1fr}.shots .shot:first-child{grid-column:1 / -1}}
+  @media (min-width:720px){.shots{grid-template-columns:1fr 1fr}}
 
   /* apartment list */
   .apt-list{list-style:none;margin-top:1.4rem;display:grid;gap:.8rem;max-width:62ch}
@@ -120,6 +120,17 @@
   /* field notes */
   .field-notes{background:var(--navy);border-radius:20px;padding:1.5rem 1.6rem;font-size:.92rem;line-height:2;color:var(--cream)}
   .field-notes span{color:var(--lime);font-weight:600}
+
+  /* bug exhibit */
+  .bug-lead{margin-top:2.2rem}
+  .bug-lead h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.1rem;text-transform:uppercase;color:var(--cream);margin-bottom:.6rem}
+  .bugshots{display:grid;gap:1rem;margin-top:1.2rem}
+  @media (min-width:680px){.bugshots{grid-template-columns:1fr 1fr}}
+  .bugshot{background:var(--navy);border-radius:16px;overflow:hidden;border-top:4px solid var(--lime)}
+  .bugshot:last-child{border-top-color:var(--orange)}
+  .bugshot img{width:100%;aspect-ratio:16/9;object-fit:cover}
+  .bugshot figcaption{padding:.85rem 1.1rem;font-size:.88rem;color:var(--dim);line-height:1.55}
+  .bugshot figcaption b{color:var(--cream);font-weight:600}
 
   .closer{text-align:center;padding-bottom:5rem}
   .closer p{margin-left:auto;margin-right:auto}
@@ -234,16 +245,12 @@
   <h2>The evidence</h2>
   <div class="shots">
     <figure class="shot">
-      <img src="img/shot_apartment_live.jpg" alt="Two players standing in the apartment kitchen while the ceiling TV shows the Bad Shrooms Live scoreboard" loading="lazy">
-      <figcaption>The apartment. The broadcast never stops.</figcaption>
+      <img src="img/shot_apartment.jpg" alt="Two players stand in the dim apartment living room facing Zlorp, a green alien standing in the kitchen doorway. Ceiling-mounted TVs show the control hints and the Bad Shrooms Live scoreboard." loading="lazy">
+      <figcaption>He does not knock, and he does not leave.</figcaption>
     </figure>
     <figure class="shot">
-      <img src="img/shot_zlorp_dash_brief.jpg" alt="The Zlorp Dash briefing card: pack food into the box, ship through the hatch" loading="lazy">
-      <figcaption>Every game gets a briefing. Nobody has finished reading one.</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/shot_microwave_portal.jpg" alt="A microwave on the kitchen counter with its door open, glowing teal from inside" loading="lazy">
-      <figcaption>The shipping department.</figcaption>
+      <img src="img/shot_jar_debrief.jpg" alt="The end-of-round debrief card: Floor Is Lava, Game 3, P0 wins, plus 200 millilitres into the jar. The jar reads 600 of 1000 millilitres with two more wins to fill it. Zlorp's line underneath reads: You climbed a bottle. I watched. It counted." loading="lazy">
+      <figcaption>Every win pours into the same litre. Two more fills it.</figcaption>
     </figure>
   </div>
   <p class="shot-note">early access build · captured in-engine</p>
@@ -289,6 +296,21 @@
     <span>[07.28]</span> the verb rail was rendering nothing at all. found by looking at it, not by testing it.<br>
     <span>[07.25]</span> the microwave door opened the wrong way, and the test that certified it was wrong in the same direction.<br>
     <span>&gt;</span> updated whenever something happens. something always happens.
+  </div>
+
+  <div class="bug-lead">
+    <h3>Exhibit B: the knife magnet</h3>
+    <p>The apartment has to come back exactly as it was after every round. For a long time it didn't, and the room looked fine, because the things that moved were not the things being checked. Same camera, same kitchen, one round apart.</p>
+    <div class="bugshots">
+      <figure class="bugshot">
+        <img src="img/bug_magnet_before.jpg" alt="Kitchen counter before the round: three knives hanging on the wall-mounted magnetic strip, a cutting board on the counter and two bananas" loading="lazy">
+        <figcaption><b>Before.</b> Knives on the strip. Cutting board on the counter. Two bananas.</figcaption>
+      </figure>
+      <figure class="bugshot">
+        <img src="img/bug_magnet_after.jpg" alt="The same kitchen counter after one round: the magnetic strip is completely bare, the cutting board is gone and only one banana remains" loading="lazy">
+        <figcaption><b>After one round.</b> The strip is bare. The board is gone. So is a banana.</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
