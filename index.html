@@ -25,14 +25,16 @@
     --cream:#F6EFDD;     /* BoneCream */
     --teal:#3FBFAD;      /* AlienTeal — Zlorp only */
     --dim:rgba(246,239,221,.62);
+    --hair:rgba(246,239,221,.10);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--cave);color:var(--cream);font-family:'Baloo 2','Nunito',system-ui,sans-serif;overflow-x:hidden}
   ::selection{background:var(--lime);color:var(--navy)}
   img{max-width:100%;height:auto;display:block}
+  a{color:var(--lime)}
 
-  h2{font-family:'Titan One','Fredoka','Baloo 2',system-ui,sans-serif;font-weight:400;font-size:clamp(1.5rem,4vw,2.3rem);text-transform:uppercase;color:var(--cream);margin-bottom:1.1rem}
+  h2{font-family:'Titan One','Fredoka','Baloo 2',system-ui,sans-serif;font-weight:400;font-size:clamp(1.5rem,4vw,2.3rem);text-transform:uppercase;color:var(--cream);margin-bottom:1.1rem;line-height:1.15}
   .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);margin-bottom:.9rem}
   p{color:var(--dim);line-height:1.7;max-width:62ch}
   p + p{margin-top:1rem}
@@ -56,28 +58,44 @@
   .btn:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
   .btn-wishlist{background:var(--lime);color:var(--navy);box-shadow:0 6px 0 rgba(20,16,43,.55)}
   .btn-wishlist:hover{transform:translateY(-3px);box-shadow:0 9px 0 rgba(20,16,43,.55)}
-  .btn-ghost{background:rgba(36,30,78,.55);color:var(--cream);border:2px solid rgba(246,239,221,.35)}
+  .btn-ghost{background:rgba(36,30,78,.55);color:var(--cream);border:2px solid rgba(246,239,221,.35);text-decoration:none}
   .btn-ghost:hover{transform:translateY(-3px);border-color:var(--cream)}
 
   /* drifting spores */
   .spore-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
   .spore{position:absolute;bottom:-12px;border-radius:50%;background:var(--lime);opacity:.45;animation:drift linear infinite}
   @keyframes drift{to{transform:translateY(-110vh) translateX(6vw);opacity:0}}
-  @media (prefers-reduced-motion: reduce){.spore{animation:none;display:none}.btn{transition:none}}
 
   /* ---------- SECTIONS ---------- */
   section{max-width:960px;margin:0 auto;padding:4.5rem 1.25rem}
-  .panel{background:var(--navy);border-radius:20px;padding:1.6rem 1.7rem}
+  .rule{max-width:960px;margin:0 auto;height:1px;background:var(--hair)}
+
+  /* reveal on scroll */
+  .rise{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+  .rise.in{opacity:1;transform:none}
 
   /* gauntlet cards */
   .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.6rem}
-  .game{background:var(--navy);border-radius:20px;padding:1.5rem 1.5rem 1.6rem;border-top:5px solid var(--purple)}
+  .game{background:var(--navy);border-radius:20px;padding:1.5rem 1.5rem 1.6rem;border-top:5px solid var(--purple);transition:transform .15s ease}
+  .game:hover{transform:translateY(-4px)}
   .game:nth-child(2){border-top-color:var(--orange)}
   .game:nth-child(3){border-top-color:var(--lime)}
   .game h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.25rem;text-transform:uppercase;color:var(--cream);margin-bottom:.55rem}
   .game p{font-size:.98rem}
   .cooking{margin-top:1.5rem;font-size:.88rem;color:var(--dim)}
   .cooking b{color:var(--cream);font-weight:600}
+
+  /* ---------- THE JAR ---------- */
+  .jar-wrap{display:grid;gap:2.2rem;align-items:center;margin-top:1.6rem}
+  @media (min-width:760px){.jar-wrap{grid-template-columns:minmax(0,1fr) 200px}}
+  .jar{width:150px;height:210px;margin:0 auto;position:relative;border:3px solid rgba(246,239,221,.5);border-top-width:0;border-radius:14px 14px 26px 26px;background:rgba(36,30,78,.5);overflow:hidden}
+  .jar::before{content:'';position:absolute;top:-12px;left:-3px;right:-3px;height:12px;border:3px solid rgba(246,239,221,.5);border-bottom:0;border-radius:8px 8px 0 0;background:rgba(36,30,78,.75)}
+  .jar-fill{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(180deg,var(--lime),#8FC63D);box-shadow:0 0 26px rgba(183,229,97,.55);transition:height 1.7s cubic-bezier(.4,0,.2,1)}
+  .jar.in .jar-fill{height:72%}
+  .jar-fill::after{content:'';position:absolute;top:-5px;left:0;right:0;height:10px;border-radius:50%;background:var(--lime);opacity:.9}
+  .jar-cap{position:absolute;left:0;right:0;top:7%;border-top:2px dashed rgba(246,239,221,.4);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:.25rem;text-align:right;padding-right:.45rem}
+  .jar-label{text-align:center;margin-top:.9rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .jar-label b{color:var(--lime);font-weight:600}
 
   /* screenshots */
   .shots{display:grid;gap:1.1rem;margin-top:1.6rem}
@@ -94,11 +112,17 @@
   .apt-list li b{color:var(--cream);font-weight:600}
   .zlorp-line{color:var(--teal);font-weight:600}
 
+  /* dial / stations */
+  .dial{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;max-width:62ch}
+  .dial span{font-size:.82rem;padding:.4rem .8rem;border-radius:999px;border:1px solid var(--hair);background:var(--navy);color:var(--dim);white-space:nowrap}
+  .dial span:first-child{border-color:rgba(183,229,97,.5);color:var(--lime)}
+
   /* field notes */
   .field-notes{background:var(--navy);border-radius:20px;padding:1.5rem 1.6rem;font-size:.92rem;line-height:2;color:var(--cream)}
   .field-notes span{color:var(--lime);font-weight:600}
 
   .closer{text-align:center;padding-bottom:5rem}
+  .closer p{margin-left:auto;margin-right:auto}
   .closer .wl-note{margin:.85rem auto 0;font-size:.82rem;color:var(--dim)}
 
   /* studio / contract strip */
@@ -112,6 +136,14 @@
   footer img{width:150px;margin:0 auto 1.2rem;opacity:.9}
   footer a{color:var(--lime);text-decoration:none}
   footer a:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .spore{animation:none;display:none}
+    .btn,.game,.jar-fill{transition:none}
+    .rise{opacity:1;transform:none;transition:none}
+    .jar.in .jar-fill{height:72%}
+  }
 </style>
 </head>
 <body>
@@ -144,15 +176,17 @@
   </div>
 </header>
 
-<section id="game">
+<section id="game" class="rise">
   <p class="eyebrow">the game</p>
   <h2>What is this</h2>
   <p><strong>Bad Shrooms</strong> is a split-screen party FPS set in a cramped one-bedroom apartment. You and one friend ate mushrooms that were not, in fact, fine. An alien named <strong>Zlorp</strong> unfolded out of the living-room air, moved in, and started running the night like a game show — minigames built from whatever's lying around the apartment.</p>
   <p>The screen is split down the middle, so nobody can lie about what they just did to you. Online is 1v1 and full-screen — different bit, same housemate.</p>
-  <p>We're a small studio polishing every minigame until it's exactly the right amount of unfair. Early Access, honestly: three minigames are playable start to finish tonight, and more are still cooking.</p>
+  <p>We're a small studio polishing every minigame until it's exactly the right amount of unfair. Early Access, honestly: <strong>three minigames are playable start to finish tonight</strong>, and the rest are still cooking.</p>
 </section>
 
-<section>
+<div class="rule"></div>
+
+<section class="rise">
   <p class="eyebrow">tonight's gauntlet</p>
   <h2>The minigames</h2>
   <div class="games">
@@ -169,10 +203,33 @@
       <p>Fine dining. The dish leaves through the microwave.</p>
     </div>
   </div>
-  <p class="cooking">Still in the workshop, not playable yet: <b>Bathtub Armada</b>, <b>Pillow Justice</b>, <b>Mecha Chameleon</b>, <b>Carpet Golf Open</b>. We'll tell you when they're real.</p>
+  <p class="cooking">Nine more are built as far as their skeletons and no further — <b>Shrunk Race</b>, <b>Bathtub Armada</b>, <b>Swole Patrol</b>, <b>Pillow Justice</b>, <b>Mecha Chameleon</b>, <b>Snack Heist</b>, <b>Déjà Room</b>, <b>Carpet Golf</b>, <b>Window Artillery</b> — plus a finale nobody gets to see yet. Their hosts sit in the apartment and say <b>LOCKED</b> when you reach for them, because a locked door is more honest than a menu that lies. We'll tell you when they're real.</p>
 </section>
 
-<section>
+<div class="rule"></div>
+
+<section class="rise">
+  <p class="eyebrow">how you win</p>
+  <h2>The jar</h2>
+  <div class="jar-wrap">
+    <div>
+      <p>There is no points counter. Zlorp harvests a substance called <strong>loosh</strong>, and every round you win pours some into <strong>one jar you both share</strong>. It holds exactly a litre.</p>
+      <p>So you're not racing each other to a number. You're filling the same container, together, at different speeds. When it brims, the night ends — and whoever poured more walks into the finale alone.</p>
+      <p>The other thing the jar does: <strong>the fuller it gets, the more the game warps.</strong> Colour bends, the room breathes, the edges start disagreeing with you. By the last round you are winning a game that has become harder to look at. That's on purpose. You did that.</p>
+    </div>
+    <div>
+      <div class="jar" aria-hidden="true">
+        <div class="jar-cap">brim · night ends</div>
+        <div class="jar-fill"></div>
+      </div>
+      <p class="jar-label"><b>720 mL</b> of a litre</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="rise">
   <p class="eyebrow">exhibit a</p>
   <h2>The evidence</h2>
   <div class="shots">
@@ -192,31 +249,50 @@
   <p class="shot-note">early access build · captured in-engine</p>
 </section>
 
-<section>
+<div class="rule"></div>
+
+<section class="rise">
   <p class="eyebrow">between rounds</p>
   <h2>The apartment</h2>
   <p>There's no lobby menu. Between minigames you're loose in the apartment, and the apartment is not ready for you.</p>
   <ul class="apt-list">
     <li><b>Everything has physics.</b> Grab it, throw it, wear it, regret it.</li>
-    <li><b>The toilet and the bidet are both interactive.</b> That's all we're saying.</li>
+    <li><b>The Japanese toilet has a control panel.</b> One of the buttons is a bidet. It is not a joke about a bidet — it is a functioning launcher, and your friend knows where you're standing.</li>
     <li><span class="zlorp-line">Zlorp runs a shop.</span> He sells joke guns and skins, and he never lets you forget what you paid for them.</li>
-    <li><b>The bedroom radio gets 8 stations.</b> Doomshroom FM is somehow on all of them.</li>
+    <li><b>Sixty characters.</b> Ten are yours immediately. The other fifty sit there in the grid, visible, not yours.</li>
+    <li><b>A party is 2 to 15 rounds,</b> your call before anyone commits. The jar is always a litre — you just decide how big the pours are.</li>
   </ul>
 </section>
 
-<section>
+<div class="rule"></div>
+
+<section class="rise">
+  <p class="eyebrow">the dial</p>
+  <h2>Eight stations</h2>
+  <p>The bedroom radio runs eight stations on live timelines. They don't wait for you — change the dial, come back twenty minutes later, and the show has moved on without you. Wander off mid-song and you lose the song.</p>
+  <div class="dial">
+    <span>Doomshroom FM</span><span>Radiance FM</span><span>Wave Naysh</span><span>Quirky Bitch FM</span><span>Cool Noises</span><span>Kool-Aid &amp; Pineapple</span><span>Millenial FM</span><span>Pops</span>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="rise">
   <p class="eyebrow">field notes</p>
   <h2>From the lab</h2>
   <div class="field-notes">
-    <span>[07.24]</span> the microwave door now opens out into the kitchen instead of into itself. this took two design locks.<br>
-    <span>[07.23]</span> minigame briefings are now centered and readable. players still skip them.<br>
-    <span>[07.22]</span> renamed 53 foods so the order tickets stop lying. no two dishes share a name anymore.<br>
-    <span>[07.21]</span> floor is lava: made the furniture less sticky. jumping off a couch now feels like jumping off a couch.<br>
+    <span>[07.30]</span> party points are gone. score is a jar of alien fluid now, and it bends the screen as it fills.<br>
+    <span>[07.29]</span> the muzzle flash had been rendering as a missing-shader purple. it had been that colour for a while. nobody looked.<br>
+    <span>[07.29]</span> floor is lava's prop cinema never executed a single frame. it had been shipping in that state, silently, doing nothing.<br>
+    <span>[07.29]</span> the bowling reaction card was destroyed in the same frame it was created. it had a whole art pass.<br>
+    <span>[07.29]</span> all sixty characters have faces now. the football has a collider it can roll on.<br>
+    <span>[07.28]</span> the verb rail was rendering nothing at all. found by looking at it, not by testing it.<br>
+    <span>[07.25]</span> the microwave door opened the wrong way, and the test that certified it was wrong in the same direction.<br>
     <span>&gt;</span> updated whenever something happens. something always happens.
   </div>
 </section>
 
-<section>
+<section class="rise">
   <div class="studio">
     <div class="studio-copy">
       <p class="eyebrow">the day job</p>
@@ -227,8 +303,9 @@
   </div>
 </section>
 
-<section class="closer">
+<section class="closer rise">
   <h2>It's shroom o'clock</h2>
+  <p>One couch. One friend. One jar.</p>
   <div class="cta-row">
     <a class="btn btn-wishlist" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
   </div>
@@ -240,6 +317,22 @@
   © 2026 Crunchrock Games · <a href="work.html">contract work</a> · <a href="mailto:jamesdouglaschaney@gmail.com">contact</a> · <a href="privacy.html">privacy</a> · <a href="eula.html">eula</a><br><br>
   crunchrock.games
 </footer>
+
+<script>
+  (function(){
+    var targets = document.querySelectorAll('.rise, .jar');
+    if(!('IntersectionObserver' in window)){
+      targets.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+    targets.forEach(function(el){ io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>
