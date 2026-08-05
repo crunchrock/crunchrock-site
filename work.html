@@ -56,7 +56,7 @@
     .brand img{width:26px}
     .navlinks{gap:.8rem}
     .navlinks a{font-size:.76rem}
-    .navlinks a[href="#capabilities"],.navlinks a[href="#history"]{display:none}
+    .navlinks a[href="#capabilities"],.navlinks a[href="#history"],.navlinks a[href="#process"]{display:none}
   }
   @media (max-width:430px){
     .navlinks a[href="#work"]{display:none}
@@ -174,6 +174,11 @@
   /* ---------- own games ---------- */
   .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.9rem;margin-top:2rem}
   .gamecard{background:var(--slate);border:1px solid var(--line);border-radius:12px;padding:1.3rem;display:flex;flex-direction:column;gap:.5rem}
+  /* The card with art leads; the text-only ones sit beside it without shrinking. */
+  .gamecard.featured{padding:0;overflow:hidden}
+  .gamecard.featured img{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:.2rem}
+  .gamecard.featured > :not(img){padding-left:1.3rem;padding-right:1.3rem}
+  .gamecard.featured > :last-child{padding-bottom:1.3rem}
   .gamecard h3{font-size:1.05rem;font-weight:700}
   .gamecard .yr{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
   .gamecard p{font-size:.9rem;color:var(--dim);line-height:1.6;flex:1}
@@ -233,6 +238,7 @@
     <div class="navlinks">
       <a href="#capabilities">Capabilities</a>
       <a href="#work">Work</a>
+      <a href="#process">Process</a>
       <a href="#history">History</a>
       <a href="#contact">Contact</a>
       <a class="game-link" href="index.html">Bad Shrooms →</a>
@@ -348,7 +354,7 @@
 <section id="work">
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">02</span><h2>Selected work</h2></div>
-    <p class="sec-sub">Four jobs, what was actually wrong with them when we picked them up, and what ended up shipping.</p>
+    <p class="sec-sub">Six jobs, what was actually wrong with them when we picked them up, and what ended up shipping.</p>
 
     <!-- CASE 1 — SYKY -->
     <article class="case">
@@ -451,12 +457,94 @@
         </figure>
       </div>
     </article>
+
+    <!-- CASE 5 — Plobie / Plantdex -->
+    <article class="case">
+      <div class="case-body">
+        <p class="case-kicker">Case 05 — Feature ownership</p>
+        <h3>Owning features on a Unity 6 web game</h3>
+        <p class="case-meta"><b>Project</b> Plobie / Plantdex · <b>Period</b> Dec 2025 – Mar 2026 · <b>Stack</b> Unity 6.3, WebGL</p>
+        <p>An isometric gardening game shipping to the browser, where we weren&rsquo;t handed tickets — we were handed features and asked to come back when they worked.</p>
+        <p>Quest flow, the garden interaction layer, and progression UI, built end to end: design pass, implementation, and the WebGL optimisation that keeps an isometric scene full of foliage inside a browser&rsquo;s memory ceiling.</p>
+        <div class="outcome">
+          <span>Shipped</span>
+          <p>Whole features owned start to finish on the current Unity LTS, in a browser build.</p>
+        </div>
+      </div>
+      <div class="case-media">
+        <div class="media-pair">
+          <figure>
+            <img src="img/work/plobie-isometric-garden-gameplay.webp" width="520" height="292" loading="lazy" alt="Isometric stylised garden scene with planted beds, patio furniture and a character tending plants">
+            <figcaption>Garden scene</figcaption>
+          </figure>
+          <figure>
+            <img src="img/work/plobie-quest-ui-gameplay.webp" width="520" height="292" loading="lazy" alt="Quest interface overlaid on the isometric garden, listing objectives and rewards">
+            <figcaption>Quest flow</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 6 — ASSC -->
+    <article class="case flip">
+      <div class="case-body">
+        <p class="case-kicker">Case 06 — Combat feel &amp; VFX</p>
+        <h3>Making a hundred enemies die readably</h3>
+        <p class="case-meta"><b>Project</b> ASSC · <b>Period</b> Apr – Aug 2025 · <b>Stack</b> Unity, URP, VFX</p>
+        <p>Top-down arena combat against crowds. The hard part of a horde isn&rsquo;t spawning it — it&rsquo;s making a hundred simultaneous deaths legible enough that the player still knows what they hit.</p>
+        <p>We built the hit feedback and blast VFX to stay readable at crowd density: spray and impact cues that survive being stacked forty deep, tuned against frame budget rather than against a still frame.</p>
+        <div class="outcome">
+          <span>Shipped</span>
+          <p>Effects that read at crowd scale without the frame time going with them.</p>
+        </div>
+      </div>
+      <div class="case-media">
+        <figure>
+          <video src="vid/clip-arena-combat-vfx.mp4" poster="img/work/clip-arena-combat-vfx-poster.webp" muted loop playsinline preload="none" aria-label="Top-down arena combat with explosion effects tearing through a crowd of enemies"></video>
+          <figcaption>Blast effects tearing through a crowd, held at budget.</figcaption>
+        </figure>
+        <figure>
+          <img src="img/work/assc-goblin-horde-blood-spray.webp" width="520" height="420" loading="lazy" alt="Dense goblin horde being cut down with red hit-spray particles and a glowing portal nearby">
+          <figcaption>Hit spray at forty-deep density.</figcaption>
+        </figure>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="process" class="sec-art">
+  <div class="art-bg" aria-hidden="true" style="background-image:url('img/work/env-neon-tacobell-cityscape-lg.webp')"></div>
+  <div class="art-scrim" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>How it actually goes</h2></div>
+    <p class="sec-sub">No discovery phase that bills for six weeks before anything runs.</p>
+
+    <div class="caps" style="margin-top:1.6rem">
+      <article class="cap" style="grid-template-columns:1fr">
+        <div>
+          <h3>1 · You tell us what&rsquo;s broken</h3>
+          <p>In whatever shape it&rsquo;s in. A repo, a build that crashes, a deadline, a device on a desk. We&rsquo;ll tell you straight whether we&rsquo;re the right shop — including when we&rsquo;re not.</p>
+        </div>
+      </article>
+      <article class="cap" style="grid-template-columns:1fr">
+        <div>
+          <h3>2 · Something runs in week one</h3>
+          <p>Not a document about the thing. The thing, badly, on your hardware — so the unknowns show up while they&rsquo;re still cheap.</p>
+        </div>
+      </article>
+      <article class="cap" style="grid-template-columns:1fr">
+        <div>
+          <h3>3 · You get the build, not a status call</h3>
+          <p>Regular playable drops. If a week went sideways you&rsquo;ll hear that too, with the reason, before you have to ask.</p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
 <section id="gallery">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><h2>More from the shelf</h2></div>
+    <div class="sec-head"><span class="sec-num">04</span><h2>More from the shelf</h2></div>
     <p class="sec-sub">Environments, gameplay systems, UI and tech art from across the book. Click anything to see it bigger.</p>
 
     <div class="gallery">
@@ -546,7 +634,7 @@
 
 <section id="history">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><h2>Track record</h2></div>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Track record</h2></div>
     <p class="sec-sub">Dated from commits and project files rather than memory. A lot of it overlaps, because contract work has never once queued up politely.</p>
 
     <div class="tl">
@@ -571,11 +659,12 @@
 
 <section id="ourgames">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><h2>Our own games</h2></div>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Our own games</h2></div>
     <p class="sec-sub">The client work pays for the studio. This is what the studio is actually for.</p>
 
     <div class="games">
-      <article class="gamecard">
+      <article class="gamecard featured">
+        <img src="img/shot_lava.jpg" alt="Split-screen Floor Is Lava in Bad Shrooms: the apartment floor has become molten lava and a shrunken glowing player stands on a raised platform" loading="lazy">
         <p class="yr">In development · Steam Early Access</p>
         <h3>Bad Shrooms</h3>
         <p>Split-screen party FPS in a one-bedroom apartment. Two players, one couch, an alien named Zlorp running the night like a game show. Data-driven minigame framework, local split-screen and online 1v1, physics sandbox, Steamworks.</p>

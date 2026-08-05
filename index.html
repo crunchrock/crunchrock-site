@@ -19,46 +19,68 @@
   :root{
     --cave:#14102B;      /* CaveInk — marketing near-black */
     --navy:#241E4E;      /* DeepTripNavy */
+    --slate:#1B1638;
     --lime:#B7E561;      /* ToxicLime */
     --purple:#6A3FA0;    /* ShroomPurple */
     --orange:#F2913D;    /* SunsetOrange */
     --cream:#F6EFDD;     /* BoneCream */
     --teal:#3FBFAD;      /* AlienTeal — Zlorp only */
-    --dim:rgba(246,239,221,.62);
-    --hair:rgba(246,239,221,.10);
+    --dim:rgba(246,239,221,.64);
+    --faint:rgba(246,239,221,.42);
+    --hair:rgba(246,239,221,.11);
+    --maxw:1080px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--cave);color:var(--cream);font-family:'Baloo 2','Nunito',system-ui,sans-serif;overflow-x:hidden}
+  body{background:var(--cave);color:var(--cream);font-family:'Baloo 2','Nunito',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
   ::selection{background:var(--lime);color:var(--navy)}
   img{max-width:100%;height:auto;display:block}
   a{color:var(--lime)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:4px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 
   h2{font-family:'Titan One','Fredoka','Baloo 2',system-ui,sans-serif;font-weight:400;font-size:clamp(1.5rem,4vw,2.3rem);text-transform:uppercase;color:var(--cream);margin-bottom:1.1rem;line-height:1.15}
-  .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);margin-bottom:.9rem}
+  .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);margin-bottom:.85rem}
   p{color:var(--dim);line-height:1.7;max-width:62ch}
   p + p{margin-top:1rem}
   p strong{color:var(--cream);font-weight:600}
 
+  /* ---------- top bar ---------- */
+  .topbar{position:sticky;top:0;z-index:60;background:rgba(20,16,43,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.6rem;padding-bottom:.6rem}
+  .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--cream);font-weight:700;font-size:.92rem}
+  .brand img{width:30px}
+  .navlinks{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+  .navlinks a{color:var(--dim);text-decoration:none;font-size:.82rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .navlinks a:hover{color:var(--cream)}
+  /* The route to paid work is a first-class destination, not a footnote. */
+  .navlinks a.hire{color:var(--cave);background:var(--lime);padding:.42rem .85rem;border-radius:9px;font-family:'Titan One',system-ui,sans-serif;font-weight:400;letter-spacing:.02em}
+  .navlinks a.hire:hover{color:var(--cave);transform:translateY(-1px)}
+  @media (max-width:760px){
+    .brand span{display:none}
+    .navlinks a[href="#screens"],.navlinks a[href="#devlog"]{display:none}
+    .navlinks{gap:.6rem}
+  }
+
   /* ---------- HERO ---------- */
-  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3rem 1.25rem 4rem;isolation:isolate}
+  .hero{position:relative;min-height:94svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3rem 1.25rem 3.5rem;isolation:isolate}
   .hero-bg{position:absolute;inset:0;z-index:-2;background:url('img/cover_dusk_house.jpg') center 30%/cover no-repeat}
   .hero-scrim{position:absolute;inset:0;z-index:-1;background:
     linear-gradient(180deg, rgba(20,16,43,.55) 0%, rgba(20,16,43,.35) 38%, rgba(20,16,43,.82) 78%, var(--cave) 100%)}
-  .presents{display:flex;flex-direction:column;align-items:center;gap:.55rem;margin-bottom:1.6rem}
-  .presents img{width:clamp(120px,18vw,180px)}
-  .presents span{font-size:.75rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
-  .wordmark{width:min(88vw,560px);filter:drop-shadow(0 10px 28px rgba(20,16,43,.85))}
-  .tagline{margin-top:1.5rem;font-size:clamp(1.05rem,2.6vw,1.4rem);color:var(--cream);font-weight:600;max-width:36ch}
-  .facts{margin-top:.6rem;font-size:.95rem;color:var(--dim);font-weight:500}
+  .presents{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-bottom:1.4rem}
+  .presents img{width:clamp(110px,16vw,160px)}
+  .presents span{font-size:.72rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+  .wordmark{width:min(88vw,540px);filter:drop-shadow(0 10px 28px rgba(20,16,43,.85))}
+  .tagline{margin-top:1.4rem;font-size:clamp(1.05rem,2.6vw,1.4rem);color:var(--cream);font-weight:600;max-width:36ch}
+  .facts{margin-top:.6rem;font-size:.94rem;color:var(--dim);font-weight:500}
   .facts b{color:var(--lime);font-weight:600}
 
-  .cta-row{margin-top:2.1rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-  .btn{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;text-transform:uppercase;text-decoration:none;font-size:1.02rem;padding:.95rem 1.7rem;border-radius:16px;display:inline-block;transition:transform .12s ease, box-shadow .12s ease}
-  .btn:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+  .cta-row{margin-top:1.9rem;display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;text-transform:uppercase;text-decoration:none;font-size:1rem;padding:.9rem 1.6rem;border-radius:15px;display:inline-block;transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
   .btn-wishlist{background:var(--lime);color:var(--navy);box-shadow:0 6px 0 rgba(20,16,43,.55)}
   .btn-wishlist:hover{transform:translateY(-3px);box-shadow:0 9px 0 rgba(20,16,43,.55)}
-  .btn-ghost{background:rgba(36,30,78,.55);color:var(--cream);border:2px solid rgba(246,239,221,.35);text-decoration:none}
+  .btn-ghost{background:rgba(36,30,78,.55);color:var(--cream);border:2px solid rgba(246,239,221,.35)}
   .btn-ghost:hover{transform:translateY(-3px);border-color:var(--cream)}
 
   /* drifting spores */
@@ -67,91 +89,135 @@
   @keyframes drift{to{transform:translateY(-110vh) translateX(6vw);opacity:0}}
 
   /* ---------- SECTIONS ---------- */
-  section{max-width:960px;margin:0 auto;padding:4.5rem 1.25rem}
-  .rule{max-width:960px;margin:0 auto;height:1px;background:var(--hair)}
+  section{max-width:var(--maxw);margin:0 auto;padding:4.2rem 1.25rem}
+  .rule{max-width:var(--maxw);margin:0 auto;height:1px;background:var(--hair)}
 
-  /* reveal on scroll */
   .rise{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
   .rise.in{opacity:1;transform:none}
 
+  /* split intro: copy + art */
+  .split{display:grid;gap:2rem;align-items:center}
+  @media (min-width:860px){.split{grid-template-columns:1.05fr .95fr;gap:2.6rem}}
+  .split figure{border-radius:18px;overflow:hidden;border:1px solid var(--hair);background:var(--navy);box-shadow:0 22px 50px rgba(8,5,22,.5)}
+  .split figcaption{padding:.6rem .9rem;font-size:.78rem;color:var(--faint)}
+
   /* gauntlet cards */
-  .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.6rem}
-  .game{background:var(--navy);border-radius:20px;padding:1.5rem 1.5rem 1.6rem;border-top:5px solid var(--purple);transition:transform .15s ease}
+  .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-top:1.6rem}
+  .game{background:var(--navy);border-radius:18px;overflow:hidden;border-top:5px solid var(--purple);transition:transform .15s ease}
   .game:hover{transform:translateY(-4px)}
   .game:nth-child(2){border-top-color:var(--orange)}
   .game:nth-child(3){border-top-color:var(--lime)}
-  .game h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.25rem;text-transform:uppercase;color:var(--cream);margin-bottom:.55rem}
-  .game p{font-size:.98rem}
-  .cooking{margin-top:1.5rem;font-size:.88rem;color:var(--dim)}
+  .game img{width:100%;aspect-ratio:16/9;object-fit:cover}
+  .game .body{padding:1.1rem 1.25rem 1.3rem}
+  .game h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.15rem;text-transform:uppercase;color:var(--cream);margin-bottom:.45rem}
+  .game p{font-size:.94rem}
+  .game .built{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);font-weight:700;margin-bottom:.4rem}
+  .cooking{margin-top:1.5rem;font-size:.88rem;color:var(--dim);max-width:none}
   .cooking b{color:var(--cream);font-weight:600}
+
+  /* ---------- screens showcase ---------- */
+  .shots{display:grid;gap:1rem;margin-top:1.7rem;grid-template-columns:1fr}
+  @media (min-width:760px){
+    .shots{grid-template-columns:1fr 1fr}
+    .shots .wide{grid-column:1 / -1}
+  }
+  .shot{background:var(--navy);border-radius:18px;overflow:hidden;border:1px solid var(--hair)}
+  .shot img{width:100%;object-fit:cover;aspect-ratio:16/9;transition:transform .4s ease}
+  /* The boards capture is a ~3:1 strip; a 16:9 tile would crop a board off. */
+  .shot.strip img{aspect-ratio:3/1}
+  .shot:hover img{transform:scale(1.03)}
+  .shot figcaption{padding:.8rem 1.1rem;font-size:.9rem;color:var(--dim);line-height:1.5}
+  .shot figcaption b{color:var(--cream);font-weight:600}
+  .shot-note{margin-top:1rem;font-size:.79rem;color:var(--faint);letter-spacing:.05em}
+  .zoomable{cursor:zoom-in}
 
   /* ---------- THE JAR ---------- */
   .jar-wrap{display:grid;gap:2.2rem;align-items:center;margin-top:1.6rem}
-  @media (min-width:760px){.jar-wrap{grid-template-columns:minmax(0,1fr) 200px}}
-  .jar{width:150px;height:210px;margin:0 auto;position:relative;border:3px solid rgba(246,239,221,.5);border-top-width:0;border-radius:14px 14px 26px 26px;background:rgba(36,30,78,.5);overflow:hidden}
+  @media (min-width:760px){.jar-wrap{grid-template-columns:minmax(0,1fr) 190px}}
+  .jar{width:145px;height:205px;margin:0 auto;position:relative;border:3px solid rgba(246,239,221,.5);border-top-width:0;border-radius:14px 14px 26px 26px;background:rgba(36,30,78,.5);overflow:hidden}
   .jar::before{content:'';position:absolute;top:-12px;left:-3px;right:-3px;height:12px;border:3px solid rgba(246,239,221,.5);border-bottom:0;border-radius:8px 8px 0 0;background:rgba(36,30,78,.75)}
   .jar-fill{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(180deg,var(--lime),#8FC63D);box-shadow:0 0 26px rgba(183,229,97,.55);transition:height 1.7s cubic-bezier(.4,0,.2,1)}
   .jar.in .jar-fill{height:72%}
   .jar-fill::after{content:'';position:absolute;top:-5px;left:0;right:0;height:10px;border-radius:50%;background:var(--lime);opacity:.9}
-  .jar-cap{position:absolute;left:0;right:0;top:7%;border-top:2px dashed rgba(246,239,221,.4);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:.25rem;text-align:right;padding-right:.45rem}
-  .jar-label{text-align:center;margin-top:.9rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .jar-cap{position:absolute;left:0;right:0;top:7%;border-top:2px dashed rgba(246,239,221,.4);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:.25rem;text-align:right;padding-right:.45rem}
+  .jar-label{text-align:center;margin-top:.85rem;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
   .jar-label b{color:var(--lime);font-weight:600}
 
-  /* screenshots */
-  .shots{display:grid;gap:1.1rem;margin-top:1.6rem}
-  .shot{background:var(--navy);border-radius:20px;overflow:hidden}
-  .shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
-  .shot figcaption{padding:.85rem 1.2rem;font-size:.92rem;color:var(--dim)}
-  .shot-note{margin-top:.9rem;font-size:.8rem;color:var(--dim);letter-spacing:.06em}
-  @media (min-width:720px){.shots{grid-template-columns:1fr 1fr}}
-
   /* apartment list */
-  .apt-list{list-style:none;margin-top:1.4rem;display:grid;gap:.8rem;max-width:62ch}
-  .apt-list li{background:var(--navy);border-radius:14px;padding:.9rem 1.2rem;color:var(--dim);line-height:1.55}
+  .apt-list{list-style:none;margin-top:1.4rem;display:grid;gap:.75rem;max-width:62ch}
+  .apt-list li{background:var(--navy);border-radius:14px;padding:.85rem 1.15rem;color:var(--dim);line-height:1.55}
   .apt-list li::before{content:'🍄';margin-right:.6rem}
   .apt-list li b{color:var(--cream);font-weight:600}
   .zlorp-line{color:var(--teal);font-weight:600}
 
-  /* dial / stations */
-  .dial{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;max-width:62ch}
-  .dial span{font-size:.82rem;padding:.4rem .8rem;border-radius:999px;border:1px solid var(--hair);background:var(--navy);color:var(--dim);white-space:nowrap}
+  .dial{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.1rem;max-width:62ch}
+  .dial span{font-size:.8rem;padding:.38rem .78rem;border-radius:999px;border:1px solid var(--hair);background:var(--navy);color:var(--dim);white-space:nowrap}
   .dial span:first-child{border-color:rgba(183,229,97,.5);color:var(--lime)}
 
+  /* ---------- contract band ---------- */
+  /* Full-bleed so the studio pitch reads as a destination in its own right,
+     rather than a line of small print under the game. */
+  .hire{background:linear-gradient(180deg,#1B1638 0%,#241E4E 100%);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:3.6rem 0}
+  .hire .wrap{display:grid;gap:2rem;align-items:center}
+  @media (min-width:900px){.hire .wrap{grid-template-columns:1.1fr .9fr;gap:3rem}}
+  .hire h2{margin-bottom:.7rem}
+  .hire p{font-size:.98rem}
+  .hire .statbar{margin-top:1.3rem;display:flex;flex-wrap:wrap;gap:.5rem}
+  .hire .stat{border:1px solid var(--hair);background:rgba(20,16,43,.5);border-radius:10px;padding:.45rem .8rem;font-size:.82rem;font-weight:600;color:var(--dim);font-variant-numeric:tabular-nums}
+  .hire .stat b{color:var(--cream);font-weight:700}
+  .hire .stat.live{border-color:rgba(183,229,97,.45)}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-right:.4rem;vertical-align:middle}
+  .hire .cta-row{justify-content:flex-start;margin-top:1.6rem}
+  .hire-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  .hire-grid figure{border-radius:12px;overflow:hidden;border:1px solid var(--hair);background:var(--cave)}
+  .hire-grid img{width:100%;aspect-ratio:16/10;object-fit:cover}
+  .hire-grid .tall{grid-column:1 / -1}
+  .hire-grid .tall img{aspect-ratio:21/9}
+  .hire-grid figcaption{padding:.4rem .65rem;font-size:.68rem;color:var(--faint);letter-spacing:.02em}
+
   /* field notes */
-  .field-notes{background:var(--navy);border-radius:20px;padding:1.5rem 1.6rem;font-size:.92rem;line-height:2;color:var(--cream)}
+  .field-notes{background:var(--navy);border-radius:18px;padding:1.4rem 1.5rem;font-size:.91rem;line-height:2;color:var(--cream);max-width:none}
   .field-notes span{color:var(--lime);font-weight:600}
 
   /* bug exhibit */
   .bug-lead{margin-top:2.2rem}
-  .bug-lead h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.1rem;text-transform:uppercase;color:var(--cream);margin-bottom:.6rem}
-  .bugshots{display:grid;gap:1rem;margin-top:1.2rem}
+  .bug-lead h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.05rem;text-transform:uppercase;color:var(--cream);margin-bottom:.6rem}
+  .bugshots{display:grid;gap:1rem;margin-top:1.1rem}
   @media (min-width:680px){.bugshots{grid-template-columns:1fr 1fr}}
   .bugshot{background:var(--navy);border-radius:16px;overflow:hidden;border-top:4px solid var(--lime)}
   .bugshot:last-child{border-top-color:var(--orange)}
   .bugshot img{width:100%;aspect-ratio:16/9;object-fit:cover}
-  .bugshot figcaption{padding:.85rem 1.1rem;font-size:.88rem;color:var(--dim);line-height:1.55}
+  .bugshot figcaption{padding:.8rem 1.05rem;font-size:.87rem;color:var(--dim);line-height:1.55}
   .bugshot figcaption b{color:var(--cream);font-weight:600}
 
-  .closer{text-align:center;padding-bottom:5rem}
+  .closer{text-align:center;padding-bottom:4.5rem}
   .closer p{margin-left:auto;margin-right:auto}
-  .closer .wl-note{margin:.85rem auto 0;font-size:.82rem;color:var(--dim)}
+  .closer .wl-note{margin:.85rem auto 0;font-size:.8rem;color:var(--faint)}
 
-  /* studio / contract strip */
-  .studio{background:var(--navy);border-radius:20px;padding:1.7rem 1.8rem;display:flex;gap:1.4rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
-  .studio h2{margin-bottom:.5rem;font-size:clamp(1.25rem,3vw,1.7rem)}
-  .studio p{margin:0;font-size:.96rem}
-  .studio .studio-copy{flex:1 1 320px}
-  .studio .btn{white-space:nowrap}
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(10,7,24,.94);display:none;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem)}
+  .lb[open]{display:flex}
+  .lb-fig{margin:0;max-width:min(1600px,100%);max-height:100%;display:flex;flex-direction:column;gap:.7rem}
+  .lb-fig img{max-width:100%;max-height:80vh;width:auto;height:auto;border-radius:12px;border:1px solid rgba(246,239,221,.2);box-shadow:0 30px 80px rgba(0,0,0,.6);object-fit:contain}
+  .lb-cap{font-size:.88rem;color:var(--dim);text-align:center;line-height:1.5;max-width:70ch;margin:0 auto}
+  .lb-cap b{color:var(--cream)}
+  .lb-close{position:absolute;top:1rem;right:1.15rem;background:rgba(36,30,78,.85);color:var(--cream);border:1px solid var(--hair);border-radius:10px;font:inherit;font-size:1.35rem;line-height:1;padding:.4rem .7rem;cursor:pointer}
+  .lb-close:hover{border-color:var(--lime);color:var(--lime)}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(36,30,78,.8);color:var(--cream);border:1px solid var(--hair);border-radius:10px;font:inherit;font-size:1.4rem;line-height:1;padding:.55rem .8rem;cursor:pointer}
+  .lb-nav:hover{border-color:var(--lime);color:var(--lime)}
+  .lb-prev{left:.8rem}.lb-next{right:.8rem}
+  @media (max-width:620px){.lb-nav{display:none}}
+  body.lb-open{overflow:hidden}
 
-  footer{padding:3rem 1.25rem 4rem;text-align:center;color:var(--dim);font-size:.85rem}
-  footer img{width:150px;margin:0 auto 1.2rem;opacity:.9}
+  footer{padding:2.8rem 1.25rem 3.6rem;text-align:center;color:var(--faint);font-size:.84rem}
+  footer img{width:140px;margin:0 auto 1.1rem;opacity:.9}
   footer a{color:var(--lime);text-decoration:none}
-  footer a:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
     .spore{animation:none;display:none}
-    .btn,.game,.jar-fill{transition:none}
+    .btn,.game,.jar-fill,.shot img{transition:none}
+    .shot:hover img{transform:none}
     .rise{opacity:1;transform:none;transition:none}
     .jar.in .jar-fill{height:72%}
   }
@@ -159,7 +225,19 @@
 </head>
 <body>
 
-<header class="hero">
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
+    <div class="navlinks">
+      <a href="#game">The game</a>
+      <a href="#screens">Screens</a>
+      <a href="#devlog">Dev log</a>
+      <a class="hire" href="work.html">Hire the studio</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
   <div class="hero-bg" role="img" aria-label="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="spore-field" aria-hidden="true">
@@ -188,11 +266,19 @@
 </header>
 
 <section id="game" class="rise">
-  <p class="eyebrow">the game</p>
-  <h2>What is this</h2>
-  <p><strong>Bad Shrooms</strong> is a split-screen party FPS set in a cramped one-bedroom apartment. You and one friend ate mushrooms that were not, in fact, fine. An alien named <strong>Zlorp</strong> unfolded out of the living-room air, moved in, and started running the night like a game show — minigames built from whatever's lying around the apartment.</p>
-  <p>The screen is split down the middle, so nobody can lie about what they just did to you. Online is 1v1 and full-screen — different bit, same housemate.</p>
-  <p>We're a small studio polishing every minigame until it's exactly the right amount of unfair. Early Access, honestly: <strong>three minigames are playable start to finish tonight</strong>, and the rest are still cooking.</p>
+  <div class="split">
+    <div>
+      <p class="eyebrow">the game</p>
+      <h2>What is this</h2>
+      <p><strong>Bad Shrooms</strong> is a split-screen party FPS set in a cramped one-bedroom apartment. You and one friend ate mushrooms that were not, in fact, fine. An alien named <strong>Zlorp</strong> unfolded out of the living-room air, moved in, and started running the night like a game show — minigames built from whatever's lying around the apartment.</p>
+      <p>The screen is split down the middle, so nobody can lie about what they just did to you. Online is 1v1 and full-screen — different bit, same housemate.</p>
+      <p>Early Access, honestly: <strong>three minigames and the finale are playable start to finish</strong>, and the rest are still cooking.</p>
+    </div>
+    <figure>
+      <img src="img/shot_title.jpg" alt="The Bad Shrooms title screen: a painted purple dusk street, the game's logo in dripping letters, and a menu reading Online, Local, Settings, Credits, Exit" loading="lazy">
+      <figcaption>Boot straight into Online or Local. No launcher, no account wall.</figcaption>
+    </figure>
+  </div>
 </section>
 
 <div class="rule"></div>
@@ -202,19 +288,58 @@
   <h2>The minigames</h2>
   <div class="games">
     <div class="game">
-      <h3>Monkey Bowls</h3>
-      <p>Bowling in the living room. The pins are bananas. The foul line is enforced.</p>
+      <img src="img/shot_apartment.jpg" alt="Two players stand in the dim apartment living room facing Zlorp, a green alien in the kitchen doorway, with ceiling-mounted TVs above them" loading="lazy">
+      <div class="body">
+        <p class="built">Playable now</p>
+        <h3>Monkey Bowls</h3>
+        <p>Bowling in the living room. The pins are bananas. The foul line is enforced.</p>
+      </div>
     </div>
     <div class="game">
-      <h3>Floor Is Lava</h3>
-      <p>Zlorp shrinks you to flea size and the floor stops being a floor. The furniture won the last three rounds.</p>
+      <img src="img/shot_lava.jpg" alt="Split-screen view of Floor Is Lava: the apartment floor has become molten orange lava and a shrunken glowing player stands on a raised platform" loading="lazy">
+      <div class="body">
+        <p class="built">Playable now</p>
+        <h3>Floor Is Lava</h3>
+        <p>Zlorp shrinks you to flea size and the floor stops being a floor. The furniture won the last three rounds.</p>
+      </div>
     </div>
     <div class="game">
-      <h3>Zlorp Dash</h3>
-      <p>Fine dining. The dish leaves through the microwave.</p>
+      <img src="img/shot_zlorp_dash_brief.jpg" alt="The Zlorp Dash briefing card, headed Blue Plate Special, listing the controls: grab food, drop or throw into box, ship the hatch" loading="lazy">
+      <div class="body">
+        <p class="built">Playable now</p>
+        <h3>Zlorp Dash</h3>
+        <p>Fine dining. You pack the box, and the dish leaves through the microwave.</p>
+      </div>
     </div>
   </div>
-  <p class="cooking">Nine more are built as far as their skeletons and no further — <b>Shrunk Race</b>, <b>Bathtub Armada</b>, <b>Swole Patrol</b>, <b>Pillow Justice</b>, <b>Mecha Chameleon</b>, <b>Snack Heist</b>, <b>Déjà Room</b>, <b>Carpet Golf</b>, <b>Window Artillery</b> — plus a finale nobody gets to see yet. Their hosts sit in the apartment and say <b>LOCKED</b> when you reach for them, because a locked door is more honest than a menu that lies. We'll tell you when they're real.</p>
+  <p class="cooking"><b>The finale is built too</b> — all seven phases of the Zlorp Showdown, each with its own coloured bar and its own way of cheating. Nine more games exist as skeletons and no further: <b>Shrunk Race</b>, <b>Bathtub Armada</b>, <b>Swole Patrol</b>, <b>Pillow Justice</b>, <b>Mecha Chameleon</b>, <b>Snack Heist</b>, <b>Déjà Room</b>, <b>Carpet Golf</b>, <b>Window Artillery</b>. Their hosts sit in the apartment and say <b>LOCKED</b> when you reach for them, because a locked door is more honest than a menu that lies.</p>
+</section>
+
+<div class="rule"></div>
+
+<section id="screens" class="rise">
+  <p class="eyebrow">exhibit a</p>
+  <h2>The evidence</h2>
+  <p>Everything below is the current build, captured in-engine this week. Click any of them to see it full size.</p>
+  <div class="shots">
+    <figure class="shot wide">
+      <img src="img/shot_lava_boil.jpg" alt="Split-screen Floor Is Lava at the final boil: the whole apartment floor is churning lava lit yellow and orange, both players holding pistols, a banner reading Final Boil — every second is worth 3" loading="lazy">
+      <figcaption><b>Final boil.</b> The last stretch of Floor Is Lava, where every second is worth triple and the furniture is the only ground left.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="img/shot_jar_debrief.jpg" alt="End-of-round debrief card reading Floor Is Lava, Game 3, P0 wins, plus 200 millilitres into the jar, with the jar at 600 of 1000 millilitres and two more wins to fill it" loading="lazy">
+      <figcaption><b>Every win pours into the same litre.</b> Two more fills it — and then the night ends.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="img/shot_kitchen.jpg" alt="The apartment kitchen at night lit by teal and magenta ceiling strips, with counter, oven, fridge and dining table" loading="lazy">
+      <figcaption><b>Between rounds you're just loose in a flat.</b> Every light in here is made by a fixture you can see.</figcaption>
+    </figure>
+    <figure class="shot strip wide">
+      <img src="img/shot_boards.jpg" alt="Two ceiling-mounted screens in the apartment: one reads Now Playing with the current radio station and track, the other reads Bad Shrooms Live with both players' scores" loading="lazy">
+      <figcaption><b>The ceiling boards keep score and pick the music.</b> They also tell on whoever changed the station.</figcaption>
+    </figure>
+  </div>
+  <p class="shot-note">early access build · captured in-engine · Unity 6 / URP</p>
 </section>
 
 <div class="rule"></div>
@@ -224,7 +349,7 @@
   <h2>The jar</h2>
   <div class="jar-wrap">
     <div>
-      <p>There is no points counter. Zlorp harvests a substance called <strong>loosh</strong>, and every round you win pours some into <strong>one jar you both share</strong>. It holds exactly a litre.</p>
+      <p>There is no points counter. Zlorp harvests a substance called <strong>loosh</strong>, and every round you win pours some into <strong>one jar you both share</strong>. It holds exactly a litre — or however much you set it to before anyone commits.</p>
       <p>So you're not racing each other to a number. You're filling the same container, together, at different speeds. When it brims, the night ends — and whoever poured more walks into the finale alone.</p>
       <p>The other thing the jar does: <strong>the fuller it gets, the more the game warps.</strong> Colour bends, the room breathes, the edges start disagreeing with you. By the last round you are winning a game that has become harder to look at. That's on purpose. You did that.</p>
     </div>
@@ -241,24 +366,6 @@
 <div class="rule"></div>
 
 <section class="rise">
-  <p class="eyebrow">exhibit a</p>
-  <h2>The evidence</h2>
-  <div class="shots">
-    <figure class="shot">
-      <img src="img/shot_apartment.jpg" alt="Two players stand in the dim apartment living room facing Zlorp, a green alien standing in the kitchen doorway. Ceiling-mounted TVs show the control hints and the Bad Shrooms Live scoreboard." loading="lazy">
-      <figcaption>He does not knock, and he does not leave.</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/shot_jar_debrief.jpg" alt="The end-of-round debrief card: Floor Is Lava, Game 3, P0 wins, plus 200 millilitres into the jar. The jar reads 600 of 1000 millilitres with two more wins to fill it. Zlorp's line underneath reads: You climbed a bottle. I watched. It counted." loading="lazy">
-      <figcaption>Every win pours into the same litre. Two more fills it.</figcaption>
-    </figure>
-  </div>
-  <p class="shot-note">early access build · captured in-engine</p>
-</section>
-
-<div class="rule"></div>
-
-<section class="rise">
   <p class="eyebrow">between rounds</p>
   <h2>The apartment</h2>
   <p>There's no lobby menu. Between minigames you're loose in the apartment, and the apartment is not ready for you.</p>
@@ -267,34 +374,65 @@
     <li><b>The Japanese toilet has a control panel.</b> One of the buttons is a bidet. It is not a joke about a bidet — it is a functioning launcher, and your friend knows where you're standing.</li>
     <li><span class="zlorp-line">Zlorp runs a shop.</span> He sells joke guns and skins, and he never lets you forget what you paid for them.</li>
     <li><b>Sixty characters.</b> Ten are yours immediately. The other fifty sit there in the grid, visible, not yours.</li>
-    <li><b>A party is 2 to 15 rounds,</b> your call before anyone commits. The jar is always a litre — you just decide how big the pours are.</li>
+    <li><b>A party is 2 to 15 rounds,</b> your call before anyone commits.</li>
   </ul>
-</section>
 
-<div class="rule"></div>
-
-<section class="rise">
-  <p class="eyebrow">the dial</p>
-  <h2>Eight stations</h2>
-  <p>The bedroom radio runs eight stations on live timelines. They don't wait for you — change the dial, come back twenty minutes later, and the show has moved on without you. Wander off mid-song and you lose the song.</p>
+  <h2 style="margin-top:2.6rem">Eight stations</h2>
+  <p>The radio lives in the VR chair — sit down and the dial comes up as a hologram, sticks for tuning, mute at the bottom of the volume ladder. Eight stations run on live timelines. They don't wait for you: change the dial, come back twenty minutes later, and the show has moved on without you.</p>
   <div class="dial">
     <span>Doomshroom FM</span><span>Radiance FM</span><span>Wave Naysh</span><span>Quirky Bitch FM</span><span>Cool Noises</span><span>Kool-Aid &amp; Pineapple</span><span>Millenial FM</span><span>Pops</span>
   </div>
 </section>
 
-<div class="rule"></div>
+<!-- The studio pitch sits here, mid-scroll, where someone who likes the work
+     is still reading — not buried under the last wishlist button. -->
+<section class="hire" id="hire" style="max-width:none;padding-left:0;padding-right:0">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">the day job</p>
+      <h2>Bad Shrooms is funded by contract work</h2>
+      <p>Crunchrock is a Unity studio for hire. Hardware that speaks its own protocol, live-service mobile clients with players already inside them, WebGL builds arguing with a load-time budget, and VR that has to feel right on your face instead of on a monitor.</p>
+      <p>Seven years of taking the jobs that are hard to write a ticket for. The same hands that built everything above.</p>
+      <div class="statbar">
+        <span class="stat"><b>50+</b> contracts</span>
+        <span class="stat"><b>5,000+</b> billed hours</span>
+        <span class="stat"><b>100%</b> job success</span>
+        <span class="stat live"><span class="dot"></span>Available now</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-wishlist" href="work.html">See the work</a>
+        <a class="btn btn-ghost" href="mailto:jamesdouglaschaney@gmail.com?subject=Contract%20enquiry%20—%20Crunchrock%20Games">Start a project</a>
+      </div>
+    </div>
+    <div class="hire-grid">
+      <figure class="tall">
+        <img src="img/work/env-neon-ramen-club-street.webp" alt="Neon-lit cyberpunk street at night rendered in Unity URP" loading="lazy">
+        <figcaption>URP environment &amp; lighting</figcaption>
+      </figure>
+      <figure>
+        <img src="img/work/syky-pink-gown-pedestal.webp" alt="A pink couture gown on a pedestal in a bright gallery overlooking the sea" loading="lazy">
+        <figcaption>SYKY — WebGL brand world</figcaption>
+      </figure>
+      <figure>
+        <img src="img/work/combattrainer-title-screen.webp" alt="Combat Trainer title screen with corner registration markers used for light-gun calibration" loading="lazy">
+        <figcaption>Light-gun hardware integration</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
-<section class="rise">
+<section id="devlog" class="rise">
   <p class="eyebrow">field notes</p>
   <h2>From the lab</h2>
   <div class="field-notes">
+    <span>[08.02]</span> the whole flat got relit. every light in here is now made by a fixture you can actually see.<br>
+    <span>[08.02]</span> put the contrast back. the grade was not the thing that was overdone — the ambient occlusion was grey, and grey is not a shadow.<br>
+    <span>[08.02]</span> all three built games ran end to end, both seats scoring, zero console errors.<br>
+    <span>[08.02]</span> the finale got a body: guns in hands, coins on screen, and a boss with a voice.<br>
+    <span>[08.02]</span> there is no solo game, so the menu stopped offering one.<br>
+    <span>[08.02]</span> made the build lie loudly instead of quietly — an effect that only ran in the editor now says so.<br>
+    <span>[08.02]</span> looked at the pin deck instead of arguing about it. it is still the darkest thing on its lane.<br>
     <span>[07.30]</span> party points are gone. score is a jar of alien fluid now, and it bends the screen as it fills.<br>
-    <span>[07.29]</span> the muzzle flash had been rendering as a missing-shader purple. it had been that colour for a while. nobody looked.<br>
-    <span>[07.29]</span> floor is lava's prop cinema never executed a single frame. it had been shipping in that state, silently, doing nothing.<br>
-    <span>[07.29]</span> the bowling reaction card was destroyed in the same frame it was created. it had a whole art pass.<br>
-    <span>[07.29]</span> all sixty characters have faces now. the football has a collider it can roll on.<br>
-    <span>[07.28]</span> the verb rail was rendering nothing at all. found by looking at it, not by testing it.<br>
-    <span>[07.25]</span> the microwave door opened the wrong way, and the test that certified it was wrong in the same direction.<br>
     <span>&gt;</span> updated whenever something happens. something always happens.
   </div>
 
@@ -314,25 +452,25 @@
   </div>
 </section>
 
-<section class="rise">
-  <div class="studio">
-    <div class="studio-copy">
-      <p class="eyebrow">the day job</p>
-      <h2>We also build for hire</h2>
-      <p>Bad Shrooms is funded by contract work — Unity for hire across mobile, VR, WebGL and the weird hardware nobody wants to scope. 50+ contracts, 5,000+ billed hours, 100% job success.</p>
-    </div>
-    <a class="btn btn-ghost" href="work.html">See the work</a>
-  </div>
-</section>
-
 <section class="closer rise">
   <h2>It's shroom o'clock</h2>
   <p>One couch. One friend. One jar.</p>
   <div class="cta-row">
     <a class="btn btn-wishlist" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+    <a class="btn btn-ghost" href="work.html">Hire the studio</a>
   </div>
   <p class="wl-note">wishlists tell us you want this.</p>
 </section>
+
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lb-close" type="button" data-lb-close aria-label="Close image viewer">&times;</button>
+  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Previous image">&#8249;</button>
+  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Next image">&#8250;</button>
+  <figure class="lb-fig">
+    <img id="lb-img" src="" alt="">
+    <figcaption class="lb-cap" id="lb-cap"></figcaption>
+  </figure>
+</div>
 
 <footer>
   <img src="img/logo_crunchrock.png" alt="Crunchrock Games">
@@ -353,6 +491,59 @@
       });
     }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
     targets.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Click any screenshot to see it at full size.
+  (function () {
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lb-img');
+    var lbCap = document.getElementById('lb-cap');
+    var items = [];
+    var index = 0;
+    var lastFocus = null;
+
+    document.querySelectorAll('.shot img, .bugshot img, .split figure img').forEach(function (img) {
+      var fig = img.closest('figure');
+      var cap = fig ? fig.querySelector('figcaption') : null;
+      img.classList.add('zoomable');
+      img.tabIndex = 0;
+      img.setAttribute('role', 'button');
+      items.push({ src: img.getAttribute('src'), alt: img.alt, cap: cap ? cap.innerHTML : '' });
+      var i = items.length - 1;
+      img.addEventListener('click', function () { open(i); });
+      img.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+      });
+    });
+
+    function show(i) {
+      index = (i + items.length) % items.length;
+      var it = items[index];
+      lbImg.src = it.src; lbImg.alt = it.alt; lbCap.innerHTML = it.cap;
+    }
+    function open(i) {
+      lastFocus = document.activeElement;
+      show(i);
+      lb.setAttribute('open', '');
+      document.body.classList.add('lb-open');
+      lb.querySelector('[data-lb-close]').focus();
+    }
+    function close() {
+      lb.removeAttribute('open');
+      document.body.classList.remove('lb-open');
+      lbImg.src = '';
+      if (lastFocus) lastFocus.focus();
+    }
+    lb.querySelector('[data-lb-close]').addEventListener('click', close);
+    lb.querySelector('[data-lb-prev]').addEventListener('click', function () { show(index - 1); });
+    lb.querySelector('[data-lb-next]').addEventListener('click', function () { show(index + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.hasAttribute('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') show(index + 1);
+      else if (e.key === 'ArrowLeft') show(index - 1);
+    });
   })();
 </script>
 
