@@ -1,519 +1,361 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bad Shrooms - Crunchrock Games</title>
-<meta name="description" content="Bad Shrooms: a fast first-person party game of sabotage loops, throwables, and alien game night. Two players - local split or Steam. Wishlist on Steam.">
+<title>Bad Shrooms — Crunchrock Games</title>
+<meta name="description" content="Bad Shrooms: a first-person party game in one apartment that will not stay arranged. Free demo, two players, one couch or two Steam seats.">
 <link rel="icon" type="image/png" href="img/favicon_shroom.png">
-<meta property="og:title" content="Bad Shrooms - Crunchrock Games">
-<meta property="og:description" content="Fast first-person party chaos. Sabotage loops. One jar. Wishlist on Steam.">
+<meta property="og:title" content="Bad Shrooms — Crunchrock Games">
+<meta property="og:description" content="Your friend is the difficulty setting. First-person party chaos in one apartment. Wishlist on Steam.">
 <meta property="og:image" content="https://crunchrock.games/img/cover_dusk_house.jpg">
 <meta property="og:url" content="https://crunchrock.games/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cave:#14102B;      /* CaveInk - marketing near-black */
-    --navy:#241E4E;      /* DeepTripNavy */
-    --slate:#1B1638;
-    --lime:#B7E561;      /* ToxicLime */
-    --purple:#6A3FA0;    /* ShroomPurple */
-    --orange:#F2913D;    /* SunsetOrange */
-    --cream:#F6EFDD;     /* BoneCream */
-    --teal:#3FBFAD;      /* AlienTeal - Zlorp only */
-    --dim:rgba(246,239,221,.64);
-    --faint:rgba(246,239,221,.42);
-    --hair:rgba(246,239,221,.11);
-    --maxw:1080px;
+    /* Canon palette, field inverted: BoneCream is the paper, CaveInk is the ink.
+       ToxicLime and SunsetOrange are too light to carry text on cream — they are
+       fills only. ShroomPurple is the one accent that reads as type here.
+       AlienTeal only appears on the dark plates, where Zlorp lives. */
+    --paper:#F6EFDD;
+    --ink:#14102B;
+    --navy:#241E4E;
+    --lime:#B7E561;
+    --purple:#6A3FA0;
+    --orange:#F2913D;
+    --cream:#F6EFDD;
+    --teal:#3FBFAD;
+    --ink-70:rgba(20,16,43,.72);
+    --rule:rgba(20,16,43,.20);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--cave);color:var(--cream);font-family:'Baloo 2','Nunito',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-  ::selection{background:var(--lime);color:var(--navy)}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Baloo 2',system-ui,sans-serif;
+    font-size:clamp(1.05rem,.5vw + .95rem,1.15rem);line-height:1.5;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(rgba(20,16,43,.085) 1px, transparent 1px);
+    background-size:23px 23px;
+  }
+  ::selection{background:var(--lime);color:var(--ink)}
   img{max-width:100%;height:auto;display:block}
-  a{color:var(--lime)}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:4px}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
+  /* mono is the technical voice: facts, labels, dates, nav */
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;
+        letter-spacing:-.01em;line-height:1.5}
 
-  h2{font-family:'Titan One','Fredoka','Baloo 2',system-ui,sans-serif;font-weight:400;font-size:clamp(1.5rem,4vw,2.3rem);text-transform:uppercase;color:var(--cream);margin-bottom:1.1rem;line-height:1.15}
-  .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);margin-bottom:.85rem}
-  p{color:var(--dim);line-height:1.7;max-width:62ch}
-  p + p{margin-top:1rem}
-  p strong{color:var(--cream);font-weight:600}
+  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;
+           text-transform:uppercase;line-height:.92}
 
-  /* ---------- top bar ---------- */
-  .topbar{position:sticky;top:0;z-index:60;background:rgba(20,16,43,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
-  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.6rem;padding-bottom:.6rem}
-  .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--cream);font-weight:700;font-size:.92rem}
-  .brand img{width:30px}
-  .navlinks{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
-  .navlinks a{color:var(--dim);text-decoration:none;font-size:.82rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-  .navlinks a:hover{color:var(--cream)}
-  /* The route to paid work is a first-class destination, not a footnote. */
-  .navlinks a.hire{color:var(--cave);background:var(--lime);padding:.42rem .85rem;border-radius:9px;font-family:'Titan One',system-ui,sans-serif;font-weight:400;letter-spacing:.02em}
-  .navlinks a.hire:hover{color:var(--cave);transform:translateY(-1px)}
-  @media (max-width:760px){
-    .brand span{display:none}
-    .navlinks a[href="#screens"],.navlinks a[href="#devlog"]{display:none}
-    .navlinks{gap:.6rem}
+  a{color:var(--purple)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-offset:4px}
+
+  .hold{max-width:1240px;margin:0 auto;padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
+
+  /* ---------------- sticker button ---------------- */
+  .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;
+       text-transform:uppercase;text-decoration:none;font-size:clamp(1.05rem,1.7vw,1.3rem);
+       padding:.85rem 1.7rem;background:var(--lime);color:var(--ink);
+       border:2.5px solid var(--ink);border-radius:2px;
+       box-shadow:6px 6px 0 var(--ink);
+       transition:transform .1s ease,box-shadow .1s ease}
+  .btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+  .btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
+
+  /* ---------------- top bar ---------------- */
+  .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
+  .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+             padding-block:.7rem}
+  .bar .who{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
+  .bar .who img{width:30px}
+  .bar nav{display:flex;gap:1.5rem;align-items:center}
+  .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700;
+             letter-spacing:.02em}
+  .bar nav a:hover{color:var(--purple)}
+  @media (max-width:560px){.bar .who span{display:none}}
+
+  /* ---------------- 1. the poster ---------------- */
+  .poster{position:relative;background:var(--ink);isolation:isolate;overflow:hidden;
+          min-height:min(86svh,820px);display:flex;flex-direction:column;
+          align-items:center;justify-content:flex-end;text-align:center;
+          padding:clamp(4rem,12vh,8rem) clamp(1.1rem,4vw,2.4rem) clamp(3rem,9vh,5rem)}
+  .poster-art{position:absolute;inset:0;z-index:-2;
+              background:url('img/cover_dusk_house.jpg') center 26%/cover no-repeat}
+  /* Just enough lift at the foot to seat the type — the art is not muffled. */
+  .poster-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
+     transparent 0%, transparent 46%, rgba(20,16,43,.58) 78%, rgba(20,16,43,.88) 100%)}
+  .wordmark{width:min(84vw,560px);filter:drop-shadow(0 10px 34px rgba(20,16,43,.7))}
+  .say{margin-top:1.4rem;color:var(--cream);font-family:'Titan One',system-ui,sans-serif;
+       font-weight:400;font-size:clamp(1.4rem,3.4vw,2.3rem);line-height:1.08;max-width:17ch;
+       text-shadow:0 3px 20px rgba(20,16,43,.9)}
+  .poster .btn{margin-top:1.9rem;border-color:var(--cream);box-shadow:6px 6px 0 var(--cream)}
+  .poster .btn:hover{box-shadow:3px 3px 0 var(--cream)}
+  .poster .btn:active{box-shadow:0 0 0 var(--cream)}
+  .poster .fact{margin-top:1.5rem;color:var(--cream);opacity:.95;
+                text-shadow:0 2px 12px rgba(20,16,43,.9)}
+
+  /* ---------------- the loose friend ----------------
+     The game's verb is grab-and-throw, so the one interactive thing on the
+     site is the word "friend" — pinned, already crooked, and flingable. It
+     settles back askew because your friend never settles back straight.
+     The word stays in normal flow and stays selectable; only the inner
+     span rotates, so the sentence never reflows. */
+  .loose{display:inline-block;position:relative}
+  .loose i{display:inline-block;font-style:normal;transform-origin:14% 6%;
+           cursor:grab;touch-action:none;will-change:transform}
+  .loose i:active{cursor:grabbing}
+  /* the pin it hangs off */
+  .loose::before{content:'';position:absolute;left:calc(14% - 3px);top:-2px;
+                 width:7px;height:7px;border-radius:50%;background:var(--lime);
+                 box-shadow:0 0 0 2px rgba(20,16,43,.55);z-index:2;pointer-events:none}
+  @media (prefers-reduced-motion: reduce){
+    .loose i{cursor:auto;transform:rotate(6deg)}
   }
 
-  /* ---------- HERO ---------- */
-  .hero{position:relative;min-height:94svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3rem 1.25rem 3.5rem;isolation:isolate}
-  .hero-bg{position:absolute;inset:0;z-index:-2;background:url('img/cover_dusk_house.jpg') center 30%/cover no-repeat}
-  .hero-scrim{position:absolute;inset:0;z-index:-1;background:
-    linear-gradient(180deg, rgba(20,16,43,.55) 0%, rgba(20,16,43,.35) 38%, rgba(20,16,43,.82) 78%, var(--cave) 100%)}
-  .presents{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-bottom:1.4rem}
-  .presents img{width:clamp(110px,16vw,160px)}
-  .presents span{font-size:.72rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
-  .wordmark{width:min(88vw,540px);filter:drop-shadow(0 10px 28px rgba(20,16,43,.85))}
-  .tagline{margin-top:1.4rem;font-size:clamp(1.05rem,2.6vw,1.4rem);color:var(--cream);font-weight:600;max-width:36ch}
-  .facts{margin-top:.6rem;font-size:.94rem;color:var(--dim);font-weight:500}
-  .facts b{color:var(--lime);font-weight:600}
+  /* the wordmark's own signature, used once: the plate bleeds onto the paper */
+  .bleed{display:block;width:100%;height:clamp(30px,3.4vw,58px);color:var(--lime);
+         margin-top:-1px}
 
-  .cta-row{margin-top:1.9rem;display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center}
-  .btn{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;text-transform:uppercase;text-decoration:none;font-size:1rem;padding:.9rem 1.6rem;border-radius:15px;display:inline-block;transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
-  .btn-wishlist{background:var(--lime);color:var(--navy);box-shadow:0 6px 0 rgba(20,16,43,.55)}
-  .btn-wishlist:hover{transform:translateY(-3px);box-shadow:0 9px 0 rgba(20,16,43,.55)}
-  .btn-ghost{background:rgba(36,30,78,.55);color:var(--cream);border:2px solid rgba(246,239,221,.35)}
-  .btn-ghost:hover{transform:translateY(-3px);border-color:var(--cream)}
+  /* ---------------- 2. the three ---------------- */
+  .three{padding-block:clamp(3rem,8vh,5.5rem)}
+  .kicker{max-width:46ch}
+  /* Breaks the measure so the plates run the full width of the paper. */
+  .trio{display:grid;gap:clamp(1.4rem,2.6vw,2.2rem);margin-top:clamp(1.6rem,4vh,2.6rem);
+        width:100vw;margin-inline:calc(50% - 50vw);
+        padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
+  @media (min-width:820px){.trio{grid-template-columns:repeat(3,1fr)}}
+  /* Every capture has the score bar burned into the top, and Monkey Bowls also
+     carries a Zlorp dialogue box over its top third. Zoom-framing inside a fixed
+     window pushes that chrome out without flattening the plate into a strip.
+     Per-plate transform-origin below does the framing. Replace the whole
+     mechanism the day there are clean captures. */
+  .plate .frame{aspect-ratio:3/2;overflow:hidden;
+                border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink)}
+  .plate .frame img{width:100%;height:100%;object-fit:cover;transform:scale(1.5)}
+  /* Single column below 820: keep the plates cinematic so three of them stacked
+     don't turn the page back into a scroll. */
+  @media (max-width:819px){.plate .frame{aspect-ratio:2/1}}
+  .plate h2{margin-top:1.5rem;font-size:clamp(1.7rem,3.3vw,2.5rem);color:var(--ink)}
+  /* One line each, so the three read as a set instead of a ragged 2/2/2. */
+  .plate p{margin-top:.45rem;color:var(--ink-70);max-width:none;text-wrap:balance}
+  /* This is the roadmap, not a footnote — it gets size, ink, and the three new
+     names carrying the colour. */
+  .after{margin-top:clamp(2.2rem,5vh,3.2rem);padding-top:clamp(1.2rem,2.4vh,1.7rem);
+         border-top:2px solid var(--ink);max-width:36ch;color:var(--ink);
+         font-size:1.24em;line-height:1.34;text-wrap:balance}
+  .after b{color:var(--purple);font-weight:700}
 
-  /* drifting spores */
-  .spore-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-  .spore{position:absolute;bottom:-12px;border-radius:50%;background:var(--lime);opacity:.45;animation:drift linear infinite}
-  @keyframes drift{to{transform:translateY(-110vh) translateX(6vw);opacity:0}}
+  /* ---------------- 3. the jar ---------------- */
+  .jar{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
+  .jar .hold{display:grid;gap:clamp(2rem,4vw,3.4rem);align-items:center;
+             padding-block:clamp(3.4rem,9vh,6rem)}
+  @media (min-width:900px){.jar .hold{grid-template-columns:1.02fr .98fr}}
+  .zlorp{color:var(--teal);font-size:clamp(1.15rem,2vw,1.45rem);font-weight:600;
+         max-width:28ch;margin-bottom:1.2rem}
+  .zlorp::before{content:'“'}.zlorp::after{content:'”'}
+  .jar h2{font-size:clamp(2.3rem,5.6vw,4.4rem);color:var(--cream)}
+  .jar p{margin-top:1.2rem;color:rgba(246,239,221,.92);max-width:44ch}
+  .jar img{width:100%;border:2.5px solid var(--cream)}
 
-  /* ---------- SECTIONS ---------- */
-  section{max-width:var(--maxw);margin:0 auto;padding:4.2rem 1.25rem}
-  .rule{max-width:var(--maxw);margin:0 auto;height:1px;background:var(--hair)}
+  /* ---------------- 4. the close ---------------- */
+  .close{text-align:center;padding-block:clamp(3.2rem,9vh,5rem)}
+  .close h2{font-size:clamp(1.8rem,4.4vw,3rem);max-width:18ch;margin-inline:auto}
+  .close .btn{margin-top:1.8rem}
 
-  .rise{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
-  .rise.in{opacity:1;transform:none}
-
-  /* split intro: copy + art */
-  .split{display:grid;gap:2rem;align-items:center}
-  @media (min-width:860px){.split{grid-template-columns:1.05fr .95fr;gap:2.6rem}}
-  .split figure{border-radius:18px;overflow:hidden;border:1px solid var(--hair);background:var(--navy);box-shadow:0 22px 50px rgba(8,5,22,.5)}
-  .split figcaption{padding:.6rem .9rem;font-size:.78rem;color:var(--faint)}
-
-  /* gauntlet cards */
-  .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-top:1.6rem}
-  .game{background:var(--navy);border-radius:18px;overflow:hidden;border-top:5px solid var(--purple);transition:transform .15s ease}
-  .game:hover{transform:translateY(-4px)}
-  .game:nth-child(2){border-top-color:var(--orange)}
-  .game:nth-child(3){border-top-color:var(--lime)}
-  .game img{width:100%;aspect-ratio:16/9;object-fit:cover}
-  .game .body{padding:1.1rem 1.25rem 1.3rem}
-  .game h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.15rem;text-transform:uppercase;color:var(--cream);margin-bottom:.45rem}
-  .game p{font-size:.94rem}
-  .game .built{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);font-weight:700;margin-bottom:.4rem}
-  .cooking{margin-top:1.5rem;font-size:.88rem;color:var(--dim);max-width:none}
-  .cooking b{color:var(--cream);font-weight:600}
-
-  /* ---------- screens showcase ---------- */
-  .shots{display:grid;gap:1rem;margin-top:1.7rem;grid-template-columns:1fr}
-  @media (min-width:760px){
-    .shots{grid-template-columns:1fr 1fr}
-    .shots .wide{grid-column:1 / -1}
-  }
-  .shot{background:var(--navy);border-radius:18px;overflow:hidden;border:1px solid var(--hair)}
-  .shot img{width:100%;object-fit:cover;aspect-ratio:16/9;transition:transform .4s ease}
-  /* The boards capture is a ~3:1 strip; a 16:9 tile would crop a board off. */
-  .shot.strip img{aspect-ratio:3/1}
-  .shot:hover img{transform:scale(1.03)}
-  .shot figcaption{padding:.8rem 1.1rem;font-size:.9rem;color:var(--dim);line-height:1.5}
-  .shot figcaption b{color:var(--cream);font-weight:600}
-  .shot-note{margin-top:1rem;font-size:.79rem;color:var(--faint);letter-spacing:.05em}
-  .zoomable{cursor:zoom-in}
-
-  /* ---------- THE JAR ---------- */
-  .jar-wrap{display:grid;gap:2.2rem;align-items:center;margin-top:1.6rem}
-  @media (min-width:760px){.jar-wrap{grid-template-columns:minmax(0,1fr) 190px}}
-  .jar{width:145px;height:205px;margin:0 auto;position:relative;border:3px solid rgba(246,239,221,.5);border-top-width:0;border-radius:14px 14px 26px 26px;background:rgba(36,30,78,.5);overflow:hidden}
-  .jar::before{content:'';position:absolute;top:-12px;left:-3px;right:-3px;height:12px;border:3px solid rgba(246,239,221,.5);border-bottom:0;border-radius:8px 8px 0 0;background:rgba(36,30,78,.75)}
-  .jar-fill{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(180deg,var(--lime),#8FC63D);box-shadow:0 0 26px rgba(183,229,97,.55);transition:height 1.7s cubic-bezier(.4,0,.2,1)}
-  .jar.in .jar-fill{height:72%}
-  .jar-fill::after{content:'';position:absolute;top:-5px;left:0;right:0;height:10px;border-radius:50%;background:var(--lime);opacity:.9}
-  .jar-cap{position:absolute;left:0;right:0;top:7%;border-top:2px dashed rgba(246,239,221,.4);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:.25rem;text-align:right;padding-right:.45rem}
-  .jar-label{text-align:center;margin-top:.85rem;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-  .jar-label b{color:var(--lime);font-weight:600}
-
-  /* apartment list */
-  .apt-list{list-style:none;margin-top:1.4rem;display:grid;gap:.75rem;max-width:62ch}
-  .apt-list li{background:var(--navy);border-radius:14px;padding:.85rem 1.15rem;color:var(--dim);line-height:1.55}
-  .apt-list li::before{content:'ðŸ„';margin-right:.6rem}
-  .apt-list li b{color:var(--cream);font-weight:600}
-  .zlorp-line{color:var(--teal);font-weight:600}
-
-  .dial{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.1rem;max-width:62ch}
-  .dial span{font-size:.8rem;padding:.38rem .78rem;border-radius:999px;border:1px solid var(--hair);background:var(--navy);color:var(--dim);white-space:nowrap}
-  .dial span:first-child{border-color:rgba(183,229,97,.5);color:var(--lime)}
-
-  /* ---------- contract band ---------- */
-  /* Full-bleed so the studio pitch reads as a destination in its own right,
-     rather than a line of small print under the game. */
-  .hire{background:linear-gradient(180deg,#1B1638 0%,#241E4E 100%);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:3.6rem 0}
-  .hire .wrap{display:grid;gap:2rem;align-items:center}
-  @media (min-width:900px){.hire .wrap{grid-template-columns:1.1fr .9fr;gap:3rem}}
-  .hire h2{margin-bottom:.7rem}
-  .hire p{font-size:.98rem}
-  .hire .statbar{margin-top:1.3rem;display:flex;flex-wrap:wrap;gap:.5rem}
-  .hire .stat{border:1px solid var(--hair);background:rgba(20,16,43,.5);border-radius:10px;padding:.45rem .8rem;font-size:.82rem;font-weight:600;color:var(--dim);font-variant-numeric:tabular-nums}
-  .hire .stat b{color:var(--cream);font-weight:700}
-  .hire .stat.live{border-color:rgba(183,229,97,.45)}
-  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-right:.4rem;vertical-align:middle}
-  .hire .cta-row{justify-content:flex-start;margin-top:1.6rem}
-  .hire-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-  .hire-grid figure{border-radius:12px;overflow:hidden;border:1px solid var(--hair);background:var(--cave)}
-  .hire-grid img{width:100%;aspect-ratio:16/10;object-fit:cover}
-  .hire-grid .tall{grid-column:1 / -1}
-  .hire-grid .tall img{aspect-ratio:21/9}
-  .hire-grid figcaption{padding:.4rem .65rem;font-size:.68rem;color:var(--faint);letter-spacing:.02em}
-
-  /* field notes */
-  .field-notes{background:var(--navy);border-radius:18px;padding:1.4rem 1.5rem;font-size:.91rem;line-height:2;color:var(--cream);max-width:none}
-  .field-notes span{color:var(--lime);font-weight:600}
-
-  /* bug exhibit */
-  .bug-lead{margin-top:2.2rem}
-  .bug-lead h3{font-family:'Titan One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:1.05rem;text-transform:uppercase;color:var(--cream);margin-bottom:.6rem}
-  .bugshots{display:grid;gap:1rem;margin-top:1.1rem}
-  @media (min-width:680px){.bugshots{grid-template-columns:1fr 1fr}}
-  .bugshot{background:var(--navy);border-radius:16px;overflow:hidden;border-top:4px solid var(--lime)}
-  .bugshot:last-child{border-top-color:var(--orange)}
-  .bugshot img{width:100%;aspect-ratio:16/9;object-fit:cover}
-  .bugshot figcaption{padding:.8rem 1.05rem;font-size:.87rem;color:var(--dim);line-height:1.55}
-  .bugshot figcaption b{color:var(--cream);font-weight:600}
-
-  /* lightbox */
-  .lb{position:fixed;inset:0;z-index:100;background:rgba(10,7,24,.94);display:none;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem)}
-  .lb[open]{display:flex}
-  .lb-fig{margin:0;max-width:min(1600px,100%);max-height:100%;display:flex;flex-direction:column;gap:.7rem}
-  .lb-fig img{max-width:100%;max-height:80vh;width:auto;height:auto;border-radius:12px;border:1px solid rgba(246,239,221,.2);box-shadow:0 30px 80px rgba(0,0,0,.6);object-fit:contain}
-  .lb-cap{font-size:.88rem;color:var(--dim);text-align:center;line-height:1.5;max-width:70ch;margin:0 auto}
-  .lb-cap b{color:var(--cream)}
-  .lb-close{position:absolute;top:1rem;right:1.15rem;background:rgba(36,30,78,.85);color:var(--cream);border:1px solid var(--hair);border-radius:10px;font:inherit;font-size:1.35rem;line-height:1;padding:.4rem .7rem;cursor:pointer}
-  .lb-close:hover{border-color:var(--lime);color:var(--lime)}
-  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(36,30,78,.8);color:var(--cream);border:1px solid var(--hair);border-radius:10px;font:inherit;font-size:1.4rem;line-height:1;padding:.55rem .8rem;cursor:pointer}
-  .lb-nav:hover{border-color:var(--lime);color:var(--lime)}
-  .lb-prev{left:.8rem}.lb-next{right:.8rem}
-  @media (max-width:620px){.lb-nav{display:none}}
-  body.lb-open{overflow:hidden}
-
-  footer{padding:2.8rem 1.25rem 3.6rem;text-align:center;color:var(--faint);font-size:.84rem}
-  footer img{width:140px;margin:0 auto 1.1rem;opacity:.9}
-  footer a{color:var(--lime);text-decoration:none}
+  footer{border-top:2px solid var(--ink);padding-block:1.6rem 2.4rem}
+  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;
+               justify-content:space-between}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--purple)}
+  footer a:hover{color:var(--purple)}
+  footer .links{display:flex;gap:1.4rem;flex-wrap:wrap}
 
   @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto}
-    .spore{animation:none;display:none}
-    .btn,.game,.jar-fill,.shot img{transition:none}
-    .shot:hover img{transform:none}
-    .rise{opacity:1;transform:none;transition:none}
-    .jar.in .jar-fill{height:72%}
+    .btn{transition:none}
+    .btn:hover,.btn:active{transform:none}
   }
 </style>
 </head>
 <body>
 
-<nav class="topbar">
-  <div class="wrap">
-    <a class="brand" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
-    <div class="navlinks">
-      <a href="#game">The game</a>
-      <a href="#screens">Screens</a>
-      <a href="#devlog">Dev log</a>
-      <a class="hire" href="work.html">Hire the studio</a>
-    </div>
+<div class="bar">
+  <div class="hold">
+    <a class="who mono" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
+    <nav class="mono">
+      <a href="work.html">Studio</a>
+      <a href="https://store.steampowered.com/app/4995150" rel="noopener">Steam</a>
+    </nav>
   </div>
-</nav>
-
-<header class="hero" id="top">
-  <div class="hero-bg" role="img" aria-label="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
-  <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="spore-field" aria-hidden="true">
-    <i class="spore" style="left:8%;width:5px;height:5px;animation-duration:16s;animation-delay:0s"></i>
-    <i class="spore" style="left:22%;width:3px;height:3px;animation-duration:22s;animation-delay:4s"></i>
-    <i class="spore" style="left:41%;width:6px;height:6px;animation-duration:14s;animation-delay:2s"></i>
-    <i class="spore" style="left:58%;width:4px;height:4px;animation-duration:19s;animation-delay:7s"></i>
-    <i class="spore" style="left:73%;width:5px;height:5px;animation-duration:17s;animation-delay:1s"></i>
-    <i class="spore" style="left:89%;width:3px;height:3px;animation-duration:24s;animation-delay:5s"></i>
-  </div>
-
-  <div class="presents">
-    <img src="img/logo_crunchrock.png" alt="Crunchrock Games">
-    <span>presents</span>
-  </div>
-
-  <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
-
-  <p class="tagline">Your friend is the difficulty setting.</p>
-  <p class="facts"><b>Fast rounds. First-person hands. Sabotage loops.</b> &middot; demo: 2 players local or Steam</p>
-
-  <div class="cta-row">
-    <a class="btn btn-wishlist" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-    <a class="btn btn-ghost" href="#game">See the chaos</a>
-  </div>
-</header>
-
-<section id="game" class="rise">
-  <div class="split">
-    <div>
-      <p class="eyebrow">the game</p>
-      <h2>Wacky action. Tight loops.</h2>
-      <p><strong>Bad Shrooms</strong> is a psychedelic first-person party game in one rearrangeable apartment. You and a friend ate mushrooms that were not fine. <strong>Zlorp</strong> moved in and turned game night into a hustle.</p>
-      <p>Grab, throw, steal the pad, ship the box, fill the jar. Rounds are short. Betrayal is the mechanic. Local vertical split or Steam online - both seats play for real.</p>
-    </div>
-    <figure>
-      <img src="img/shot_intro.jpg" alt="Floor Is Lava: a neon-pink molten floor fills the apartment while a glowing green figure stands on the dining table" loading="lazy">
-      <figcaption>The floor quit. The furniture did not.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<section class="rise">
-  <p class="eyebrow">playable now</p>
-  <h2>Three games. Instant rematch.</h2>
-  <div class="games">
-    <div class="game">
-      <img src="img/shot_monkey_bowls.jpg" alt="Monkey Bowls: player about to throw a globe into glowing mushroom-lined lanes" loading="lazy">
-      <div class="body">
-        <p class="built">Playable now</p>
-        <h3>Monkey Bowls</h3>
-        <p>Banana pins. Foul line. Maximum judgment.</p>
-      </div>
-    </div>
-    <div class="game">
-      <img src="img/shot_lava.jpg" alt="Floor Is Lava with neon pink molten floor and a green figure perched on the table" loading="lazy">
-      <div class="body">
-        <p class="built">Playable now</p>
-        <h3>Floor Is Lava</h3>
-        <p>Shrink. Jump. Burn. Steal their island.</p>
-      </div>
-    </div>
-    <div class="game">
-      <img src="img/shot_zlorp_dash.jpg" alt="Zlorp Dash kitchen scramble: grab a bowl while packing a food order against the clock" loading="lazy">
-      <div class="body">
-        <p class="built">Playable now</p>
-        <h3>Zlorp Dash</h3>
-        <p>Steal the order. Pack the box. Microwave portal.</p>
-      </div>
-    </div>
-  </div>
-  <p class="cooking"><b>Early Access next:</b> Mecha Chameleon, Snack Heist, Gun Box Gallery, bigger house, four players. Then more.</p>
-</section>
-
-<div class="rule"></div>
-
-<section id="screens" class="rise">
-  <p class="eyebrow">in the flat</p>
-  <h2>Ruin the friendship. Fill the jar.</h2>
-  <p>Click any shot for the full frame.</p>
-  <div class="shots">
-    <figure class="shot wide">
-      <img src="img/shot_monkey_bowls.jpg" alt="Monkey Bowls mid-throw with glowing mushrooms and lanes" loading="lazy">
-      <figcaption><b>Throw first. Apologize never.</b></figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/shot_jar_debrief.jpg" alt="Floor Is Lava result card: CrunchRock wins and pours 200 millilitres into the shared loosh jar" loading="lazy">
-      <figcaption><b>Wins pour into one shared litre.</b></figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/shot_zlorp_premise.jpg" alt="Zlorp in the kitchen after a punch, loosh jar glowing on the table" loading="lazy">
-      <figcaption><b>Zlorp keeps score. Loudly.</b></figcaption>
-    </figure>
-    <figure class="shot strip wide">
-      <img src="img/shot_zlorp_jarline.jpg" alt="Cinematic Zlorp dialogue: The jar wants a litre of you" loading="lazy">
-      <figcaption><b>"The jar wants a litre of you."</b></figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/shot_zlorp_window.jpg" alt="Zlorp standing by the apartment window at night" loading="lazy">
-      <figcaption><b>Same flat. Worse decisions.</b></figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/shot_bathroom_alien.jpg" alt="A spotted alien body standing over a bathtub with a toy sailboat" loading="lazy">
-      <figcaption><b>Between rounds you're loose. Bad idea.</b></figcaption>
-    </figure>
-  </div>
-  <p class="shot-note">current build &middot; in-engine &middot; Unity 6 / URP</p>
-</section>
-
-<div class="rule"></div>
-
-<section class="rise">
-  <p class="eyebrow">how you win</p>
-  <h2>One jar. Shared pain.</h2>
-  <div class="jar-wrap">
-    <div>
-      <p>No points race. Wins pour <strong>loosh</strong> into <strong>one jar you both fill</strong>. When it brims, the night ends - and the room has already started warping on you.</p>
-      <p>Short rounds. Clear rules. Messy execution. That is the loop.</p>
-    </div>
-    <div>
-      <div class="jar" aria-hidden="true">
-        <div class="jar-cap">brim &middot; night ends</div>
-        <div class="jar-fill"></div>
-      </div>
-      <p class="jar-label"><b>720 mL</b> of a litre</p>
-    </div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<section class="rise">
-  <p class="eyebrow">between rounds</p>
-  <h2>The apartment fights back</h2>
-  <ul class="apt-list">
-    <li><b>Everything has physics.</b> Grab it. Yeet it. Wear it.</li>
-    <li><b>Bidet launcher.</b> Your friend knows where you're standing.</li>
-    <li><span class="zlorp-line">ZlorpMart.</span> Joke guns. Skins. Attitude.</li>
-    <li><b>60 characters.</b> 10 free. The rest stare at you.</li>
-  </ul>
-  <div class="dial" style="margin-top:1.6rem">
-    <span>Doomshroom FM</span><span>Radiance FM</span><span>Wave Naysh</span><span>Quirky Bitch FM</span><span>Cool Noises</span><span>Kool-Aid &amp; Pineapple</span><span>Millenial FM</span><span>Pops</span>
-  </div>
-</section>
-
-<!-- The studio pitch sits here, mid-scroll, where someone who likes the work
-     is still reading - not buried under the last wishlist button. -->
-<section class="hire" id="hire" style="max-width:none;padding-left:0;padding-right:0">
-  <div class="wrap">
-    <div>
-      <p class="eyebrow">the day job</p>
-      <h2>Funded by contract work</h2>
-      <p>Crunchrock is a Unity studio for hire - hardware protocols, live mobile clients, WebGL budgets, VR that has to feel right on your face.</p>
-      <div class="statbar">
-        <span class="stat"><b>50+</b> contracts</span>
-        <span class="stat"><b>5,000+</b> billed hours</span>
-        <span class="stat"><b>100%</b> job success</span>
-        <span class="stat live"><span class="dot"></span>Available now</span>
-      </div>
-      <div class="cta-row">
-        <a class="btn btn-wishlist" href="work.html">See the work</a>
-        <a class="btn btn-ghost" href="mailto:hello@crunchrock.games?subject=Contract%20enquiry%20-%20Crunchrock%20Games">Start a project</a>
-      </div>
-    </div>
-    <div class="hire-grid">
-      <figure class="tall">
-        <img src="img/work/env-neon-ramen-club-street.webp" alt="Neon-lit cyberpunk street at night rendered in Unity URP" loading="lazy">
-        <figcaption>URP environment &amp; lighting</figcaption>
-      </figure>
-      <figure>
-        <img src="img/work/syky-pink-gown-pedestal.webp" alt="A pink couture gown on a pedestal in a bright gallery overlooking the sea" loading="lazy">
-        <figcaption>SYKY - WebGL brand world</figcaption>
-      </figure>
-      <figure>
-        <img src="img/work/combattrainer-title-screen.webp" alt="Combat Trainer title screen with corner registration markers used for light-gun calibration" loading="lazy">
-        <figcaption>Light-gun hardware integration</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section id="devlog" class="rise">
-  <p class="eyebrow">field notes</p>
-  <h2>From the lab</h2>
-  <div class="field-notes">
-    <span>[08.12]</span> site plates reshot from Steam nights - action first, letterbox gone.<br>
-    <span>[08.11]</span> two Steam seats on character select; READY sticks when both lock in.<br>
-    <span>[08.10]</span> host-authoritative party for the three demo games.<br>
-    <span>[08.10]</span> online = full-screen FPS; couch = vertical split. both real.<br>
-    <span>[08.02]</span> flat relit. three games end to end. zero console errors.<br>
-    <span>[07.30]</span> score is a jar of alien fluid now. it bends the screen as it fills.<br>
-    <span>&gt;</span> updated whenever something happens.
-  </div>
-</section>
-
-<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
-  <button class="lb-close" type="button" data-lb-close aria-label="Close image viewer">&times;</button>
-  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Previous image">&#8249;</button>
-  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Next image">&#8250;</button>
-  <figure class="lb-fig">
-    <img id="lb-img" src="" alt="">
-    <figcaption class="lb-cap" id="lb-cap"></figcaption>
-  </figure>
 </div>
 
-<footer>
-  <img src="img/logo_crunchrock.png" alt="Crunchrock Games">
-  &copy; 2026 Crunchrock Games &middot; <a href="work.html">contract work</a> &middot; <a href="mailto:hello@crunchrock.games">contact</a> &middot; <a href="privacy.html">privacy</a> &middot; <a href="eula.html">eula</a><br><br>
-  crunchrock.games
+<!-- 1 -->
+<header class="poster" id="top">
+  <div class="poster-art" role="img" aria-label="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
+  <div class="poster-lift" aria-hidden="true"></div>
+  <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
+  <p class="say">Your <span class="loose"><i>friend</i></span> is the difficulty setting.</p>
+  <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+  <p class="fact mono">Free demo. Two players. One couch or two Steam seats.</p>
+</header>
+
+<svg class="bleed" viewBox="0 0 1200 104" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path fill="currentColor" d="M1200,0 H0 V6 H70 C77.6,34 81.2,56 90,56 C98.8,56 102.4,34 110,6 H183 C187.9,21 190.3,30 196,30 C201.7,30 204.1,21 209,6 H308 C317.1,47 321.4,82 332,82 C342.6,82 346.9,47 356,6 H455 C460.7,27 463.4,42 470,42 C476.6,42 479.3,27 485,6 H565 C569.2,18 571.2,24 576,24 C580.8,24 582.8,18 587,6 H674 C683.9,41 688.6,70 700,70 C711.4,70 716.1,41 726,6 H829 C835.5,30 838.5,48 846,48 C853.5,48 856.5,30 863,6 H950 C954.6,20 956.7,28 962,28 C967.3,28 969.4,20 974,6 H1072 C1079.6,36 1083.2,60 1092,60 C1100.8,60 1104.4,36 1112,6 H1200 Z"/>
+</svg>
+
+<!-- 2 -->
+<section class="three">
+  <div class="hold">
+    <p class="kicker mono">Three games in the demo. Rounds are short, the rematch is instant, and betrayal is the mechanic.</p>
+    <div class="trio">
+      <article class="plate">
+        <div class="frame"><img src="img/shot_monkey_bowls.jpg" loading="lazy" style="transform-origin:50% 100%" alt="Monkey Bowls: a player about to throw a globe down a lane lined with glowing mushrooms and banana pins"></div>
+        <h2 class="display">Monkey<br>Bowls</h2>
+        <p>Banana pins. Maximum judgment.</p>
+      </article>
+      <article class="plate">
+        <div class="frame"><img src="img/shot_lava_boil.jpg" loading="lazy" style="transform-origin:50% 62%" alt="Floor Is Lava: the apartment floor turned to boiling neon pink lava with a green figure stranded on the dining table"></div>
+        <h2 class="display">Floor<br>Is Lava</h2>
+        <p>Shrink. Jump. Steal their island.</p>
+      </article>
+      <article class="plate">
+        <div class="frame"><img src="img/shot_zlorp_dash.jpg" loading="lazy" style="transform-origin:38% 78%" alt="Zlorp Dash: a kitchen counter with a bowl ready to grab and an open food order listing banana, onion and carrot"></div>
+        <h2 class="display">Zlorp<br>Dash</h2>
+        <p>Steal the order. Pack the box.</p>
+      </article>
+    </div>
+    <p class="after">Early Access adds <b>Mecha Chameleon</b>, <b>Snack Heist</b> and <b>Gun Box Gallery</b>, a bigger house, and four players.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="jar">
+  <div class="hold">
+    <div>
+      <p class="zlorp">The jar wants a litre of you. It isn't fussy about whose.</p>
+      <h2 class="display">One jar.<br>You both<br>fill it.</h2>
+      <p>No points race. Every win pours <strong>loosh</strong> into one shared litre. When it brims the night ends — and the room has been warping the whole time you weren't looking.</p>
+    </div>
+    <figure>
+      <img src="img/shot_jar_debrief.jpg" loading="lazy" alt="Floor Is Lava result card: CrunchRock wins and pours 200 millilitres into the shared loosh jar, reading 400 of 1000">
+    </figure>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="close">
+  <div class="hold">
+    <h2 class="display">Bad Shrooms is coming to Steam.</h2>
+    <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+  </div>
+</section>
+
+<footer class="mono">
+  <div class="hold">
+    <p>Crunchrock Games is a Unity studio for hire. <a href="work.html">See the work</a></p>
+    <div class="links">
+      <a href="mailto:hello@crunchrock.games">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="eula.html">EULA</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-  (function(){
-    var targets = document.querySelectorAll('.rise, .jar');
-    if(!('IntersectionObserver' in window)){
-      targets.forEach(function(el){ el.classList.add('in'); });
-      return;
-    }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
-    targets.forEach(function(el){ io.observe(el); });
-  })();
+// The loose friend. Torsional spring about a rest angle that is deliberately
+// not zero, plus grab-and-throw, because that is the game's verb.
+(function () {
+  var host = document.querySelector('.loose');
+  if (!host) return;
+  var word = host.querySelector('i');
+  if (!word || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // Click any screenshot to see it at full size.
-  (function () {
-    var lb = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lb-img');
-    var lbCap = document.getElementById('lb-cap');
-    var items = [];
-    var index = 0;
-    var lastFocus = null;
+  var REST = 6 * Math.PI / 180;   // it never hangs straight
+  var K = 26;                     // spring toward rest
+  var C = 4.0;                    // damping — ~0.4 ratio, springs 2-3 times then settles
+  var MAX = 0.95;                 // ~54deg. A word on a pin, not a propeller.
+  var VMAX = 7;                   // cap on throw energy, so a violent flick still reads
 
-    document.querySelectorAll('.shot img, .split figure img').forEach(function (img) {
-      var fig = img.closest('figure');
-      var cap = fig ? fig.querySelector('figcaption') : null;
-      img.classList.add('zoomable');
-      img.tabIndex = 0;
-      img.setAttribute('role', 'button');
-      items.push({ src: img.getAttribute('src'), alt: img.alt, cap: cap ? cap.innerHTML : '' });
-      var i = items.length - 1;
-      img.addEventListener('click', function () { open(i); });
-      img.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
-      });
-    });
+  var angle = REST, vel = 0, grabbed = false, grabOffset = 0;
+  var pointerAngle = 0, lastPointerAngle = 0, lastT = 0, raf = null, idle = 0;
 
-    function show(i) {
-      index = (i + items.length) % items.length;
-      var it = items[index];
-      lbImg.src = it.src; lbImg.alt = it.alt; lbCap.innerHTML = it.cap;
+  function pivot() {
+    var r = word.getBoundingClientRect();
+    // transform-origin is 14% 6% of the un-rotated box; the rect is close
+    // enough at small angles and re-read every grab.
+    return { x: r.left + r.width * 0.14, y: r.top + r.height * 0.06 };
+  }
+
+  function angleTo(e, p) { return Math.atan2(e.clientY - p.y, e.clientX - p.x); }
+
+  function frame(t) {
+    var dt = lastT ? Math.min((t - lastT) / 1000, 1 / 30) : 1 / 60;
+    lastT = t;
+
+    if (grabbed) {
+      var target = pointerAngle - grabOffset;
+      if (target > MAX) target = MAX;
+      if (target < -MAX) target = -MAX;
+      var raw = (target - angle) / Math.max(dt, 0.001);
+      if (raw > VMAX) raw = VMAX;
+      if (raw < -VMAX) raw = -VMAX;
+      // smooth it, or a single big pointer jump stores absurd energy
+      vel = vel * 0.55 + raw * 0.45;
+      angle = target;
+    } else {
+      var acc = -K * (angle - REST) - C * vel;
+      vel += acc * dt;
+      angle += vel * dt;
+      if (angle > MAX) { angle = MAX; vel *= -0.4; }
+      if (angle < -MAX) { angle = -MAX; vel *= -0.4; }
     }
-    function open(i) {
-      lastFocus = document.activeElement;
-      show(i);
-      lb.setAttribute('open', '');
-      document.body.classList.add('lb-open');
-      lb.querySelector('[data-lb-close]').focus();
-    }
-    function close() {
-      lb.removeAttribute('open');
-      document.body.classList.remove('lb-open');
-      lbImg.src = '';
-      if (lastFocus) lastFocus.focus();
-    }
-    lb.querySelector('[data-lb-close]').addEventListener('click', close);
-    lb.querySelector('[data-lb-prev]').addEventListener('click', function () { show(index - 1); });
-    lb.querySelector('[data-lb-next]').addEventListener('click', function () { show(index + 1); });
-    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
-    document.addEventListener('keydown', function (e) {
-      if (!lb.hasAttribute('open')) return;
-      if (e.key === 'Escape') close();
-      else if (e.key === 'ArrowRight') show(index + 1);
-      else if (e.key === 'ArrowLeft') show(index - 1);
-    });
-  })();
+
+    word.style.transform = 'rotate(' + angle.toFixed(4) + 'rad)';
+
+    var settled = !grabbed && Math.abs(vel) < 0.004 && Math.abs(angle - REST) < 0.004;
+    if (settled) { idle++; } else { idle = 0; }
+    if (idle > 20) { word.style.transform = 'rotate(' + REST.toFixed(4) + 'rad)'; raf = null; lastT = 0; return; }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function run() { if (raf === null) { lastT = 0; idle = 0; raf = requestAnimationFrame(frame); } }
+
+  word.addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    grabbed = true;
+    var p = pivot();
+    grabOffset = angleTo(e, p) - angle;
+    pointerAngle = lastPointerAngle = angleTo(e, p);
+    run();
+    // Capture is a nicety, not a requirement — never let it kill the grab.
+    try { word.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+
+  word.addEventListener('pointermove', function (e) {
+    if (!grabbed) return;
+    pointerAngle = angleTo(e, pivot());
+  });
+
+  function release(e) {
+    if (!grabbed) return;
+    grabbed = false;
+    try { word.releasePointerCapture(e.pointerId); } catch (err) {}
+    run();
+  }
+  word.addEventListener('pointerup', release);
+  word.addEventListener('pointercancel', release);
+
+  // Announce that it moves, once, when it first scrolls into view.
+  function nudge() { vel = -2.2; run(); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { setTimeout(nudge, 550); io.disconnect(); } });
+    }, { threshold: 0.9 });
+    io.observe(host);
+  } else { setTimeout(nudge, 700); }
+})();
 </script>
 
 </body>

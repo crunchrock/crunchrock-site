@@ -1,757 +1,341 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contract Work — Crunchrock Games</title>
-<meta name="description" content="Crunchrock Games takes Unity contract work that's hard to scope: hardware protocols, live-service mobile clients, WebGL budgets, VR comfort. 50+ contracts, 5,000+ billed hours, 100% job success.">
+<meta name="description" content="Crunchrock Games takes the Unity work that's hard to scope: hardware protocols, live-service mobile, WebGL budgets, VR comfort. Seven years of it.">
 <link rel="icon" type="image/png" href="img/favicon_shroom.png">
 <meta property="og:title" content="Contract Work — Crunchrock Games">
-<meta property="og:description" content="Unity contract studio. Hardware integration, live-service mobile, WebGL, VR. 50+ contracts, 5,000+ billed hours, 100% job success.">
+<meta property="og:description" content="Unity contract studio. Hardware integration, live-service mobile, WebGL, VR. Seven years of the jobs nobody could write a ticket for.">
 <meta property="og:image" content="https://crunchrock.games/img/work/env-neon-ramen-club-street.webp">
 <meta property="og:url" content="https://crunchrock.games/work.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cave:#14102B;
+    --paper:#F6EFDD;
+    --ink:#14102B;
     --navy:#241E4E;
-    --slate:#1B1638;
     --lime:#B7E561;
-    --teal:#3FBFAD;
-    --orange:#F2913D;
     --purple:#6A3FA0;
     --cream:#F6EFDD;
-    --dim:rgba(246,239,221,.66);
-    --faint:rgba(246,239,221,.44);
-    --line:rgba(246,239,221,.14);
-    --maxw:1080px;
+    --ink-70:rgba(20,16,43,.72);
+    --rule:rgba(20,16,43,.20);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--cave);color:var(--cream);font-family:'Baloo 2','Nunito',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-  ::selection{background:var(--lime);color:var(--navy)}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Baloo 2',system-ui,sans-serif;
+    font-size:clamp(1.05rem,.5vw + .95rem,1.15rem);line-height:1.5;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(rgba(20,16,43,.085) 1px, transparent 1px);
+    background-size:23px 23px;
+  }
+  ::selection{background:var(--lime);color:var(--ink)}
   img,video{max-width:100%;height:auto;display:block}
-  a{color:var(--teal)}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:4px}
+  /* AlienTeal is Zlorp's alone and he does not work here. */
+  a{color:var(--purple)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-offset:4px}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;
+        letter-spacing:-.01em;line-height:1.5}
+  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;
+           text-transform:uppercase;line-height:.92}
+  p{max-width:58ch}
 
-  /* ---------- top bar ---------- */
-  .topbar{position:sticky;top:0;z-index:50;background:rgba(20,16,43,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.7rem;padding-bottom:.7rem}
-  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--cream);font-weight:700;font-size:.95rem;letter-spacing:.02em}
-  .brand img{width:34px}
-  .navlinks{display:flex;gap:1.1rem;flex-wrap:wrap;align-items:center}
-  .navlinks a{color:var(--dim);text-decoration:none;font-size:.86rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-  .navlinks a:hover{color:var(--cream)}
-  .navlinks a.game-link{color:var(--lime)}
-  /* Keep the bar one row on phones: brand, the two links that convert, and
-     the route back to the game. */
-  @media (max-width:760px){
-    .brand{font-size:.84rem;white-space:nowrap;gap:.45rem}
-    .brand img{width:26px}
-    .navlinks{gap:.8rem}
-    .navlinks a{font-size:.76rem}
-    .navlinks a[href="#capabilities"],.navlinks a[href="#history"],.navlinks a[href="#process"]{display:none}
-  }
-  @media (max-width:430px){
-    .navlinks a[href="#work"]{display:none}
-  }
+  .hold{max-width:1240px;margin:0 auto;padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
+  .band{padding-block:clamp(2.8rem,7vh,4.6rem)}
 
-  /* ---------- hero ---------- */
-  .hero{position:relative;isolation:isolate;padding:3.6rem 0 3.2rem;border-bottom:1px solid var(--line)}
-  /* The source is a night scene, so it stays a texture behind the content —
-     the actual showcase is the media panel, not a washed-out background. */
-  .hero-bg{position:absolute;inset:0;z-index:-2;background:url('img/work/env-neon-ramen-club-street.webp') center 45%/cover no-repeat;opacity:.42}
-  .hero-scrim{position:absolute;inset:0;z-index:-1;background:
-    linear-gradient(90deg, rgba(20,16,43,.93) 0%, rgba(20,16,43,.80) 45%, rgba(20,16,43,.62) 100%),
-    linear-gradient(180deg, rgba(20,16,43,.35) 0%, rgba(20,16,43,.25) 50%, rgba(20,16,43,.90) 90%, var(--cave) 100%)}
-  .hero .wrap{display:grid;gap:2.4rem;align-items:center}
-  @media (min-width:940px){.hero .wrap{grid-template-columns:1.02fr .98fr;gap:3rem}}
+  .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;
+       text-transform:uppercase;text-decoration:none;font-size:clamp(1rem,1.6vw,1.2rem);
+       padding:.82rem 1.6rem;background:var(--lime);color:var(--ink);
+       border:2.5px solid var(--ink);border-radius:2px;box-shadow:6px 6px 0 var(--ink);
+       transition:transform .1s ease,box-shadow .1s ease}
+  .btn.ghost{background:transparent}
+  .btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+  .btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
+  .cta{margin-top:1.9rem;display:flex;gap:.9rem;flex-wrap:wrap}
 
-  /* hero media collage */
-  .hero-media{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-  .hero-media figure{background:var(--navy);border:1px solid rgba(246,239,221,.18);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(8,5,22,.55)}
-  .hero-media .wide{grid-column:1 / -1}
-  .hero-media img,.hero-media video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
-  .hero-media figcaption{padding:.42rem .7rem;font-size:.72rem;color:var(--faint);letter-spacing:.02em}
-  .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--lime)}
-  h1{font-family:'Titan One',system-ui,sans-serif;font-weight:400;font-size:clamp(2rem,5.6vw,3.35rem);line-height:1.06;text-transform:uppercase;margin:.9rem 0 0;max-width:16ch;text-wrap:balance}
-  .lede{margin-top:1.15rem;font-size:clamp(1.02rem,2.1vw,1.16rem);color:var(--cream);max-width:56ch;line-height:1.62;font-weight:500}
-  .lede b{color:var(--lime);font-weight:700}
+  /* ---------------- top bar ---------------- */
+  .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
+  .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+             padding-block:.7rem}
+  .bar .who{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
+  .bar .who img{width:30px}
+  .bar nav{display:flex;gap:1.5rem;align-items:center}
+  .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700}
+  .bar nav a:hover{color:var(--purple)}
+  @media (max-width:560px){.bar .who span{display:none}}
 
-  .statbar{margin-top:1.9rem;display:flex;flex-wrap:wrap;gap:.5rem}
-  .stat{border:1px solid var(--line);background:rgba(36,30,78,.5);border-radius:10px;padding:.5rem .8rem;font-size:.84rem;font-weight:600;color:var(--dim);font-variant-numeric:tabular-nums}
-  .stat b{color:var(--cream);font-weight:700}
-  .stat.live{border-color:rgba(183,229,97,.4)}
-  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-right:.45rem;vertical-align:middle}
+  /* ---------------- the statement ----------------
+     The game page leads on art. This one leads on type, because that is what a
+     studio has to sell. It is allowed to be very large. */
+  .statement{padding-block:clamp(3rem,9vh,6rem) clamp(2rem,5vh,3rem)}
+  .statement h1{font-size:clamp(2.4rem,8.2vw,6.4rem);max-width:13ch}
+  .statement .lede{margin-top:1.6rem;max-width:56ch;color:var(--ink-70)}
+  .statement .lede b{color:var(--ink);font-weight:700}
 
-  .cta-row{margin-top:1.9rem;display:flex;gap:.8rem;flex-wrap:wrap}
-  .btn{font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;text-decoration:none;font-size:.94rem;padding:.82rem 1.45rem;border-radius:12px;display:inline-block;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
-  .btn-primary{background:var(--lime);color:var(--navy);box-shadow:0 5px 0 rgba(20,16,43,.55)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 0 rgba(20,16,43,.55)}
-  .btn-ghost{background:transparent;color:var(--cream);border:2px solid rgba(246,239,221,.3)}
-  .btn-ghost:hover{transform:translateY(-2px);border-color:var(--cream)}
+  /* The reel: three plates of real work on paper, same sticker treatment as
+     everything else. A fixed row height keeps them level — per-cell aspect
+     ratios left the two narrow ones short and opened a dead band underneath. */
+  .reel{width:100vw;margin-inline:calc(50% - 50vw);
+        border-block:2.5px solid var(--ink);background:var(--paper);
+        display:grid;grid-template-columns:1fr;
+        gap:clamp(1.1rem,2.4vw,2rem);
+        padding:clamp(1.4rem,3vw,2.4rem) clamp(1.1rem,3.4vw,2.4rem)}
+  @media (min-width:760px){.reel{grid-template-columns:1.35fr 1fr 1fr;align-items:center}}
+  .reel .cell{height:clamp(190px,19vw,310px);overflow:hidden;background:var(--ink);
+              border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink)}
+  .reel img,.reel video{width:100%;height:100%;object-fit:cover}
 
-  /* ---------- sections ---------- */
-  section{padding:4rem 0;border-bottom:1px solid var(--line)}
-  .sec-head{display:flex;align-items:baseline;gap:.9rem;margin-bottom:.4rem}
-  .sec-num{font-family:'Titan One',system-ui,sans-serif;font-size:.9rem;color:var(--purple)}
-  h2{font-size:clamp(1.4rem,3.4vw,2rem);font-weight:700;letter-spacing:-.01em;text-wrap:balance}
-  .sec-sub{color:var(--dim);max-width:60ch;line-height:1.65;margin-top:.6rem}
+  /* ---------------- the six ---------------- */
+  .jobs{display:grid;gap:clamp(1.8rem,3.4vw,2.8rem);margin-top:clamp(1.8rem,4vh,2.6rem)}
+  @media (min-width:700px){.jobs{grid-template-columns:1fr 1fr}}
+  @media (min-width:1060px){.jobs{grid-template-columns:repeat(3,1fr)}}
+  /* Fixed window + per-item framing pushes build HUDs and browser chrome
+     out of shot. See the note on each job that needs it. */
+  .frame{aspect-ratio:3/2;overflow:hidden;border:2.5px solid var(--ink);
+         box-shadow:7px 7px 0 var(--ink);background:var(--ink)}
+  .frame img,.frame video{width:100%;height:100%;object-fit:cover}
+  .job h2{margin-top:1.3rem;font-size:clamp(1.25rem,2.1vw,1.7rem)}
+  .job .meta{margin-top:.5rem;color:var(--ink-70)}
+  .job p{margin-top:.7rem;color:var(--ink-70);max-width:40ch}
+  .job .shipped{margin-top:.7rem;color:var(--ink);max-width:40ch}
+  .job .shipped b{color:var(--purple);font-weight:700}
+  /* The one job with no usable capture runs on the writing. */
+  .job.nocap .frame{display:flex;align-items:center;padding:clamp(1.2rem,2vw,2rem);
+                    background:var(--ink);box-shadow:7px 7px 0 var(--ink)}
+  .job.nocap .frame p{color:rgba(246,239,221,.92);max-width:none;
+                      font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;
+                      line-height:1.55}
 
-  /* ---------- capabilities ---------- */
-  /* Section carries its own art so this block doesn't read as a wall of text. */
-  .sec-art{position:relative;isolation:isolate;overflow:hidden}
-  .sec-art .art-bg{position:absolute;inset:0;z-index:-2;
-    background:url('img/work/env-cyberpunk-neon-city-03.webp') center 35%/cover no-repeat;opacity:.30}
-  .sec-art .art-scrim{position:absolute;inset:0;z-index:-1;background:
-    linear-gradient(180deg, var(--cave) 0%, rgba(20,16,43,.86) 22%, rgba(20,16,43,.88) 72%, var(--cave) 100%)}
+  /* ---------------- ledger ---------------- */
+  .tl{margin-top:1.6rem;border-top:2px solid var(--ink)}
+  .tl-row{display:grid;gap:.1rem 1.6rem;padding:.62rem 0;border-bottom:1px solid var(--rule)}
+  @media (min-width:680px){.tl-row{grid-template-columns:12.5rem 1fr;align-items:baseline}}
+  .tl-when{color:var(--ink-70);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tl-what b{font-weight:700}
+  .tl-what span{color:var(--ink-70)}
 
-  .caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.85rem;margin-top:1.9rem}
-  .cap{background:rgba(27,22,56,.82);border:1px solid var(--line);border-radius:12px;
-       padding:1rem 1.1rem 1.05rem;display:grid;grid-template-columns:52px 1fr;gap:.85rem;align-items:start;
-       backdrop-filter:blur(6px)}
-  .cap-thumb{width:52px;height:52px;border-radius:9px;object-fit:cover;display:block;
-             border:1px solid rgba(246,239,221,.16)}
-  .cap h3{font-size:.98rem;font-weight:700;margin-bottom:.3rem;color:var(--cream);line-height:1.25}
-  .cap p{font-size:.89rem;color:var(--dim);line-height:1.55}
-  .cap .tags{margin-top:.55rem;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);font-weight:600}
+  /* ---------------- ours ---------------- */
+  .ours{display:grid;gap:clamp(1.4rem,3vw,2.4rem);margin-top:1.8rem}
+  @media (min-width:780px){.ours{grid-template-columns:repeat(3,1fr)}}
+  .ours h3{font-size:clamp(1.15rem,1.9vw,1.45rem);margin-top:1rem}
+  .ours .when{margin-top:.4rem;color:var(--ink-70)}
+  .ours p{margin-top:.6rem;color:var(--ink-70);max-width:none}
+  .ours a{display:inline-block;margin-top:.7rem;font-weight:700;text-decoration:none;
+          border-bottom:2.5px solid var(--purple)}
 
-  /* ---------- case studies ---------- */
-  .case{display:grid;gap:1.5rem;margin-top:2.4rem;padding-top:2.4rem;border-top:1px solid var(--line)}
-  .case:first-of-type{border-top:none;padding-top:0;margin-top:2rem}
-  @media (min-width:820px){
-    .case{grid-template-columns:1.05fr 1fr;align-items:start;gap:2.2rem}
-    .case.flip .case-media{order:-1}
-  }
-  .case-kicker{font-size:.73rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);font-weight:700}
-  .case h3{font-size:clamp(1.2rem,2.6vw,1.5rem);font-weight:700;margin:.5rem 0 .55rem;text-wrap:balance}
-  .case-meta{font-size:.8rem;color:var(--faint);margin-bottom:1rem;line-height:1.7}
-  .case-meta b{color:var(--teal);font-weight:600}
-  .case p{color:var(--dim);line-height:1.68;font-size:.95rem}
-  .case p + p{margin-top:.8rem}
-  .case p strong{color:var(--cream);font-weight:600}
-  .outcome{margin-top:1rem;border-left:3px solid var(--lime);background:rgba(183,229,97,.07);padding:.75rem 1rem;border-radius:0 8px 8px 0}
-  .outcome span{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);font-weight:700;margin-bottom:.25rem}
-  .outcome p{color:var(--cream);font-size:.93rem}
-  .case-media{display:grid;gap:.7rem;align-content:start}
-  .case-media figure{background:var(--navy);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  /* Cap height so a tall source can't leave the text column stranded beside
-     600px of dead space. UI screenshots use .fit so they're never cropped. */
-  .case-media img,.case-media video{width:100%;display:block;max-height:430px;object-fit:cover;object-position:center}
-  .case-media .fit img{object-fit:contain;background:#0E0B1E}
-  .case-media figcaption{padding:.6rem .85rem;font-size:.79rem;color:var(--faint);line-height:1.45}
-  .media-pair{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;align-items:start}
-  .media-pair img{max-height:340px}
+  /* ---------------- close ---------------- */
+  .close{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
+  .close h2{font-size:clamp(1.9rem,5vw,3.4rem);max-width:16ch}
+  .close p{margin-top:1.2rem;color:rgba(246,239,221,.92)}
+  .close .proof{margin-top:1.4rem;color:var(--cream)}
+  .close .proof b{color:var(--lime);font-weight:700;font-variant-numeric:tabular-nums}
+  .close .btn{border-color:var(--cream);box-shadow:6px 6px 0 var(--cream)}
+  .close .btn:hover{box-shadow:3px 3px 0 var(--cream)}
+  .close .btn:active{box-shadow:0 0 0 var(--cream)}
+  .close .links{margin-top:1.8rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+  .close .links a{color:var(--lime);text-decoration:none;
+                  border-bottom:2px solid rgba(183,229,97,.45)}
+  .close .links a:hover{border-bottom-color:var(--lime)}
 
-
-  /* ---------- gallery ---------- */
-  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;margin-top:2rem}
-  .tile{background:var(--navy);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
-  .tile img,.tile video{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;transition:transform .35s ease}
-  /* Phone-shaped source in a landscape tile: letterbox it rather than crop the
-     UI away, and keep the grid rhythm intact. */
-  .tile.portrait img,.tile.portrait video{object-fit:contain;background:#0E0B1E}
-  .tile:hover img{transform:scale(1.04)}
-  .tile figcaption{padding:.6rem .8rem .7rem;font-size:.79rem;color:var(--dim);line-height:1.45}
-  .tile figcaption b{display:block;color:var(--cream);font-weight:600;font-size:.82rem;margin-bottom:.12rem}
-
-  /* ---------- timeline ---------- */
-  .tl{margin-top:1.9rem;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .tl-row{display:grid;grid-template-columns:130px 1fr;gap:1rem;padding:.72rem 1rem;border-bottom:1px solid var(--line);font-size:.89rem;align-items:baseline}
-  .tl-row:last-child{border-bottom:none}
-  .tl-row:nth-child(odd){background:rgba(36,30,78,.34)}
-  .tl-when{color:var(--teal);font-weight:600;font-variant-numeric:tabular-nums;font-size:.82rem}
-  .tl-what b{color:var(--cream);font-weight:600}
-  .tl-what span{color:var(--dim)}
-  @media (max-width:560px){.tl-row{grid-template-columns:1fr;gap:.15rem}}
-
-  /* ---------- own games ---------- */
-  .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.9rem;margin-top:2rem}
-  .gamecard{background:var(--slate);border:1px solid var(--line);border-radius:12px;padding:1.3rem;display:flex;flex-direction:column;gap:.5rem}
-  /* The card with art leads; the text-only ones sit beside it without shrinking. */
-  .gamecard.featured{padding:0;overflow:hidden}
-  .gamecard.featured img{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:.2rem}
-  .gamecard.featured > :not(img){padding-left:1.3rem;padding-right:1.3rem}
-  .gamecard.featured > :last-child{padding-bottom:1.3rem}
-  .gamecard h3{font-size:1.05rem;font-weight:700}
-  .gamecard .yr{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
-  .gamecard p{font-size:.9rem;color:var(--dim);line-height:1.6;flex:1}
-  .gamecard a{font-weight:700;font-size:.88rem;text-decoration:none;color:var(--lime)}
-  .gamecard a:hover{text-decoration:underline}
-
-  /* ---------- contact ---------- */
-  .contact{text-align:center;padding:4.5rem 0}
-  .contact h2{max-width:26ch;margin:0 auto;text-wrap:balance}
-  .contact .sec-sub{margin:.9rem auto 0}
-  .links{margin-top:1.9rem;display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
-  .chip{display:inline-block;border:1px solid var(--line);background:rgba(36,30,78,.5);border-radius:999px;padding:.55rem 1.05rem;font-size:.87rem;font-weight:600;text-decoration:none;color:var(--cream)}
-  .chip:hover{border-color:var(--teal);color:var(--teal)}
-
-  /* ---------- lightbox ---------- */
-  .zoomable{cursor:zoom-in}
-  .lb{position:fixed;inset:0;z-index:100;background:rgba(10,7,24,.94);display:none;
-      align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem)}
-  .lb[open]{display:flex}
-  .lb-fig{margin:0;max-width:min(1600px,100%);max-height:100%;display:flex;flex-direction:column;gap:.7rem}
-  .lb-fig img{max-width:100%;max-height:78vh;width:auto;height:auto;border-radius:12px;
-      border:1px solid rgba(246,239,221,.2);box-shadow:0 30px 80px rgba(0,0,0,.6);object-fit:contain}
-  .lb-cap{font-size:.9rem;color:var(--dim);text-align:center;line-height:1.5;max-width:70ch;margin:0 auto}
-  .lb-cap b{color:var(--cream);display:block;font-weight:600;margin-bottom:.15rem}
-  .lb-close{position:absolute;top:1rem;right:1.15rem;background:rgba(36,30,78,.85);color:var(--cream);
-      border:1px solid var(--line);border-radius:10px;font:inherit;font-size:1.35rem;line-height:1;
-      padding:.42rem .72rem;cursor:pointer}
-  .lb-close:hover{border-color:var(--lime);color:var(--lime)}
-  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(36,30,78,.8);
-      color:var(--cream);border:1px solid var(--line);border-radius:10px;font:inherit;font-size:1.4rem;
-      line-height:1;padding:.55rem .8rem;cursor:pointer}
-  .lb-nav:hover{border-color:var(--lime);color:var(--lime)}
-  .lb-prev{left:.8rem}
-  .lb-next{right:.8rem}
-  @media (max-width:620px){.lb-nav{display:none}}
-  body.lb-open{overflow:hidden}
-
-  footer{padding:2.6rem 0 3.5rem;text-align:center;color:var(--faint);font-size:.83rem}
-  footer img{width:118px;margin:0 auto 1rem;opacity:.85}
-  footer a{color:var(--lime);text-decoration:none}
+  footer{border-top:2px solid var(--ink);padding-block:1.6rem 2.4rem}
+  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;justify-content:space-between}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--purple)}
+  footer .links{display:flex;gap:1.4rem;flex-wrap:wrap}
 
   @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto}
-    .btn,.tile img{transition:none}
-    .tile:hover img{transform:none}
+    .btn{transition:none}
+    .btn:hover,.btn:active{transform:none}
   }
 </style>
 </head>
 <body>
 
-<nav class="topbar">
-  <div class="wrap">
-    <a class="brand" href="index.html">
-      <img src="img/logo_crunchrock.png" alt="">
-      Crunchrock Games
-    </a>
-    <div class="navlinks">
-      <a href="#capabilities">Capabilities</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#history">History</a>
-      <a href="#contact">Contact</a>
-      <a class="game-link" href="index.html">Bad Shrooms →</a>
-    </div>
+<div class="bar">
+  <div class="hold">
+    <a class="who mono" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
+    <nav class="mono">
+      <a href="index.html">Bad Shrooms</a>
+      <a href="#hire">Hire us</a>
+    </nav>
   </div>
-</nav>
-
-<header class="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
-  <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="hero-copy">
-      <p class="eyebrow">Crunchrock Games · Contract</p>
-      <h1>The Unity work nobody wants to scope.</h1>
-      <p class="lede">Hardware that speaks its own protocol, live clients with players already inside them, WebGL builds arguing with a load-time budget, and VR that has to feel right on your face instead of on a monitor. <b>Seven years of taking the jobs that are hard to write a ticket for.</b></p>
-
-      <div class="statbar">
-        <span class="stat"><b>50+</b> contracts</span>
-        <span class="stat"><b>5,000+</b> billed hours</span>
-        <span class="stat"><b>100%</b> job success</span>
-        <span class="stat"><b>Unity 6.3</b> LTS current</span>
-        <span class="stat live"><span class="dot"></span>Available for contract</span>
-      </div>
-
-      <div class="cta-row">
-        <a class="btn btn-primary" href="mailto:hello@crunchrock.games?subject=Contract%20enquiry%20—%20Crunchrock%20Games">Start a project</a>
-        <a class="btn btn-ghost" href="#work">See the work</a>
-      </div>
-    </div>
-
-    <div class="hero-media">
-      <figure class="wide">
-        <video src="vid/clip-neon-cyberpunk-street.mp4" poster="img/work/clip-neon-cyberpunk-street-poster.webp" muted loop playsinline autoplay preload="metadata" aria-label="Camera moving through a neon-lit cyberpunk street at night in Unity URP"></video>
-        <figcaption>Neon district flythrough — Unity URP</figcaption>
-      </figure>
-      <figure>
-        <img src="img/work/syky-pink-gown-pedestal.webp" width="900" height="461" alt="Voluminous pink ruffled gown displayed on a black pedestal in a bright gallery overlooking the sea">
-        <figcaption>SYKY — WebGL gallery</figcaption>
-      </figure>
-      <figure>
-        <img src="img/work/archviz-streamer-room-lit.webp" width="900" height="625" alt="Photorealistic streamer bedroom interior with RGB desk lighting, monitors and neon wall sign">
-        <figcaption>Real-time interior</figcaption>
-      </figure>
-    </div>
-  </div>
-</header>
-
-<section id="capabilities" class="sec-art">
-  <div class="art-bg" aria-hidden="true"></div>
-  <div class="art-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">01</span><h2>What we get hired for</h2></div>
-    <p class="sec-sub">Usually the part of the project nobody could quite write a ticket for.</p>
-
-    <div class="caps">
-      <article class="cap">
-        <img class="cap-thumb" src="img/work/combattrainer-title-screen.webp" alt="" loading="lazy">
-        <div>
-          <h3>Hardware integration</h3>
-          <p>Peripherals over serial, and protocols reverse-engineered from what the device actually sends — not what the docs claim.</p>
-          <p class="tags">Serial · Protocols · Calibration</p>
-        </div>
-      </article>
-
-      <article class="cap">
-        <img class="cap-thumb" src="img/work/empire-research-upgrade-card.webp" alt="" loading="lazy">
-        <div>
-          <h3>Live-service mobile</h3>
-          <p>Big codebases with real players in them, where you don&rsquo;t get to refactor your way out.</p>
-          <p class="tags">Android · iOS · Live ops</p>
-        </div>
-      </article>
-
-      <article class="cap">
-        <img class="cap-thumb" src="img/work/syky-gallery-long-corridor-sea.webp" alt="" loading="lazy">
-        <div>
-          <h3>WebGL</h3>
-          <p>Unity in a browser, where load time and memory budget end up being the whole job.</p>
-          <p class="tags">WebGL · Load budget · Optimization</p>
-        </div>
-      </article>
-
-      <article class="cap">
-        <img class="cap-thumb" src="img/work/frame-vr-chapter-select-snowy.webp" alt="" loading="lazy">
-        <div>
-          <h3>VR / XR</h3>
-          <p>Quest 3 and room-scale, built inside the headset. Comfort problems never show up on a monitor.</p>
-          <p class="tags">Quest 3 · World-space UI · Locomotion</p>
-        </div>
-      </article>
-
-      <article class="cap">
-        <img class="cap-thumb" src="img/work/env-neon-food-stall.webp" alt="" loading="lazy">
-        <div>
-          <h3>Environments &amp; lighting</h3>
-          <p>Terrain, foliage and real-time lighting. Realtime mixed with baked indirect so it still fits the budget.</p>
-          <p class="tags">URP · HDRP · Shader Graph</p>
-        </div>
-      </article>
-
-      <article class="cap">
-        <img class="cap-thumb" src="img/work/cruise-bridge-cockpit-controls.webp" alt="" loading="lazy">
-        <div>
-          <h3>Rescue work</h3>
-          <p>Half-finished codebases, stalled builds, and releases a platform deadline broke.</p>
-          <p class="tags">Legacy · Platform SDKs · Triage</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="work">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">02</span><h2>Selected work</h2></div>
-    <p class="sec-sub">Six jobs, what was actually wrong with them when we picked them up, and what ended up shipping.</p>
-
-    <!-- CASE 1 — SYKY -->
-    <article class="case">
-      <div class="case-body">
-        <p class="case-kicker">Case 01 — WebGL brand world</p>
-        <h3>A digital fashion house, running in a browser tab</h3>
-        <p class="case-meta"><b>Client</b> SYKY · <b>Period</b> 2023 · <b>Stack</b> Unity, WebGL</p>
-        <p>A branded gallery for Digital Fashion Week that had to run in a browser, which turns every asset, shader and light into a negotiation with load time.</p>
-        <p>We built the environment out — architectural interiors, framed ocean vistas, a real-time water shader with sun glare, and the brand mark as carved dimensional lettering. Then an optimization pass to get it delivering in-browser without losing the look.</p>
-        <div class="outcome">
-          <span>Shipped</span>
-          <p>Archviz-grade interiors inside a browser budget, across VR, WebGL and mobile.</p>
-        </div>
-      </div>
-      <div class="case-media">
-        <figure>
-          <img src="img/work/syky-pink-gown-pedestal.webp" width="900" height="461" loading="lazy" alt="Voluminous pink ruffled gown displayed on a black pedestal in a bright gallery overlooking the sea">
-          <figcaption>Digital couture staged on a pedestal, ocean beyond.</figcaption>
-        </figure>
-        <div class="media-pair">
-          <figure>
-            <img src="img/work/syky-gallery-tree-corridor.webp" width="520" height="264" loading="lazy" alt="White gallery corridor with a mature tree growing in the walkway under open sky">
-            <figcaption>Organic contrast</figcaption>
-          </figure>
-          <figure>
-            <img src="img/work/brand-syky-logo-carved-wall.webp" width="520" height="262" loading="lazy" alt="SYKY logo rendered as carved dimensional letters on a textured wall">
-            <figcaption>Brand mark in 3D</figcaption>
-          </figure>
-        </div>
-      </div>
-    </article>
-
-    <!-- CASE 2 — Goodgame -->
-    <article class="case flip">
-      <div class="case-body">
-        <p class="case-kicker">Case 02 — Live-service mobile</p>
-        <h3>Shipping inside a live strategy title</h3>
-        <p class="case-meta"><b>Client</b> Goodgame Studios · <b>Period</b> 2023 – 2026 (ongoing) · <b>Stack</b> Unity, Android</p>
-        <p>A live strategy title with an established player base, so every change has to respect systems that already ship. &ldquo;Just refactor it&rdquo; is never on the table.</p>
-        <p>Tutorial and onboarding flow, battle rewards, progression screens, world-map UI and the research feature — <strong>3,000+ hours</strong> across direct and platform contracts, including <strong>BitLife</strong> and UX/UI on <strong>Goodgame Empire</strong>.</p>
-        <div class="outcome">
-          <span>Shipped</span>
-          <p>Features live in front of an established player base, three years running.</p>
-        </div>
-      </div>
-      <div class="case-media">
-        <div class="media-pair">
-          <figure>
-            <img src="img/work/empire-city-scene-territory.webp" width="545" height="616" loading="lazy" alt="Stylised low-poly medieval territory with timber keeps, blue banners, pine forest and mountain backdrop">
-            <figcaption>Territory scene</figcaption>
-          </figure>
-          <figure class="fit">
-            <img src="img/work/empire-research-upgrade-card.webp" width="520" height="680" loading="lazy" alt="Mobile research upgrade card showing Tier Upgrade Speed with cost icons, progress and Finish Now and Research buttons">
-            <figcaption>Research upgrade card</figcaption>
-          </figure>
-        </div>
-        <p style="font-size:.79rem;color:var(--faint);line-height:1.5;margin:0">Live economy UI. A layout bug here costs real money.</p>
-      </div>
-    </article>
-
-    <!-- CASE 3 — ASTM -->
-    <article class="case">
-      <div class="case-body">
-        <p class="case-kicker">Case 03 — Serious games</p>
-        <h3>Turning a written standard into a rule you can break</h3>
-        <p class="case-meta"><b>Project</b> ASTM Truck Loader · <b>Period</b> 2025 · <b>Stack</b> Unity, WebGL</p>
-        <p>ASTM industrial training delivered in a browser. It doesn&rsquo;t just have to look right — it has to teach a compliance rule and prove the trainee absorbed it.</p>
-        <p>We built an interactive sampling sim with guidance that surfaces the standard the moment you break it. Sample within a foot of the pad edge and it tells you right then, rather than failing you quietly at the end.</p>
-        <div class="outcome">
-          <span>Shipped</span>
-          <p>Compliance training that runs in a tab — no install, no plugin, no headset.</p>
-        </div>
-      </div>
-      <div class="case-media">
-        <figure class="fit">
-          <img src="img/work/truckloader-dune-excavator-sim.webp" width="900" height="1041" loading="lazy" alt="Excavator working a sand dune in a browser-based industrial training simulation">
-          <figcaption>Excavator operation on procedural dunes, running in-browser.</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <!-- CASE 4 — Combat Trainer -->
-    <article class="case flip">
-      <div class="case-body">
-        <p class="case-kicker">Case 04 — Hardware integration</p>
-        <h3>Making Unity talk to a light gun</h3>
-        <p class="case-meta"><b>Role</b> Sole Unity developer · <b>Period</b> Dec 2024 – Apr 2025 · <b>Stack</b> Unity, C#, serial protocol</p>
-        <p>We inherited a half-built shooting trainer. A physical light gun drives an on-screen reticule and the game scores your shots — except on day one the Unity client was receiving a packet from the gun and had no idea how to read it.</p>
-        <p>We rewrote the controller classes against the packet structure the hardware was actually sending, built a loopback rig so it could be tested without the gun in hand, then wrote the calibration routine that maps physical aim to screen space on the client&rsquo;s 1080&times;1080 display.</p>
-        <p>The first calibration pass was — quoting our own commit message here — &ldquo;bug-ridden.&rdquo; The second one wasn&rsquo;t.</p>
-        <div class="outcome">
-          <span>Shipped</span>
-          <p>A calibrated hardware trainer with the protocol tested end to end.</p>
-        </div>
-      </div>
-      <div class="case-media">
-        <figure class="fit">
-          <img src="img/work/combattrainer-title-screen.webp" width="821" height="809" loading="lazy" alt="Combat Trainer title screen in red on black with corner registration markers used for light-gun calibration">
-          <figcaption>The corner markers aren&rsquo;t decoration — they&rsquo;re the registration targets calibration aims at.</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <!-- CASE 5 — Plobie / Plantdex -->
-    <article class="case">
-      <div class="case-body">
-        <p class="case-kicker">Case 05 — Feature ownership</p>
-        <h3>Owning features on a Unity 6 web game</h3>
-        <p class="case-meta"><b>Project</b> Plobie / Plantdex · <b>Period</b> Dec 2025 – Mar 2026 · <b>Stack</b> Unity 6.3, WebGL</p>
-        <p>An isometric gardening game shipping to the browser, where we weren&rsquo;t handed tickets — we were handed features and asked to come back when they worked.</p>
-        <p>Quest flow, the garden interaction layer, and progression UI, built end to end: design pass, implementation, and the WebGL optimisation that keeps an isometric scene full of foliage inside a browser&rsquo;s memory ceiling.</p>
-        <div class="outcome">
-          <span>Shipped</span>
-          <p>Whole features owned start to finish on the current Unity LTS, in a browser build.</p>
-        </div>
-      </div>
-      <div class="case-media">
-        <div class="media-pair">
-          <figure>
-            <img src="img/work/plobie-isometric-garden-gameplay.webp" width="520" height="292" loading="lazy" alt="Isometric stylised garden scene with planted beds, patio furniture and a character tending plants">
-            <figcaption>Garden scene</figcaption>
-          </figure>
-          <figure>
-            <img src="img/work/plobie-quest-ui-gameplay.webp" width="520" height="292" loading="lazy" alt="Quest interface overlaid on the isometric garden, listing objectives and rewards">
-            <figcaption>Quest flow</figcaption>
-          </figure>
-        </div>
-      </div>
-    </article>
-
-    <!-- CASE 6 — ASSC -->
-    <article class="case flip">
-      <div class="case-body">
-        <p class="case-kicker">Case 06 — Combat feel &amp; VFX</p>
-        <h3>Making a hundred enemies die readably</h3>
-        <p class="case-meta"><b>Project</b> ASSC · <b>Period</b> Apr – Aug 2025 · <b>Stack</b> Unity, URP, VFX</p>
-        <p>Top-down arena combat against crowds. The hard part of a horde isn&rsquo;t spawning it — it&rsquo;s making a hundred simultaneous deaths legible enough that the player still knows what they hit.</p>
-        <p>We built the hit feedback and blast VFX to stay readable at crowd density: spray and impact cues that survive being stacked forty deep, tuned against frame budget rather than against a still frame.</p>
-        <div class="outcome">
-          <span>Shipped</span>
-          <p>Effects that read at crowd scale without the frame time going with them.</p>
-        </div>
-      </div>
-      <div class="case-media">
-        <figure>
-          <video src="vid/clip-arena-combat-vfx.mp4" poster="img/work/clip-arena-combat-vfx-poster.webp" muted loop playsinline preload="none" aria-label="Top-down arena combat with explosion effects tearing through a crowd of enemies"></video>
-          <figcaption>Blast effects tearing through a crowd, held at budget.</figcaption>
-        </figure>
-        <figure>
-          <img src="img/work/assc-goblin-horde-blood-spray.webp" width="520" height="420" loading="lazy" alt="Dense goblin horde being cut down with red hit-spray particles and a glowing portal nearby">
-          <figcaption>Hit spray at forty-deep density.</figcaption>
-        </figure>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section id="process" class="sec-art">
-  <div class="art-bg" aria-hidden="true" style="background-image:url('img/work/env-neon-tacobell-cityscape-lg.webp')"></div>
-  <div class="art-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><h2>How it actually goes</h2></div>
-    <p class="sec-sub">No discovery phase that bills for six weeks before anything runs.</p>
-
-    <div class="caps" style="margin-top:1.6rem">
-      <article class="cap" style="grid-template-columns:1fr">
-        <div>
-          <h3>1 · You tell us what&rsquo;s broken</h3>
-          <p>In whatever shape it&rsquo;s in. A repo, a build that crashes, a deadline, a device on a desk. We&rsquo;ll tell you straight whether we&rsquo;re the right shop — including when we&rsquo;re not.</p>
-        </div>
-      </article>
-      <article class="cap" style="grid-template-columns:1fr">
-        <div>
-          <h3>2 · Something runs in week one</h3>
-          <p>Not a document about the thing. The thing, badly, on your hardware — so the unknowns show up while they&rsquo;re still cheap.</p>
-        </div>
-      </article>
-      <article class="cap" style="grid-template-columns:1fr">
-        <div>
-          <h3>3 · You get the build, not a status call</h3>
-          <p>Regular playable drops. If a week went sideways you&rsquo;ll hear that too, with the reason, before you have to ask.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="gallery">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><h2>More from the shelf</h2></div>
-    <p class="sec-sub">Environments, gameplay systems, UI and tech art from across the book. Click anything to see it bigger.</p>
-
-    <div class="gallery">
-      <figure class="tile">
-        <video src="vid/clip-neon-cyberpunk-street.mp4" poster="img/work/clip-neon-cyberpunk-street-poster.webp" muted loop playsinline preload="none" aria-label="Camera moving through a neon-lit cyberpunk street at night in Unity URP"></video>
-        <figcaption><b>Neon district flythrough</b>Unity URP — lighting and signage study</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/env-cyberpunk-neon-city-01.webp" width="900" height="483" loading="lazy" alt="Cyberpunk street with vertical neon CLUB sign in magenta and cyan, dark rain-slick road">
-        <figcaption><b>Vertical signage composition</b>Neon as the primary light source</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/env-neon-food-stall.webp" width="520" height="335" loading="lazy" alt="Detailed cyberpunk street food stall with Japanese signage, warm interior light and hanging lanterns">
-        <figcaption><b>Street food stall</b>Prop density, warm/cool contrast</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/archviz-streamer-room-lit.webp" width="900" height="625" loading="lazy" alt="Photorealistic streamer bedroom interior with RGB desk lighting, monitors and neon wall sign">
-        <figcaption><b>Real-time interior</b>Archviz lighting — streamer room</figcaption>
-      </figure>
-      <figure class="tile">
-        <video src="vid/clip-gankmechs-title-menu.mp4" poster="img/work/clip-gankmechs-title-menu-poster.webp" muted loop playsinline preload="none" aria-label="GankMech animated title menu with a lit tabletop diorama"></video>
-        <figcaption><b>Animated title menu</b>GankMech — lit tabletop diorama</figcaption>
-      </figure>
-      <figure class="tile">
-        <video src="vid/clip-vr-chapter-select.mp4" poster="img/work/clip-vr-chapter-select-poster.webp" muted loop playsinline preload="none" aria-label="VR chapter select screen floating over a sunset seascape"></video>
-        <figcaption><b>VR chapter select</b>World-space UI over a full skybox</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/plobie-isometric-garden-gameplay.webp" width="900" height="506" loading="lazy" alt="Isometric stylised garden scene with planted beds, patio furniture and a character tending plants">
-        <figcaption><b>Plobie / Plantdex</b>Unity 6.3 web game — feature ownership</figcaption>
-      </figure>
-      <figure class="tile portrait">
-        <video src="vid/clip-farm-game-mobile-ui.mp4" poster="img/work/clip-farm-game-mobile-ui-poster.webp" muted loop playsinline preload="none" aria-label="Portrait mobile farm game being played, showing quest UI interactions"></video>
-        <figcaption><b>Mobile quest flow</b>Portrait-first UI in motion</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/assc-goblin-horde-blood-spray.webp" width="520" height="420" loading="lazy" alt="Dense goblin horde being cut down with red hit-spray particles and a glowing portal nearby">
-        <figcaption><b>Horde combat feedback</b>ASSC — hit spray and crowd density</figcaption>
-      </figure>
-      <figure class="tile">
-        <video src="vid/clip-arena-combat-vfx.mp4" poster="img/work/clip-arena-combat-vfx-poster.webp" muted loop playsinline preload="none" aria-label="Top-down arena combat with explosion effects tearing through a crowd of enemies"></video>
-        <figcaption><b>Arena blast VFX</b>ASSC — readable effects at crowd scale</figcaption>
-      </figure>
-      <figure class="tile">
-        <video src="vid/clip-lush-forest-terrain.mp4" poster="img/work/clip-lush-forest-terrain-poster.webp" muted loop playsinline preload="none" aria-label="Walking through a dense sunlit forest with layered grass, wildflowers and trees"></video>
-        <figcaption><b>Foliage &amp; terrain</b>Dense real-time forest, held at frame budget</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/cruise-bridge-cockpit-controls.webp" width="520" height="278" loading="lazy" alt="Ship bridge cockpit with radar display, throttle levers, gauges and a canal view through the windows">
-        <figcaption><b>Bridge instrumentation</b>Ship sim — radar and controls</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/cruise-ship-canal-navigation.webp" width="520" height="267" loading="lazy" alt="Cruise ship navigating a canal seen from the bridge with radar and control HUD overlaid">
-        <figcaption><b>Canal navigation</b>Live HUD over a moving vessel</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/botanical-bar-gameplay-levels.webp" width="520" height="296" loading="lazy" alt="Botanical Bar gameplay with a character at a garden counter and a tiered level-select panel">
-        <figcaption><b>Botanical Bar</b>Level progression and upgrade flow</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/funmoney-resort-challenge-items.webp" width="520" height="407" loading="lazy" alt="Isometric resort scene with a circular garden pavilion and a Challenge Items bar of objects to find">
-        <figcaption><b>Hidden-object resort</b>FunMoney4U — isometric scene + item tray</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/saiba-puffco-bci-menu.webp" width="520" height="312" loading="lazy" alt="Cyberpunk brain-computer-interface menu listing selectable ingredients over a neon interior">
-        <figcaption><b>BCI selection menu</b>Diegetic UI, in-house voxel project</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/saiba-trenchcoat-man-dialogue.webp" width="520" height="292" loading="lazy" alt="Dialogue scene with a character introduction card and branching conversation text">
-        <figcaption><b>Dialogue system</b>Character cards and branching text</figcaption>
-      </figure>
-      <figure class="tile">
-        <video src="vid/clip-spider-mech-combat.mp4" poster="img/work/clip-spider-mech-combat-poster.webp" muted loop playsinline preload="none" aria-label="Spider mech firing with green energy effects over a grassy hillside"></video>
-        <figcaption><b>Spider mech combat</b>Energy VFX, tracking and sparks</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/render-stylized-banquet-table.webp" width="520" height="218" loading="lazy" alt="Stylized banquet table scene with detailed food props and warm lighting">
-        <figcaption><b>Stylized prop set</b>Banquet table — ultrawide render</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="img/work/combattrainer-title-screen.webp" width="821" height="809" loading="lazy" alt="Combat Trainer title screen in red on black with corner registration markers used for light-gun calibration">
-        <figcaption><b>Combat Trainer</b>Title screen with calibration markers</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section id="history">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><h2>Track record</h2></div>
-    <p class="sec-sub">Dated from commits and project files rather than memory. A lot of it overlaps, because contract work has never once queued up politely.</p>
-
-    <div class="tl">
-      <div class="tl-row"><span class="tl-when">2023-07 → 08</span><span class="tl-what"><b>SYKY Space</b> <span>· WebGL brand world, shaders, optimization pass</span></span></div>
-      <div class="tl-row"><span class="tl-when">2023-09</span><span class="tl-what"><b>URP Cyberpunk City</b> <span>· neon environment art, URP lighting</span></span></div>
-      <div class="tl-row"><span class="tl-when">2023-09 → 2024-03</span><span class="tl-what"><b>FunMoney4U</b> <span>· hidden-object resort, isometric scenes</span></span></div>
-      <div class="tl-row"><span class="tl-when">2023-10 → 2024-02</span><span class="tl-what"><b>Ship Games Simulator</b> <span>· mobile sim, title and upgrade UI, AdMob</span></span></div>
-      <div class="tl-row"><span class="tl-when">2023-10 → 2026-03</span><span class="tl-what"><b>Goodgame Studios</b> <span>· live mobile strategy client — BitLife, Goodgame Empire</span></span></div>
-      <div class="tl-row"><span class="tl-when">2024-03 → 06</span><span class="tl-what"><b>GankMech</b> <span>· mech arena, title dioramas, VR menu</span></span></div>
-      <div class="tl-row"><span class="tl-when">2024-08 → 2025-09</span><span class="tl-what"><b>Tyrads Unity SDK</b> <span>· third-party SDK integration</span></span></div>
-      <div class="tl-row"><span class="tl-when">2024-12 → 2025-04</span><span class="tl-what"><b>Combat Trainer</b> <span>· light-gun hardware, serial protocol, calibration</span></span></div>
-      <div class="tl-row"><span class="tl-when">2025-04 → 08</span><span class="tl-what"><b>ASSC</b> <span>· top-down arena combat, horde VFX</span></span></div>
-      <div class="tl-row"><span class="tl-when">2025</span><span class="tl-what"><b>VR clinical-trial application</b> <span>· five-star engagement</span></span></div>
-      <div class="tl-row"><span class="tl-when">2025-08 → 09</span><span class="tl-what"><b>ASTM Truck Loader</b> <span>· browser training simulation</span></span></div>
-      <div class="tl-row"><span class="tl-when">2025-10 → 11</span><span class="tl-what"><b>Botanical Bar</b> <span>· interactive concept, title and progression</span></span></div>
-      <div class="tl-row"><span class="tl-when">2025-12 → 2026-03</span><span class="tl-what"><b>Plobie / Plantdex</b> <span>· Unity 6.3 web game, feature ownership</span></span></div>
-      <div class="tl-row"><span class="tl-when">2026-02 → 03</span><span class="tl-what"><b>Titans and Dragons</b> <span>· mobile UI design and implementation</span></span></div>
-      <div class="tl-row"><span class="tl-when">2024 → 2025</span><span class="tl-what"><b>VR sandbox / room-scale</b> <span>· Quest 3, world-space UI, locomotion</span></span></div>
-    </div>
-  </div>
-</section>
-
-<section id="ourgames">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><h2>Our own games</h2></div>
-    <p class="sec-sub">The client work pays for the studio. This is what the studio is actually for.</p>
-
-    <div class="games">
-      <article class="gamecard featured">
-        <img src="img/shot_lava.jpg" alt="Split-screen Floor Is Lava in Bad Shrooms: the apartment floor has become molten lava and a shrunken glowing player stands on a raised platform" loading="lazy">
-        <p class="yr">In development · Steam Early Access</p>
-        <h3>Bad Shrooms</h3>
-        <p>Psychedelic first-person party game with an alien named Zlorp running the house like a game show. The free demo supports two-player local split-screen and Steam multiplayer; Early Access expands to six games, a larger house, and four-player local and Steam play.</p>
-        <a href="index.html">See the game page →</a>
-      </article>
-
-      <article class="gamecard">
-        <p class="yr">Released · Steam</p>
-        <h3>CyberWhiskey: Guy&rsquo;s Room</h3>
-        <p>Our first release, built solo start to finish. It&rsquo;s a simple game, but it made it all the way onto a store page instead of dying in a folder somewhere, which turns out to be the hard part.</p>
-        <a href="https://store.steampowered.com/search/?term=CyberWhiskey" rel="noopener">Find it on Steam →</a>
-      </article>
-
-      <article class="gamecard">
-        <p class="yr">2021 · Browser</p>
-        <h3>CrunchRock&rsquo;s Mini Gallery</h3>
-        <p>Voxel work from the early days &mdash; MagicaVoxel assets and environment pieces you can actually walk around in. It&rsquo;s old, but it still loads in a browser, which is more than most 2021 web builds can say.</p>
-        <a href="https://crunchrock.itch.io/crunchrocks-mini-gallery" rel="noopener">Play it on itch.io →</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="wrap">
-    <p class="eyebrow">Available for contract</p>
-    <h2>Got something that needs to ship?</h2>
-    <p class="sec-sub">Full builds, feature ownership, rescue jobs on things that have stalled, and the integrations nobody else wants to put a number on. Tell us what&rsquo;s broken and we&rsquo;ll tell you straight whether we&rsquo;re the right shop for it.</p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn btn-primary" href="mailto:hello@crunchrock.games?subject=Contract%20enquiry%20—%20Crunchrock%20Games">Email the studio</a>
-    </div>
-    <div class="links">
-      <a class="chip" href="https://www.upwork.com/freelancers/jimchaney" rel="noopener">Upwork — 100% Job Success</a>
-      <a class="chip" href="https://www.linkedin.com/in/crunchrock" rel="noopener">LinkedIn</a>
-      <a class="chip" href="https://store.steampowered.com/app/4995150" rel="noopener">Bad Shrooms on Steam</a>
-    </div>
-  </div>
-</section>
-
-<!--
-  SHOWREEL — drop-in block. Upload the reel to YouTube, then paste the 11-char
-  video id into both places marked VIDEO_ID and move this block above </section>
-  of the contact section.
-
-  <div class="reel">
-    <a href="https://www.youtube.com/watch?v=VIDEO_ID" rel="noopener">
-      <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Watch the Crunchrock Games showreel">
-    </a>
-  </div>
--->
-
-<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
-  <button class="lb-close" type="button" data-lb-close aria-label="Close image viewer">&times;</button>
-  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Previous image">&#8249;</button>
-  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Next image">&#8250;</button>
-  <figure class="lb-fig">
-    <img id="lb-img" src="" alt="">
-    <figcaption class="lb-cap" id="lb-cap"></figcaption>
-  </figure>
 </div>
 
-<footer>
-  <div class="wrap">
-    <img src="img/logo_crunchrock.png" alt="Crunchrock Games">
-    <p>&copy; 2026 Crunchrock Games ·
-      <a href="index.html">Bad Shrooms</a> ·
-      <a href="mailto:hello@crunchrock.games">contact</a> ·
-      <a href="privacy.html">privacy</a> ·
-      <a href="eula.html">eula</a>
-    </p>
+<section class="statement" id="top">
+  <div class="hold">
+    <h1 class="display">The Unity work nobody wants to scope.</h1>
+    <p class="lede mono">Hardware that speaks its own protocol. Live clients with players already inside them. WebGL builds arguing with a load budget. VR that has to feel right on your face instead of on a monitor. <b>Seven years of taking the jobs that are hard to write a ticket for.</b></p>
+    <div class="cta">
+      <a class="btn" href="mailto:hello@crunchrock.games?subject=Contract%20enquiry%20—%20Crunchrock%20Games">Start a project</a>
+      <a class="btn ghost" href="#work">See the work</a>
+    </div>
+  </div>
+</section>
+
+<div class="reel">
+  <div class="cell"><video src="vid/clip-neon-cyberpunk-street.mp4" poster="img/work/clip-neon-cyberpunk-street-poster.webp" muted loop playsinline preload="none" aria-label="Camera moving through a neon-lit cyberpunk street at night, built in Unity URP"></video></div>
+  <div class="cell"><img src="img/work/archviz-streamer-room-lit.webp" loading="lazy" alt="Photorealistic streamer bedroom interior with RGB desk lighting, monitors and a neon wall sign"></div>
+  <div class="cell"><video src="vid/clip-vr-chapter-select.mp4" poster="img/work/clip-vr-chapter-select-poster.webp" muted loop playsinline preload="none" aria-label="VR chapter select screen floating over a sunset seascape"></video></div>
+</div>
+
+<section class="band" id="work">
+  <div class="hold">
+    <h2 class="display" style="font-size:clamp(1.7rem,4vw,2.8rem)">Selected work</h2>
+    <p class="mono" style="margin-top:.8rem;color:var(--ink-70)">Six jobs, what was wrong with them when we picked them up, and what shipped.</p>
+
+    <div class="jobs">
+      <article class="job">
+        <!-- framed off the left edge: the capture carries the WebGL build's FPS overlay there -->
+        <div class="frame"><img src="img/work/syky-pink-gown-pedestal.webp" loading="lazy" style="object-position:100% 50%" alt="Voluminous pink ruffled gown displayed on a black pedestal in a bright gallery overlooking the sea"></div>
+        <h2 class="display">A fashion house in a browser tab</h2>
+        <p class="meta mono">SYKY. 2023. Unity, WebGL.</p>
+        <p>A branded gallery for Digital Fashion Week that had to run in a browser, which turns every asset, shader and light into a negotiation with load time.</p>
+        <p class="shipped"><b>Shipped.</b> Archviz-grade interiors inside a browser budget, across VR, WebGL and mobile.</p>
+      </article>
+
+      <article class="job">
+        <div class="frame"><img src="img/work/empire-city-scene-territory.webp" loading="lazy" style="object-position:50% 68%" alt="Stylised low-poly medieval territory with timber keeps, blue banners, pine forest and a mountain backdrop"></div>
+        <h2 class="display">Shipping inside a live strategy title</h2>
+        <p class="meta mono">Goodgame Studios. 2023–2026, ongoing. Unity, Android.</p>
+        <p>An established player base, so every change has to respect systems that already ship. &ldquo;Just refactor it&rdquo; is never on the table. Onboarding, battle rewards, progression, world-map UI and the research feature — <strong>3,000+ hours</strong>, including BitLife and UX/UI on Goodgame Empire.</p>
+        <p class="shipped"><b>Shipped.</b> Live economy UI, three years running. A layout bug there costs real money.</p>
+      </article>
+
+      <article class="job">
+        <!-- the browser toolbar sits along the top of this capture; framed below it -->
+        <div class="frame"><img src="img/work/truckloader-dune-excavator-sim.webp" loading="lazy" style="object-position:50% 42%" alt="Excavator working a sand dune in a browser-based industrial training simulation"></div>
+        <h2 class="display">A written standard you can break</h2>
+        <p class="meta mono">ASTM Truck Loader. 2025. Unity, WebGL.</p>
+        <p>Industrial compliance training in a browser. It has to teach a rule and prove the trainee absorbed it. Sample within a foot of the pad edge and it tells you right then, rather than failing you quietly at the end.</p>
+        <p class="shipped"><b>Shipped.</b> Compliance training that runs in a tab — no install, no plugin, no headset.</p>
+      </article>
+
+      <article class="job nocap">
+        <!-- The only Combat Trainer capture has the calibration debug log printed
+             over the title. Rather than ship a broken plate, this one runs on
+             the writing. Replace the day there is a clean screenshot. -->
+        <div class="frame"><p>&gt; Calibration started.<br>&gt; Reticle -&gt; (329.08, 156.10)<br><br>&gt; commit: &ldquo;bug-ridden&rdquo;<br>&gt; commit: (the second one wasn't)</p></div>
+        <h2 class="display">Making Unity talk to a light gun</h2>
+        <p class="meta mono">Sole Unity developer. Dec 2024 – Apr 2025. Serial protocol.</p>
+        <p>We inherited a half-built shooting trainer. On day one the Unity client was receiving a packet from the gun and had no idea how to read it. We rewrote the controller classes against the packet the hardware actually sends, built a loopback rig so it could be tested without the gun in hand, then wrote the calibration that maps physical aim to screen space.</p>
+        <p class="shipped"><b>Shipped.</b> A calibrated hardware trainer with the protocol tested end to end.</p>
+      </article>
+
+      <article class="job">
+        <div class="frame"><img src="img/work/plobie-isometric-garden-gameplay.webp" loading="lazy" alt="Isometric stylised garden scene with planted beds, patio furniture and a character tending plants"></div>
+        <h2 class="display">Owning features on a Unity 6 web game</h2>
+        <p class="meta mono">Plobie / Plantdex. Dec 2025 – Mar 2026. Unity 6.3, WebGL.</p>
+        <p>We weren't handed tickets, we were handed features and asked to come back when they worked. Quest flow, the garden interaction layer and progression UI, plus the WebGL optimisation that keeps a foliage-heavy isometric scene inside a browser's memory ceiling.</p>
+        <p class="shipped"><b>Shipped.</b> Whole features owned start to finish on the current Unity LTS.</p>
+      </article>
+
+      <article class="job">
+        <div class="frame"><video src="vid/clip-arena-combat-vfx.mp4" poster="img/work/clip-arena-combat-vfx-poster.webp" muted loop playsinline preload="none" aria-label="Top-down arena combat with explosion effects tearing through a crowd of enemies"></video></div>
+        <h2 class="display">Making a hundred enemies die readably</h2>
+        <p class="meta mono">ASSC. Apr – Aug 2025. Unity, URP, VFX.</p>
+        <p>The hard part of a horde isn't spawning it — it's making a hundred simultaneous deaths legible enough that the player still knows what they hit. Spray and impact cues that survive being stacked forty deep, tuned against frame budget rather than against a still frame.</p>
+        <p class="shipped"><b>Shipped.</b> Effects that read at crowd scale without the frame time going with them.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band" style="padding-top:0">
+  <div class="hold">
+    <h2 class="display" style="font-size:clamp(1.7rem,4vw,2.8rem)">Track record</h2>
+    <p class="mono" style="margin-top:.8rem;color:var(--ink-70)">Dated off commits and project files rather than memory. It overlaps, because contract work has never once queued up politely.</p>
+    <div class="tl mono">
+      <div class="tl-row"><span class="tl-when">2023-07 → 08</span><span class="tl-what"><b>SYKY Space</b> <span>WebGL brand world, shaders, optimisation</span></span></div>
+      <div class="tl-row"><span class="tl-when">2023-09</span><span class="tl-what"><b>URP Cyberpunk City</b> <span>neon environment art, URP lighting</span></span></div>
+      <div class="tl-row"><span class="tl-when">2023-09 → 2024-03</span><span class="tl-what"><b>FunMoney4U</b> <span>hidden-object resort, isometric scenes</span></span></div>
+      <div class="tl-row"><span class="tl-when">2023-10 → 2024-02</span><span class="tl-what"><b>Ship Games Simulator</b> <span>mobile sim, title and upgrade UI, AdMob</span></span></div>
+      <div class="tl-row"><span class="tl-when">2023-10 → 2026-03</span><span class="tl-what"><b>Goodgame Studios</b> <span>live mobile strategy client, BitLife and Empire</span></span></div>
+      <div class="tl-row"><span class="tl-when">2024-03 → 06</span><span class="tl-what"><b>GankMech</b> <span>mech arena, title dioramas, VR menu</span></span></div>
+      <div class="tl-row"><span class="tl-when">2024-08 → 2025-09</span><span class="tl-what"><b>Tyrads Unity SDK</b> <span>third-party SDK integration</span></span></div>
+      <div class="tl-row"><span class="tl-when">2024-12 → 2025-04</span><span class="tl-what"><b>Combat Trainer</b> <span>light-gun hardware, serial protocol, calibration</span></span></div>
+      <div class="tl-row"><span class="tl-when">2024 → 2025</span><span class="tl-what"><b>VR sandbox / room-scale</b> <span>Quest 3, world-space UI, locomotion</span></span></div>
+      <div class="tl-row"><span class="tl-when">2025</span><span class="tl-what"><b>VR clinical-trial application</b> <span>five-star engagement</span></span></div>
+      <div class="tl-row"><span class="tl-when">2025-04 → 08</span><span class="tl-what"><b>ASSC</b> <span>top-down arena combat, horde VFX</span></span></div>
+      <div class="tl-row"><span class="tl-when">2025-08 → 09</span><span class="tl-what"><b>ASTM Truck Loader</b> <span>browser training simulation</span></span></div>
+      <div class="tl-row"><span class="tl-when">2025-10 → 11</span><span class="tl-what"><b>Botanical Bar</b> <span>interactive concept, title and progression</span></span></div>
+      <div class="tl-row"><span class="tl-when">2025-12 → 2026-03</span><span class="tl-what"><b>Plobie / Plantdex</b> <span>Unity 6.3 web game, feature ownership</span></span></div>
+      <div class="tl-row"><span class="tl-when">2026-02 → 03</span><span class="tl-what"><b>Titans and Dragons</b> <span>mobile UI design and implementation</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" style="padding-top:0">
+  <div class="hold">
+    <h2 class="display" style="font-size:clamp(1.7rem,4vw,2.8rem)">Our own games</h2>
+    <p class="mono" style="margin-top:.8rem;color:var(--ink-70)">The client work pays for the studio. This is what the studio is for.</p>
+    <div class="ours">
+      <article>
+        <div class="frame"><img src="img/cover_dusk_house.jpg" loading="lazy" style="object-position:50% 32%" alt="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
+        <h3 class="display">Bad Shrooms</h3>
+        <p class="when mono">In development. Steam Early Access.</p>
+        <p>Psychedelic first-person party game with an alien named Zlorp running the house like a game show. Free demo is exactly two players; Early Access expands to six games, a bigger house and four players.</p>
+        <a href="index.html">See the game page</a>
+      </article>
+      <article>
+        <h3 class="display">CyberWhiskey: Guy's Room</h3>
+        <p class="when mono">Released. Steam.</p>
+        <p>Our first release, built solo start to finish. A simple game, but it made it onto a store page instead of dying in a folder, which turns out to be the hard part.</p>
+        <a href="https://store.steampowered.com/search/?term=CyberWhiskey" rel="noopener">Find it on Steam</a>
+      </article>
+      <article>
+        <h3 class="display">Crunchrock's Mini Gallery</h3>
+        <p class="when mono">2021. Browser.</p>
+        <p>Voxel work from the early days — MagicaVoxel assets and environment pieces you can walk around in. It's old, but it still loads in a browser, which is more than most 2021 web builds can say.</p>
+        <a href="https://crunchrock.itch.io/crunchrocks-mini-gallery" rel="noopener">Play it on itch.io</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="close band" id="hire">
+  <div class="hold">
+    <h2 class="display">Got something that needs to ship?</h2>
+    <p>Full builds, feature ownership, rescue jobs on things that have stalled, and the integrations nobody else wants to put a number on. Tell us what's broken and we'll tell you straight whether we're the right shop — including when we're not.</p>
+    <p>No discovery phase that bills for six weeks before anything runs. Something runs on your hardware in week one, badly, so the unknowns show up while they're still cheap. After that it's playable drops, not status calls.</p>
+    <p class="proof mono"><b>50+</b> contracts. <b>5,000+</b> billed hours. <b>100%</b> job success. Seven years. Currently available.</p>
+    <div class="cta">
+      <a class="btn" href="mailto:hello@crunchrock.games?subject=Contract%20enquiry%20—%20Crunchrock%20Games">Email the studio</a>
+    </div>
+    <div class="links mono">
+      <a href="https://www.upwork.com/freelancers/jimchaney" rel="noopener">Upwork</a>
+      <a href="https://www.linkedin.com/in/crunchrock" rel="noopener">LinkedIn</a>
+      <a href="https://store.steampowered.com/app/4995150" rel="noopener">Bad Shrooms on Steam</a>
+    </div>
+  </div>
+</section>
+
+<footer class="mono">
+  <div class="hold">
+    <p style="max-width:none">&copy; 2026 Crunchrock Games</p>
+    <div class="links">
+      <a href="index.html">Bad Shrooms</a>
+      <a href="mailto:hello@crunchrock.games">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="eula.html">EULA</a>
+    </div>
   </div>
 </footer>
 
 <script>
-  // Autoplay is unreliable on mobile and wasteful off-screen: only play the
-  // loops that are actually visible, and never under reduced-motion.
+  // Only play the loops that are on screen, never under reduced-motion, and
+  // never on a metered connection — the posters already carry the content.
   (function () {
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Don't spend someone's mobile data on decorative loops; the posters
-    // already carry the content.
     var conn = navigator.connection || {};
     var saveData = conn.saveData === true || /^([23]g|slow-2g)$/.test(conn.effectiveType || '');
-    var vids = document.querySelectorAll('.tile video, .hero-media video');
-    if (reduce || saveData) {
-      vids.forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
-      return;
-    }
+    var vids = document.querySelectorAll('video');
+    if (reduce || saveData) { vids.forEach(function (v) { v.pause(); }); return; }
     if (!('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -759,73 +343,10 @@
         if (e.isIntersecting) {
           if (v.preload === 'none') v.preload = 'auto';
           v.play().catch(function () {});
-        } else {
-          v.pause();
-        }
+        } else { v.pause(); }
       });
     }, { rootMargin: '200px 0px', threshold: 0.15 });
     vids.forEach(function (v) { io.observe(v); });
-  })();
-
-  // Click any still to open it full size. The -lg copies are only fetched
-  // here, so browsing the page never pays for them.
-  (function () {
-    var lb = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lb-img');
-    var lbCap = document.getElementById('lb-cap');
-    var items = [];
-    var index = 0;
-    var lastFocus = null;
-
-    document.querySelectorAll('.tile img, .case-media img, .hero-media img').forEach(function (img) {
-      var fig = img.closest('figure');
-      var cap = fig ? fig.querySelector('figcaption') : null;
-      img.classList.add('zoomable');
-      img.tabIndex = 0;
-      img.setAttribute('role', 'button');
-      items.push({
-        src: img.getAttribute('src').replace(/\.webp$/, '-lg.webp'),
-        alt: img.alt,
-        cap: cap ? cap.innerHTML : ''
-      });
-      var i = items.length - 1;
-      img.addEventListener('click', function () { open(i); });
-      img.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
-      });
-    });
-
-    function show(i) {
-      index = (i + items.length) % items.length;
-      var it = items[index];
-      lbImg.src = it.src;
-      lbImg.alt = it.alt;
-      lbCap.innerHTML = it.cap;
-    }
-    function open(i) {
-      lastFocus = document.activeElement;
-      show(i);
-      lb.setAttribute('open', '');
-      document.body.classList.add('lb-open');
-      lb.querySelector('[data-lb-close]').focus();
-    }
-    function close() {
-      lb.removeAttribute('open');
-      document.body.classList.remove('lb-open');
-      lbImg.src = '';
-      if (lastFocus) lastFocus.focus();
-    }
-
-    lb.querySelector('[data-lb-close]').addEventListener('click', close);
-    lb.querySelector('[data-lb-prev]').addEventListener('click', function () { show(index - 1); });
-    lb.querySelector('[data-lb-next]').addEventListener('click', function () { show(index + 1); });
-    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
-    document.addEventListener('keydown', function (e) {
-      if (!lb.hasAttribute('open')) return;
-      if (e.key === 'Escape') close();
-      else if (e.key === 'ArrowRight') show(index + 1);
-      else if (e.key === 'ArrowLeft') show(index - 1);
-    });
   })();
 </script>
 
