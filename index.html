@@ -100,7 +100,7 @@
   .poster .btn{margin-top:1.9rem;border-color:var(--cream);box-shadow:6px 6px 0 var(--cream)}
   .poster .btn:hover{box-shadow:3px 3px 0 var(--cream)}
   .poster .btn:active{box-shadow:0 0 0 var(--cream)}
-  .poster .fact{margin-top:1.5rem;color:var(--cream);opacity:.95;
+  .poster .fact{margin-top:1.5rem;color:var(--cream);
                 text-shadow:0 2px 12px rgba(20,16,43,.9)}
 
   /* ---------------- the loose friend ----------------
@@ -125,6 +125,31 @@
   .bleed{display:block;width:100%;height:clamp(30px,3.4vw,58px);color:var(--lime);
          margin-top:-1px}
 
+  /* ---------------- 1b. the trailer ----------------
+     Self-hosted. No YouTube embed: no third-party cookies, no "watch on
+     YouTube" interstitial, and the poster frame is a still we chose. The file
+     is a 16 MB CRF-26 encode and preload is none, so nothing downloads until
+     someone presses play. */
+  .reel{padding-block:clamp(3rem,8vh,5rem)}
+  .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem}
+  .reel h2{font-size:clamp(1.9rem,4.4vw,3rem);color:var(--ink)}
+  .reel .run{color:var(--ink)}
+  .screen{margin-top:clamp(1.4rem,3.4vh,2.2rem);border:2.5px solid var(--ink);
+          box-shadow:9px 9px 0 var(--ink);background:var(--ink);line-height:0}
+  .screen video{width:100%;height:auto;aspect-ratio:16/9;display:block;background:var(--ink)}
+
+  /* ---------------- the state of play ----------------
+     The schedule, in public, in the technical voice. One line changes when a
+     stage moves; nothing else on the page has to. */
+  .state{margin-top:clamp(1.6rem,4vh,2.4rem);display:grid;gap:.9rem}
+  @media (min-width:760px){.state{grid-template-columns:repeat(3,1fr)}}
+  .state li{list-style:none;border:2.5px solid var(--ink);padding:.9rem 1.1rem;
+            background:var(--paper)}
+  .state li b{display:block;text-transform:uppercase;letter-spacing:.04em;
+              margin-bottom:.25rem}
+  .state li.now{background:var(--lime)}
+  .state li.next{background:var(--orange)}
+
   /* ---------------- 2. the three ---------------- */
   .three{padding-block:clamp(3rem,8vh,5.5rem)}
   .kicker{max-width:46ch}
@@ -146,7 +171,9 @@
   @media (max-width:819px){.plate .frame{aspect-ratio:2/1}}
   .plate h2{margin-top:1.5rem;font-size:clamp(1.7rem,3.3vw,2.5rem);color:var(--ink)}
   /* One line each, so the three read as a set instead of a ragged 2/2/2. */
-  .plate p{margin-top:.45rem;color:var(--ink-70);max-width:none;text-wrap:balance}
+  /* Full-strength ink. THE GREY LAW (BRAND.md §1): text is never dimmed —
+     hierarchy comes from size, weight, case and hue, never from opacity. */
+  .plate p{margin-top:.45rem;color:var(--ink);max-width:none;text-wrap:balance}
   /* This is the roadmap, not a footnote — it gets size, ink, and the three new
      names carrying the colour. */
   .after{margin-top:clamp(2.2rem,5vh,3.2rem);padding-top:clamp(1.2rem,2.4vh,1.7rem);
@@ -163,13 +190,14 @@
          max-width:28ch;margin-bottom:1.2rem}
   .zlorp::before{content:'“'}.zlorp::after{content:'”'}
   .jar h2{font-size:clamp(2.3rem,5.6vw,4.4rem);color:var(--cream)}
-  .jar p{margin-top:1.2rem;color:rgba(246,239,221,.92);max-width:44ch}
+  .jar p{margin-top:1.2rem;color:var(--cream);max-width:44ch}
   .jar img{width:100%;border:2.5px solid var(--cream)}
 
   /* ---------------- 4. the close ---------------- */
   .close{text-align:center;padding-block:clamp(3.2rem,9vh,5rem)}
   .close h2{font-size:clamp(1.8rem,4.4vw,3rem);max-width:18ch;margin-inline:auto}
   .close .btn{margin-top:1.8rem}
+  .close .note{margin-top:1.2rem;color:var(--ink);max-width:44ch;margin-inline:auto}
 
   footer{border-top:2px solid var(--ink);padding-block:1.6rem 2.4rem}
   footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;
@@ -190,6 +218,7 @@
   <div class="hold">
     <a class="who mono" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
     <nav class="mono">
+      <a href="#trailer">Trailer</a>
       <a href="work.html">Studio</a>
       <a href="https://store.steampowered.com/app/4995150" rel="noopener">Steam</a>
     </nav>
@@ -210,28 +239,51 @@
   <path fill="currentColor" d="M1200,0 H0 V6 H70 C77.6,34 81.2,56 90,56 C98.8,56 102.4,34 110,6 H183 C187.9,21 190.3,30 196,30 C201.7,30 204.1,21 209,6 H308 C317.1,47 321.4,82 332,82 C342.6,82 346.9,47 356,6 H455 C460.7,27 463.4,42 470,42 C476.6,42 479.3,27 485,6 H565 C569.2,18 571.2,24 576,24 C580.8,24 582.8,18 587,6 H674 C683.9,41 688.6,70 700,70 C711.4,70 716.1,41 726,6 H829 C835.5,30 838.5,48 846,48 C853.5,48 856.5,30 863,6 H950 C954.6,20 956.7,28 962,28 C967.3,28 969.4,20 974,6 H1072 C1079.6,36 1083.2,60 1092,60 C1100.8,60 1104.4,36 1112,6 H1200 Z"/>
 </svg>
 
+<!-- 1b -->
+<section class="reel" id="trailer">
+  <div class="hold">
+    <div class="head">
+      <h2 class="display">The trailer</h2>
+      <p class="run mono">43 seconds · in-engine · sound on</p>
+    </div>
+    <div class="screen">
+      <video controls preload="none" playsinline poster="img/shot_zlorp_impact.jpg"
+             aria-label="Bad Shrooms trailer">
+        <source src="vid/badshrooms_trailer_a.mp4" type="video/mp4">
+        Your browser can't play this video.
+        <a href="vid/badshrooms_trailer_a.mp4">Download it instead.</a>
+      </video>
+    </div>
+    <ul class="state mono">
+      <li class="now"><b>Now</b>Steam page submitted. Wishlisting opens when Valve approves it.</li>
+      <li class="next"><b>This week</b>The free two-player demo goes in for review.</li>
+      <li><b>After that</b>Early Access: seven games, four players, a bigger house.</li>
+    </ul>
+  </div>
+</section>
+
 <!-- 2 -->
 <section class="three">
   <div class="hold">
     <p class="kicker mono">Three games in the demo. Rounds are short, the rematch is instant, and betrayal is the mechanic.</p>
     <div class="trio">
       <article class="plate">
-        <div class="frame"><img src="img/shot_monkey_bowls.jpg" loading="lazy" style="transform-origin:50% 100%" alt="Monkey Bowls: a player about to throw a globe down a lane lined with glowing mushrooms and banana pins"></div>
+        <div class="frame"><img src="img/shot_bowling_impact.jpg" loading="lazy" style="transform-origin:50% 64%" alt="Monkey Bowls: a white starburst blows the banana pins apart at the end of a glowing lane"></div>
         <h2 class="display">Monkey<br>Bowls</h2>
         <p>Banana pins. Maximum judgment.</p>
       </article>
       <article class="plate">
-        <div class="frame"><img src="img/shot_lava_boil.jpg" loading="lazy" style="transform-origin:50% 62%" alt="Floor Is Lava: the apartment floor turned to boiling neon pink lava with a green figure stranded on the dining table"></div>
+        <div class="frame"><img src="img/shot_lava_route.jpg" loading="lazy" style="transform-origin:50% 66%" alt="Floor Is Lava: the apartment floor is a churning orange lava field seen over a drawn pistol, with a kitchen counter as the next safe platform"></div>
         <h2 class="display">Floor<br>Is Lava</h2>
         <p>Shrink. Jump. Steal their island.</p>
       </article>
       <article class="plate">
-        <div class="frame"><img src="img/shot_zlorp_dash.jpg" loading="lazy" style="transform-origin:38% 78%" alt="Zlorp Dash: a kitchen counter with a bowl ready to grab and an open food order listing banana, onion and carrot"></div>
+        <div class="frame"><img src="img/shot_fridge_hunt.jpg" loading="lazy" style="transform-origin:46% 62%" alt="Zlorp Dash: the open fridge stacked with produce and leftovers while an order card lists the items still needed"></div>
         <h2 class="display">Zlorp<br>Dash</h2>
         <p>Steal the order. Pack the box.</p>
       </article>
     </div>
-    <p class="after">Early Access adds <b>Mecha Chameleon</b>, <b>Snack Heist</b> and <b>Gun Box Gallery</b>, a bigger house, and four players.</p>
+    <p class="after">Early Access takes it to <b>seven games</b> — <b>Mecha Chameleon</b>, <b>Snack Heist</b>, <b>Gun Box Gallery</b> and one more — plus a bigger house and four players.</p>
   </div>
 </section>
 
@@ -244,7 +296,7 @@
       <p>No points race. Every win pours <strong>loosh</strong> into one shared litre. When it brims the night ends — and the room has been warping the whole time you weren't looking.</p>
     </div>
     <figure>
-      <img src="img/shot_jar_debrief.jpg" loading="lazy" alt="Floor Is Lava result card: CrunchRock wins and pours 200 millilitres into the shared loosh jar, reading 400 of 1000">
+      <img src="img/shot_zlorp_impact.jpg" loading="lazy" alt="A white impact starburst erupts against Zlorp in a hallway whose walls have melted into churning yellow and purple patterns">
     </figure>
   </div>
 </section>
@@ -254,6 +306,7 @@
   <div class="hold">
     <h2 class="display">Bad Shrooms is coming to Steam.</h2>
     <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+    <p class="mono note">The page is in review at Valve — the button opens the moment they approve it.</p>
   </div>
 </section>
 
