@@ -64,6 +64,16 @@ Owner-set 2026-08-15, permanent, no exceptions. Full table with reasons and repl
    cards. Structure follows what we actually have — the trailer, the three games, the jar, the
    schedule. Numbers live in sentences, not in bordered rectangles.
 6. **Small light-grey text.** The Grey Law, below.
+7. **Everything in patterns of three.** Tricolon sentences, three-sentence staccato, three-item
+   lists, three-column grids, three-beat taglines. **Budget: one three per page**, and only when the
+   world actually has three of that thing — the demo really does have three minigames, so the three
+   plates are legitimate and they are this page's one. **Subtraction test: delete one of the three.
+   If nothing is lost, it was rhythm — leave it deleted.** Then write the line at its natural uneven
+   length instead of clipping it to two.
+
+**Register reference: [aggrocrab.com](https://aggrocrab.com).** Flat, uneven, conversational game
+copy, one game per row in alternating layout rather than a symmetric card grid, one CTA, and no
+balanced-for-the-sake-of-balance anything. That is the target voice for this site.
 
 **The test for anything not on the list: would a model produce this on its first try?** If yes, it
 needs a reason to exist beyond looking finished.
