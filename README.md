@@ -47,6 +47,27 @@ Baloo 2 for body, JetBrains Mono for the technical voice — facts, labels, date
 Sticker language throughout: 2.5px ink borders with a hard offset shadow, no blur, no gradient
 except the poster's foot.
 
+### The clanker tells — banned, all six
+
+A design move that reads as machine-generated because it is what every model reaches for first.
+Owner-set 2026-08-15, permanent, no exceptions. Full table with reasons and replacements:
+`marketing/BRAND.md` §0.1 in the game repo.
+
+1. **A sans-serif paired with a serif.** Titan One, Baloo 2, JetBrains Mono. No serif on this site.
+2. **These • weird • dots • everywhere.** Write the sentence. Real punctuation, or a line break.
+3. **An icon in a rounded square, inside a box that is also a rounded square.** Our chrome is square
+   — 2.5px ink borders, hard offset shadows, `border-radius:2px` at most. Images are real captures
+   from the game, never icons.
+4. **ALL-CAPS EYEBROW TEXT THAT ENDS WITH AN EM DASH —.** The headline is the headline. `.kicker`
+   is a plain sentence in mono and stays that way.
+5. **The generic skeleton:** stats in the hero in a box, a numbered "our process" section, service
+   cards. Structure follows what we actually have — the trailer, the three games, the jar, the
+   schedule. Numbers live in sentences, not in bordered rectangles.
+6. **Small light-grey text.** The Grey Law, below.
+
+**The test for anything not on the list: would a model produce this on its first try?** If yes, it
+needs a reason to exist beyond looking finished.
+
 ### The Grey Law — binding
 
 **No dimmed text. Anywhere. Ever.** No faded cream on the dark plates, no `--ink-70` on the paper,
