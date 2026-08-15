@@ -39,10 +39,18 @@ python -m http.server 8901 --bind 127.0.0.1
 
 ## The design
 
-Inverted canon palette: **BoneCream is the paper, CaveInk is the ink.** ToxicLime and SunsetOrange
-are too light to carry text on cream, so they are fills only. ShroomPurple is the one accent that
-works as type. AlienTeal appears only on the dark plates, where Zlorp lives. Titan One for display,
-Baloo 2 for body, JetBrains Mono for the technical voice — facts, labels, dates, nav.
+Inverted canon palette: **BoneCream is the paper, CaveInk is the ink.**
+
+**All text on the paper field is ink.** Not purple, not lime, not orange — owner ruling,
+2026-08-15. The colours are fills, borders, knockouts and underlines only: a lime highlight *behind*
+ink type is right, lime type is not. Emphasis comes from weight, and links are identified by an
+underline rather than a hue. On the dark plates, cream carries the type and AlienTeal belongs to
+Zlorp alone.
+
+**No background pattern on the paper.** The dot grid is gone and does not come back.
+
+Titan One for display, Baloo 2 for body, JetBrains Mono for the technical voice — facts, labels,
+dates, nav.
 
 Sticker language throughout: 2.5px ink borders with a hard offset shadow, no blur, no gradient
 except the poster's foot.
