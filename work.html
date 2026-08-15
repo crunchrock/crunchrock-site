@@ -22,6 +22,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    /* TEXT ON PAPER IS INK — not purple, not lime (owner, 2026-08-15).
+       The colours are fills, borders and highlights only. */
     --paper:#F6EFDD;
     --ink:#14102B;
     --navy:#241E4E;
@@ -36,14 +38,12 @@
     font-family:'Baloo 2',system-ui,sans-serif;
     font-size:clamp(1.05rem,.5vw + .95rem,1.15rem);line-height:1.5;
     overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(rgba(20,16,43,.085) 1px, transparent 1px);
-    background-size:23px 23px;
   }
   ::selection{background:var(--lime);color:var(--ink)}
   img,video{max-width:100%;height:auto;display:block}
   /* AlienTeal is Zlorp's alone and he does not work here. */
-  a{color:var(--purple)}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-offset:4px}
+  a{color:var(--ink)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
 
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;
         letter-spacing:-.01em;line-height:1.5}
@@ -72,7 +72,7 @@
   .bar .who img{width:30px}
   .bar nav{display:flex;gap:1.5rem;align-items:center}
   .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700}
-  .bar nav a:hover{color:var(--purple)}
+  .bar nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
   @media (max-width:560px){.bar .who span{display:none}}
 
   /* ---------------- the statement ----------------
@@ -109,7 +109,7 @@
   .job .meta{margin-top:.5rem;color:var(--ink)}
   .job p{margin-top:.7rem;color:var(--ink);max-width:40ch}
   .job .shipped{margin-top:.7rem;color:var(--ink);max-width:40ch}
-  .job .shipped b{color:var(--purple);font-weight:700}
+  .job .shipped b{color:var(--ink);font-weight:700}
   /* The one job with no usable capture runs on the writing. */
   .job.nocap .frame{display:flex;align-items:center;padding:clamp(1.2rem,2vw,2rem);
                     background:var(--ink);box-shadow:7px 7px 0 var(--ink)}
@@ -132,7 +132,7 @@
   .ours .when{margin-top:.4rem;color:var(--ink)}
   .ours p{margin-top:.6rem;color:var(--ink);max-width:none}
   .ours a{display:inline-block;margin-top:.7rem;font-weight:700;text-decoration:none;
-          border-bottom:2.5px solid var(--purple)}
+          border-bottom:2.5px solid var(--ink)}
 
   /* ---------------- close ---------------- */
   .close{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
@@ -150,7 +150,7 @@
 
   footer{border-top:2px solid var(--ink);padding-block:1.6rem 2.4rem}
   footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;justify-content:space-between}
-  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--purple)}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
   footer .links{display:flex;gap:1.4rem;flex-wrap:wrap}
 
   @media (prefers-reduced-motion: reduce){

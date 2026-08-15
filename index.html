@@ -23,9 +23,10 @@
 <style>
   :root{
     /* Canon palette, field inverted: BoneCream is the paper, CaveInk is the ink.
-       ToxicLime and SunsetOrange are too light to carry text on cream — they are
-       fills only. ShroomPurple is the one accent that reads as type here.
-       AlienTeal only appears on the dark plates, where Zlorp lives. */
+       TEXT ON PAPER IS INK. Not purple, not lime, not orange — owner, 2026-08-15.
+       The colours are fills, borders and highlights only: lime knockouts, the
+       button, the bleed. Emphasis comes from weight, not hue. AlienTeal only
+       appears on the dark plates, where Zlorp lives. */
     --paper:#F6EFDD;
     --ink:#14102B;
     --navy:#241E4E;
@@ -42,8 +43,6 @@
     font-family:'Baloo 2',system-ui,sans-serif;
     font-size:clamp(1.05rem,.5vw + .95rem,1.15rem);line-height:1.5;
     overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(rgba(20,16,43,.085) 1px, transparent 1px);
-    background-size:23px 23px;
   }
   ::selection{background:var(--lime);color:var(--ink)}
   img{max-width:100%;height:auto;display:block}
@@ -55,8 +54,8 @@
   .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;
            text-transform:uppercase;line-height:.92}
 
-  a{color:var(--purple)}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-offset:4px}
+  a{color:var(--ink)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
 
   .hold{max-width:1240px;margin:0 auto;padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
 
@@ -79,7 +78,7 @@
   .bar nav{display:flex;gap:1.5rem;align-items:center}
   .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700;
              letter-spacing:.02em}
-  .bar nav a:hover{color:var(--purple)}
+  .bar nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
   @media (max-width:560px){.bar .who span{display:none}}
 
   /* ---------------- 1. the poster ---------------- */
@@ -172,7 +171,7 @@
   .after{margin-top:clamp(2.2rem,5vh,3.2rem);padding-top:clamp(1.2rem,2.4vh,1.7rem);
          border-top:2px solid var(--ink);max-width:36ch;color:var(--ink);
          font-size:1.24em;line-height:1.34;text-wrap:balance}
-  .after b{color:var(--purple);font-weight:700}
+  .after b{color:var(--ink);font-weight:700}
 
   /* ---------------- 3. the jar ---------------- */
   .jar{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
@@ -195,8 +194,8 @@
   footer{border-top:2px solid var(--ink);padding-block:1.6rem 2.4rem}
   footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;
                justify-content:space-between}
-  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--purple)}
-  footer a:hover{color:var(--purple)}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+  footer a:hover{border-bottom-color:var(--lime)}
   footer .links{display:flex;gap:1.4rem;flex-wrap:wrap}
 
   @media (prefers-reduced-motion: reduce){
@@ -296,7 +295,7 @@
   <div class="hold">
     <h2 class="display">Bad Shrooms is coming to Steam.</h2>
     <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-    <p class="mono note">The page is in review at Valve — the button opens the moment they approve it.</p>
+    <p class="mono note">Wishlisting opens as soon as Valve approves the page.</p>
   </div>
 </section>
 
