@@ -138,16 +138,11 @@
   .screen video{width:100%;height:auto;aspect-ratio:16/9;display:block;background:var(--ink)}
 
   /* ---------------- the state of play ----------------
-     The schedule, in public, in the technical voice. One line changes when a
-     stage moves; nothing else on the page has to. */
-  .state{margin-top:clamp(1.6rem,4vh,2.4rem);display:grid;gap:.9rem}
-  @media (min-width:760px){.state{grid-template-columns:repeat(3,1fr)}}
-  .state li{list-style:none;border:2.5px solid var(--ink);padding:.9rem 1.1rem;
-            background:var(--paper)}
-  .state li b{display:block;text-transform:uppercase;letter-spacing:.04em;
-              margin-bottom:.25rem}
-  .state li.now{background:var(--lime)}
-  .state li.next{background:var(--orange)}
+     The schedule, in public, in the technical voice. It is a sentence, not a
+     row of tiles: coloured boxes turned three ordinary facts into a progress
+     tracker nobody asked for, and made them harder to read than plain type. */
+  .state{margin-top:clamp(1.3rem,3vh,1.9rem);max-width:52ch}
+  .state b{background:var(--lime);box-shadow:0 0 0 3px var(--lime)}
 
   /* ---------------- 2. the three ---------------- */
   .three{padding-block:clamp(3rem,8vh,5.5rem)}
@@ -157,14 +152,13 @@
         width:100vw;margin-inline:calc(50% - 50vw);
         padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
   @media (min-width:820px){.trio{grid-template-columns:repeat(3,1fr)}}
-  /* Every capture has the score bar burned into the top, and Monkey Bowls also
-     carries a Zlorp dialogue box over its top third. Zoom-framing inside a fixed
-     window pushes that chrome out without flattening the plate into a strip.
-     Per-plate transform-origin below does the framing. Replace the whole
-     mechanism the day there are clean captures. */
+  /* The plate images are pre-cropped to 3:2 clear of the HUD (plate_*.jpg), so
+     the old zoom-framing hack is gone — no transform, no per-plate origin. If a
+     new capture arrives with a score bar in it, crop the file, don't scale it
+     inside the window. */
   .plate .frame{aspect-ratio:3/2;overflow:hidden;
                 border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink)}
-  .plate .frame img{width:100%;height:100%;object-fit:cover;transform:scale(1.5)}
+  .plate .frame img{width:100%;height:100%;object-fit:cover}
   /* Single column below 820: keep the plates cinematic so three of them stacked
      don't turn the page back into a scroll. */
   @media (max-width:819px){.plate .frame{aspect-ratio:2/1}}
@@ -231,7 +225,7 @@
   <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
   <p class="say">Your <span class="loose"><i>friend</i></span> is the difficulty setting.</p>
   <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-  <p class="fact mono">Free demo. Two players. One couch or two Steam seats.</p>
+  <p class="fact mono">A free demo for two players, on one couch or over Steam.</p>
 </header>
 
 <svg class="bleed" viewBox="0 0 1200 104" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -243,7 +237,7 @@
   <div class="hold">
     <div class="head">
       <h2 class="display">The trailer</h2>
-      <p class="run mono">43 seconds, in-engine, sound on.</p>
+      <p class="run mono">43 seconds. Put the sound on.</p>
     </div>
     <div class="screen">
       <video controls preload="none" playsinline poster="img/shot_zlorp_impact.jpg"
@@ -253,36 +247,33 @@
         <a href="vid/badshrooms_trailer_a.mp4">Download it instead.</a>
       </video>
     </div>
-    <ul class="state mono">
-      <li class="now"><b>Now</b>Steam page submitted. Wishlisting opens when Valve approves it.</li>
-      <li class="next"><b>This week</b>The free two-player demo goes in for review.</li>
-      <li><b>After that</b>Early Access: seven games, four players, a bigger house.</li>
-    </ul>
+    <p class="state mono">The Steam page is <b>sitting with Valve</b> right now, so the wishlist
+    button won't work until they wave it through. The free demo goes in for review this week.</p>
   </div>
 </section>
 
 <!-- 2 -->
 <section class="three">
   <div class="hold">
-    <p class="kicker mono">Three games in the demo. Rounds are short, the rematch is instant, and betrayal is the mechanic.</p>
+    <p class="kicker mono">Three games in the demo. Rounds run short enough that the rematch starts before anyone has finished complaining about the last one.</p>
     <div class="trio">
       <article class="plate">
-        <div class="frame"><img src="img/shot_bowling_impact.jpg" loading="lazy" style="transform-origin:50% 64%" alt="Monkey Bowls: a white starburst blows the banana pins apart at the end of a glowing lane"></div>
+        <div class="frame"><img src="img/plate_bowling.jpg" loading="lazy" alt="Monkey Bowls: two glowing lanes laid across the living-room floor, lined with oversized purple and red mushrooms, banana pins waiting at the far end"></div>
         <h2 class="display">Monkey<br>Bowls</h2>
         <p>Banana pins. Maximum judgment.</p>
       </article>
       <article class="plate">
-        <div class="frame"><img src="img/shot_lava_route.jpg" loading="lazy" style="transform-origin:50% 66%" alt="Floor Is Lava: the apartment floor is a churning orange lava field seen over a drawn pistol, with a kitchen counter as the next safe platform"></div>
+        <div class="frame"><img src="img/plate_lava.jpg" loading="lazy" alt="Floor Is Lava: the apartment floor is a churning orange lava field seen over a drawn pistol, with a kitchen counter as the next safe platform"></div>
         <h2 class="display">Floor<br>Is Lava</h2>
-        <p>Shrink. Jump. Steal their island.</p>
+        <p>Shrink to flea size and take their island.</p>
       </article>
       <article class="plate">
-        <div class="frame"><img src="img/shot_fridge_hunt.jpg" loading="lazy" style="transform-origin:46% 62%" alt="Zlorp Dash: the open fridge stacked with produce and leftovers while an order card lists the items still needed"></div>
+        <div class="frame"><img src="img/plate_dash.jpg" loading="lazy" alt="Zlorp Dash: the open fridge stacked with produce and leftovers, a prompt to grab the butter, and a pistol still in hand"></div>
         <h2 class="display">Zlorp<br>Dash</h2>
         <p>Steal the order. Pack the box.</p>
       </article>
     </div>
-    <p class="after">Early Access takes it to <b>seven games</b> — <b>Mecha Chameleon</b>, <b>Snack Heist</b>, <b>Gun Box Gallery</b> and one more — plus a bigger house and four players.</p>
+    <p class="after">Early Access takes it to <b>seven games</b> in a bigger house, for four players. <b>Mecha Chameleon</b> and <b>Snack Heist</b> are next in, then <b>Gun Box Gallery</b>, plus one we haven't settled on yet.</p>
   </div>
 </section>
 
