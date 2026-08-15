@@ -28,7 +28,6 @@
     --lime:#B7E561;
     --purple:#6A3FA0;
     --cream:#F6EFDD;
-    --ink-70:rgba(20,16,43,.72);
     --rule:rgba(20,16,43,.20);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -81,7 +80,7 @@
      studio has to sell. It is allowed to be very large. */
   .statement{padding-block:clamp(3rem,9vh,6rem) clamp(2rem,5vh,3rem)}
   .statement h1{font-size:clamp(2.4rem,8.2vw,6.4rem);max-width:13ch}
-  .statement .lede{margin-top:1.6rem;max-width:56ch;color:var(--ink-70)}
+  .statement .lede{margin-top:1.6rem;max-width:56ch;color:var(--ink)}
   .statement .lede b{color:var(--ink);font-weight:700}
 
   /* The reel: three plates of real work on paper, same sticker treatment as
@@ -107,14 +106,14 @@
          box-shadow:7px 7px 0 var(--ink);background:var(--ink)}
   .frame img,.frame video{width:100%;height:100%;object-fit:cover}
   .job h2{margin-top:1.3rem;font-size:clamp(1.25rem,2.1vw,1.7rem)}
-  .job .meta{margin-top:.5rem;color:var(--ink-70)}
-  .job p{margin-top:.7rem;color:var(--ink-70);max-width:40ch}
+  .job .meta{margin-top:.5rem;color:var(--ink)}
+  .job p{margin-top:.7rem;color:var(--ink);max-width:40ch}
   .job .shipped{margin-top:.7rem;color:var(--ink);max-width:40ch}
   .job .shipped b{color:var(--purple);font-weight:700}
   /* The one job with no usable capture runs on the writing. */
   .job.nocap .frame{display:flex;align-items:center;padding:clamp(1.2rem,2vw,2rem);
                     background:var(--ink);box-shadow:7px 7px 0 var(--ink)}
-  .job.nocap .frame p{color:rgba(246,239,221,.92);max-width:none;
+  .job.nocap .frame p{color:var(--cream);max-width:none;
                       font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;
                       line-height:1.55}
 
@@ -122,23 +121,23 @@
   .tl{margin-top:1.6rem;border-top:2px solid var(--ink)}
   .tl-row{display:grid;gap:.1rem 1.6rem;padding:.62rem 0;border-bottom:1px solid var(--rule)}
   @media (min-width:680px){.tl-row{grid-template-columns:12.5rem 1fr;align-items:baseline}}
-  .tl-when{color:var(--ink-70);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tl-when{color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   .tl-what b{font-weight:700}
-  .tl-what span{color:var(--ink-70)}
+  .tl-what span{color:var(--ink)}
 
   /* ---------------- ours ---------------- */
   .ours{display:grid;gap:clamp(1.4rem,3vw,2.4rem);margin-top:1.8rem}
   @media (min-width:780px){.ours{grid-template-columns:repeat(3,1fr)}}
   .ours h3{font-size:clamp(1.15rem,1.9vw,1.45rem);margin-top:1rem}
-  .ours .when{margin-top:.4rem;color:var(--ink-70)}
-  .ours p{margin-top:.6rem;color:var(--ink-70);max-width:none}
+  .ours .when{margin-top:.4rem;color:var(--ink)}
+  .ours p{margin-top:.6rem;color:var(--ink);max-width:none}
   .ours a{display:inline-block;margin-top:.7rem;font-weight:700;text-decoration:none;
           border-bottom:2.5px solid var(--purple)}
 
   /* ---------------- close ---------------- */
   .close{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
   .close h2{font-size:clamp(1.9rem,5vw,3.4rem);max-width:16ch}
-  .close p{margin-top:1.2rem;color:rgba(246,239,221,.92)}
+  .close p{margin-top:1.2rem;color:var(--cream)}
   .close .proof{margin-top:1.4rem;color:var(--cream)}
   .close .proof b{color:var(--lime);font-weight:700;font-variant-numeric:tabular-nums}
   .close .btn{border-color:var(--cream);box-shadow:6px 6px 0 var(--cream)}
@@ -192,7 +191,7 @@
 <section class="band" id="work">
   <div class="hold">
     <h2 class="display" style="font-size:clamp(1.7rem,4vw,2.8rem)">Selected work</h2>
-    <p class="mono" style="margin-top:.8rem;color:var(--ink-70)">Six jobs, and what shipped.</p>
+    <p class="mono" style="margin-top:.8rem;color:var(--ink)">Six jobs, and what shipped.</p>
 
     <div class="jobs">
       <article class="job">
@@ -254,7 +253,7 @@
 <section class="band" style="padding-top:0">
   <div class="hold">
     <h2 class="display" style="font-size:clamp(1.7rem,4vw,2.8rem)">Track record</h2>
-    <p class="mono" style="margin-top:.8rem;color:var(--ink-70)">Dated off commits, not memory. It overlaps, because contract work never queues politely.</p>
+    <p class="mono" style="margin-top:.8rem;color:var(--ink)">Dated off commits, not memory. It overlaps, because contract work never queues politely.</p>
     <div class="tl mono">
       <div class="tl-row"><span class="tl-when">2023-07 → 08</span><span class="tl-what"><b>SYKY Space</b> <span>WebGL brand world, shaders, optimisation</span></span></div>
       <div class="tl-row"><span class="tl-when">2023-09</span><span class="tl-what"><b>URP Cyberpunk City</b> <span>neon environment art, URP lighting</span></span></div>
@@ -278,7 +277,7 @@
 <section class="band" style="padding-top:0">
   <div class="hold">
     <h2 class="display" style="font-size:clamp(1.7rem,4vw,2.8rem)">Our own games</h2>
-    <p class="mono" style="margin-top:.8rem;color:var(--ink-70)">The client work pays for the studio. This is what it's for.</p>
+    <p class="mono" style="margin-top:.8rem;color:var(--ink)">The client work pays for the studio. This is what it's for.</p>
     <div class="ours">
       <article>
         <div class="frame"><img src="img/cover_dusk_house.jpg" loading="lazy" style="object-position:50% 32%" alt="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
