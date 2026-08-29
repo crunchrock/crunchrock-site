@@ -100,15 +100,19 @@ dimming them. Source: `marketing/BRAND.md` §1 in the game repo, owner-directed 
 
 ## Assets
 
-- **Art masters live in the game repo**, at `Assets/_BadShrooms/Art/Generated/` (wordmark, cover,
-  studio mark). Web copies here are exports. Re-export; never redraw.
-- **Stills** come from owner-selected capture sets, currently
-  `marketing/assets/steam/review/final-10-owner-selected-2026-08-14/` in the game repo — the same
-  ten that went to Valve. Export at ~1600px, JPEG q≈4.
-- Every capture has the score bar burned into the top, and some carry a Zlorp dialogue box. The
-  plates zoom-frame inside a fixed window (`transform:scale(1.5)` plus a per-plate
-  `transform-origin`) to push that chrome out of shot. Replace the mechanism the day there are
-  clean captures.
+- **The wordmark** is `img/logo_bad_shrooms.png`: the keeper (logo_B_01, 2026-08-28) from
+  `Assets/_BadShrooms/Art/Generated/logo_bad_shrooms_dott.png` in the game repo, with the same
+  subtle deep-navy silhouette the Steam capsule exporter puts under it (offset ~1.2% x / 2.2% y,
+  blurred, 85% ink). Never redraw; re-export from the master if the keeper changes.
+- **The hero** is in-engine, not painted: Zlorp in the kitchen, the approved capsule plate
+  (`marketing/assets/steam/2026-08-28-cig3-approved/`). The 4K source is
+  `marketing/assets/steam/raw/2026-08-28-kitchen-owner-v3/cigarette-mid3_o0-owner_4k.png` and the
+  phone crop is its `_port` sibling. The painted dusk house (`cover_dusk_house.jpg`) was retired
+  on 2026-08-29 and is no longer referenced.
+- **Stills** (`img/new_*.jpg`) are frames pulled from the owner's clip folders
+  (`Videos/Bad Shrooms Trailer Clips` and `Videos/Bad Shrooms Clips`), chosen by eye off contact
+  sheets, HUD cropped out (score bar top ~13%, dialogue box bottom), exported at ~1600px JPEG q86.
+  The old `shot_*.jpg` and `plate_*.jpg` files are no longer referenced.
 
 ### The trailer
 
@@ -130,12 +134,13 @@ Keep it under ~25 MB. GitHub hard-limits a file at 100 MB.
 
 ## What changes when a release stage moves
 
-The public schedule lives in **one place**: the `.state` list under the trailer. One line changes
+The public schedule lives in **one place**: the `.state` line under the poster. One line changes
 per stage; nothing else on the page has to.
 
-- **Valve approves the store page** → the Wishlist buttons simply start working (they 404 until
-  then). Remove the "in review" note under the closing button, and update the first `.state` item.
-- **Demo released** → second `.state` item becomes the demo link; the Steam page has a matching
+- **Demo submitted, in Valve review** → the `.state` line says so and the close says the demo goes
+  public when Valve clears it. This is the current state (submitted 2026-08-29).
+- **Demo released** → the `.state` line becomes the demo link, the close button can point at it,
+  and the trailer section swaps to Trailer B when it is cut. The Steam page has a matching
   before/after copy switch in `marketing/assets/steam/copy-drafts.md`.
 
 Release truth comes from `marketing/00_START_HERE.md` in the game repo. Never let this page get

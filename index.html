@@ -4,29 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bad Shrooms — Crunchrock Games</title>
-<meta name="description" content="Bad Shrooms: a first-person party game in one apartment that will not stay arranged. Free demo, two players, one couch or two Steam seats.">
+<meta name="description" content="Bad Shrooms: a first-person party game in an apartment that will not stay arranged, run by the alien who lives there. Free two-player demo, one couch or two Steam seats.">
 <link rel="icon" type="image/png" href="img/favicon_shroom.png">
 <meta property="og:title" content="Bad Shrooms — Crunchrock Games">
-<meta property="og:description" content="Your friend is the difficulty setting. First-person party chaos in one apartment. Wishlist on Steam.">
+<meta property="og:description" content="Your friend is the difficulty setting. First-person party chaos in one apartment, hosted by the alien who lives there. Wishlist on Steam.">
 <meta property="og:image" content="https://crunchrock.games/img/og-game.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Bad Shrooms wordmark over painted dusk key art of the house, windows glowing against a purple sky">
+<meta property="og:image:alt" content="The Bad Shrooms wordmark over Zlorp, a green alien, leaning on a kitchen counter under purple light">
 <meta property="og:site_name" content="Crunchrock Games">
 <meta property="og:url" content="https://crunchrock.games/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="The Bad Shrooms wordmark over painted dusk key art of the house">
+<meta name="twitter:image:alt" content="The Bad Shrooms wordmark over Zlorp in the kitchen">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     /* Canon palette, field inverted: BoneCream is the paper, CaveInk is the ink.
-       TEXT ON PAPER IS INK. Not purple, not lime, not orange — owner, 2026-08-15.
-       The colours are fills, borders and highlights only: lime knockouts, the
-       button, the bleed. Emphasis comes from weight, not hue. AlienTeal only
-       appears on the dark plates, where Zlorp lives. */
+       TEXT ON PAPER IS INK. Not purple, not lime, not orange (owner, 2026-08-15).
+       The colours are fills, borders and highlights only. Emphasis comes from
+       weight, not hue. AlienTeal only appears on the dark plates, where Zlorp lives. */
     --paper:#F6EFDD;
     --ink:#14102B;
     --navy:#241E4E;
@@ -69,6 +68,11 @@
   .btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
   .btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
 
+  /* sticker frame for every capture */
+  .frame{overflow:hidden;border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink);
+         background:var(--ink);line-height:0}
+  .frame img{width:100%;height:100%;object-fit:cover}
+
   /* ---------------- top bar ---------------- */
   .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
   .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem;
@@ -79,39 +83,41 @@
   .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700;
              letter-spacing:.02em}
   .bar nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
-  @media (max-width:560px){.bar .who span{display:none}}
+  @media (max-width:560px){.bar .who span{display:none}.bar nav{gap:.8rem;font-size:.82rem}}
 
-  /* ---------------- 1. the poster ---------------- */
+  /* ---------------- 1. the poster ----------------
+     In-engine: Zlorp in the kitchen, the same plate as the Steam capsule.
+     The old painted key art is retired (2026-08-29). */
   .poster{position:relative;background:var(--ink);isolation:isolate;overflow:hidden;
-          min-height:min(86svh,820px);display:flex;flex-direction:column;
-          align-items:center;justify-content:flex-end;text-align:center;
-          padding:clamp(4rem,12vh,8rem) clamp(1.1rem,4vw,2.4rem) clamp(3rem,9vh,5rem)}
+          min-height:min(92svh,900px);display:flex;flex-direction:column;
+          justify-content:flex-end;
+          padding:clamp(4rem,12vh,8rem) 0 clamp(3rem,9vh,5rem)}
   .poster-art{position:absolute;inset:0;z-index:-2;
-              background:url('img/cover_dusk_house.jpg') center 26%/cover no-repeat}
-  /* Just enough lift at the foot to seat the type — the art is not muffled. */
+              background:url('img/cover_zlorp_kitchen.jpg') 62% 40%/cover no-repeat}
+  @media (max-width:700px){.poster-art{background-image:url('img/cover_zlorp_kitchen_portrait.jpg');
+                                       background-position:50% 30%}}
+  /* Just enough lift at the foot to seat the type. The art is not muffled. */
   .poster-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
-     transparent 0%, transparent 46%, rgba(20,16,43,.58) 78%, rgba(20,16,43,.88) 100%)}
-  .wordmark{width:min(84vw,560px);filter:drop-shadow(0 10px 34px rgba(20,16,43,.7))}
+     transparent 0%, transparent 50%, rgba(20,16,43,.55) 80%, rgba(20,16,43,.9) 100%)}
+  .poster .hold{width:100%}
+  .wordmark{width:min(78vw,520px)}
   .say{margin-top:1.4rem;color:var(--cream);font-family:'Titan One',system-ui,sans-serif;
        font-weight:400;font-size:clamp(1.4rem,3.4vw,2.3rem);line-height:1.08;max-width:17ch;
        text-shadow:0 3px 20px rgba(20,16,43,.9)}
   .poster .btn{margin-top:1.9rem;border-color:var(--cream);box-shadow:6px 6px 0 var(--cream)}
   .poster .btn:hover{box-shadow:3px 3px 0 var(--cream)}
   .poster .btn:active{box-shadow:0 0 0 var(--cream)}
-  .poster .fact{margin-top:1.5rem;color:var(--cream);
+  .poster .fact{margin-top:1.5rem;color:var(--cream);max-width:46ch;
                 text-shadow:0 2px 12px rgba(20,16,43,.9)}
 
   /* ---------------- the loose friend ----------------
      The game's verb is grab-and-throw, so the one interactive thing on the
-     site is the word "friend" — pinned, already crooked, and flingable. It
-     settles back askew because your friend never settles back straight.
-     The word stays in normal flow and stays selectable; only the inner
-     span rotates, so the sentence never reflows. */
+     site is the word "friend": pinned, already crooked, and flingable. It
+     settles back askew because your friend never settles back straight. */
   .loose{display:inline-block;position:relative}
   .loose i{display:inline-block;font-style:normal;transform-origin:14% 6%;
            cursor:grab;touch-action:none;will-change:transform}
   .loose i:active{cursor:grabbing}
-  /* the pin it hangs off */
   .loose::before{content:'';position:absolute;left:calc(14% - 3px);top:-2px;
                  width:7px;height:7px;border-radius:50%;background:var(--lime);
                  box-shadow:0 0 0 2px rgba(20,16,43,.55);z-index:2;pointer-events:none}
@@ -123,70 +129,89 @@
   .bleed{display:block;width:100%;height:clamp(30px,3.4vw,58px);color:var(--lime);
          margin-top:-1px}
 
-  /* ---------------- 1b. the trailer ----------------
-     Self-hosted. No YouTube embed: no third-party cookies, no "watch on
-     YouTube" interstitial, and the poster frame is a still we chose. The file
-     is a 16 MB CRF-26 encode and preload is none, so nothing downloads until
-     someone presses play. */
-  .reel{padding-block:clamp(3rem,8vh,5rem)}
-  .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem}
-  .reel h2{font-size:clamp(1.9rem,4.4vw,3rem);color:var(--ink)}
-  .reel .run{color:var(--ink)}
-  .screen{margin-top:clamp(1.4rem,3.4vh,2.2rem);border:2.5px solid var(--ink);
-          box-shadow:9px 9px 0 var(--ink);background:var(--ink);line-height:0}
-  .screen video{width:100%;height:auto;aspect-ratio:16/9;display:block;background:var(--ink)}
-
   /* ---------------- the state of play ----------------
-     The schedule, in public, in the technical voice. It is a sentence, not a
-     row of tiles: coloured boxes turned three ordinary facts into a progress
-     tracker nobody asked for, and made them harder to read than plain type. */
-  .state{margin-top:clamp(1.3rem,3vh,1.9rem);max-width:52ch}
+     The schedule, in public, in the technical voice. A sentence, not tiles. */
+  .state{padding-block:clamp(2rem,5vh,3rem) 0}
+  .state p{max-width:62ch}
   .state b{background:var(--lime);box-shadow:0 0 0 3px var(--lime)}
 
-  /* ---------------- 2. the three ---------------- */
-  .three{padding-block:clamp(3rem,8vh,5.5rem)}
-  .kicker{max-width:46ch}
-  /* Breaks the measure so the plates run the full width of the paper. */
-  .trio{display:grid;gap:clamp(1.4rem,2.6vw,2.2rem);margin-top:clamp(1.6rem,4vh,2.6rem);
-        width:100vw;margin-inline:calc(50% - 50vw);
-        padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
-  @media (min-width:820px){.trio{grid-template-columns:repeat(3,1fr)}}
-  /* The plate images are pre-cropped to 3:2 clear of the HUD (plate_*.jpg), so
-     the old zoom-framing hack is gone — no transform, no per-plate origin. If a
-     new capture arrives with a score bar in it, crop the file, don't scale it
-     inside the window. */
-  .plate .frame{aspect-ratio:3/2;overflow:hidden;
-                border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink)}
-  .plate .frame img{width:100%;height:100%;object-fit:cover}
-  /* Single column below 820: keep the plates cinematic so three of them stacked
-     don't turn the page back into a scroll. */
-  @media (max-width:819px){.plate .frame{aspect-ratio:2/1}}
-  .plate h2{margin-top:1.5rem;font-size:clamp(1.7rem,3.3vw,2.5rem);color:var(--ink)}
-  /* One line each, so the three read as a set instead of a ragged 2/2/2. */
-  /* Full-strength ink. THE GREY LAW (BRAND.md §1): text is never dimmed —
-     hierarchy comes from size, weight, case and hue, never from opacity. */
-  .plate p{margin-top:.45rem;color:var(--ink);max-width:none;text-wrap:balance}
-  /* This is the roadmap, not a footnote — it gets size, ink, and the three new
-     names carrying the colour. */
-  .after{margin-top:clamp(2.2rem,5vh,3.2rem);padding-top:clamp(1.2rem,2.4vh,1.7rem);
-         border-top:2px solid var(--ink);max-width:36ch;color:var(--ink);
-         font-size:1.24em;line-height:1.34;text-wrap:balance}
-  .after b{color:var(--ink);font-weight:700}
+  /* ---------------- 2. the house ----------------
+     An uneven mosaic, because the apartment is not a grid either. */
+  .house{padding-block:clamp(3rem,8vh,5rem)}
+  .house h2{font-size:clamp(2rem,5.2vw,3.8rem);max-width:15ch}
+  .house .lede{margin-top:1.1rem;max-width:54ch}
+  /* A direct child of the section, so it is full-bleed without the 100vw trick
+     (which mis-centres by half a scrollbar). */
+  .mosaic{display:grid;gap:clamp(1rem,2vw,1.6rem);margin-top:clamp(1.6rem,4vh,2.6rem);
+          padding-inline:clamp(1.1rem,3.4vw,2.4rem);
+          grid-template-columns:repeat(2,1fr)}
+  .mosaic .frame{aspect-ratio:16/9}
+  .mosaic .a{grid-column:1/-1}
+  @media (min-width:820px){
+    .mosaic{grid-template-columns:repeat(6,1fr)}
+    .mosaic .a{grid-column:1/4}
+    .mosaic .b{grid-column:4/7}
+    .mosaic .c{grid-column:1/3}
+    .mosaic .d{grid-column:3/5}
+    .mosaic .e{grid-column:5/7}
+    .mosaic .c,.mosaic .d,.mosaic .e{aspect-ratio:3/2}
+  }
+  .house .cap{margin-top:1.4rem;max-width:56ch}
 
-  /* ---------------- 3. the jar ---------------- */
+  /* ---------------- 3. the games ----------------
+     One game per row, alternating sides, two captures each. The demo has
+     three games; that is this page's one three. */
+  .games{padding-block:clamp(2rem,6vh,4rem) clamp(3rem,8vh,5rem)}
+  .games .kicker{max-width:50ch}
+  .game{display:grid;gap:clamp(1.2rem,3vw,2.4rem);align-items:center;
+        padding-block:clamp(2rem,5vh,3.4rem);border-top:2px solid var(--ink)}
+  .game:first-of-type{margin-top:clamp(1.4rem,4vh,2.4rem)}
+  @media (min-width:820px){
+    .game{grid-template-columns:1.3fr 1fr}
+    .game.flip{grid-template-columns:1fr 1.3fr}
+    .game.flip .words{order:-1}
+  }
+  .game .shots{display:grid;gap:clamp(.9rem,1.6vw,1.3rem);grid-template-columns:1fr}
+  .game .shots .frame:first-child{aspect-ratio:3/2}
+  .game .shots .frame:last-child{aspect-ratio:16/9}
+  @media (min-width:560px){.game .shots{grid-template-columns:1.1fr .9fr;align-items:start}}
+  .game h3{font-size:clamp(2rem,4.6vw,3.4rem)}
+  .game .words p{margin-top:.9rem;max-width:36ch}
+  .game .words .rule{font-weight:700}
+  .after{margin-top:clamp(2rem,5vh,3rem);padding-top:clamp(1.2rem,2.4vh,1.7rem);
+         border-top:2px solid var(--ink);max-width:40ch;
+         font-size:1.2em;line-height:1.34;text-wrap:balance}
+  .after b{font-weight:700}
+
+  /* ---------------- 4. Zlorp and the jar ---------------- */
   .jar{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
-  .jar .hold{display:grid;gap:clamp(2rem,4vw,3.4rem);align-items:center;
-             padding-block:clamp(3.4rem,9vh,6rem)}
-  @media (min-width:900px){.jar .hold{grid-template-columns:1.02fr .98fr}}
+  .jar .hold{padding-block:clamp(3.4rem,9vh,6rem)}
+  .jar .top{display:grid;gap:clamp(2rem,4vw,3.4rem);align-items:center}
+  @media (min-width:900px){.jar .top{grid-template-columns:.98fr 1.02fr}}
   .zlorp{color:var(--teal);font-size:clamp(1.15rem,2vw,1.45rem);font-weight:600;
-         max-width:28ch;margin-bottom:1.2rem}
+         max-width:30ch;margin-bottom:1.2rem}
   .zlorp::before{content:'“'}.zlorp::after{content:'”'}
   .jar h2{font-size:clamp(2.3rem,5.6vw,4.4rem);color:var(--cream)}
   .jar p{margin-top:1.2rem;color:var(--cream);max-width:44ch}
-  .jar img{width:100%;border:2.5px solid var(--cream)}
+  .jar .frame{border-color:var(--cream);box-shadow:7px 7px 0 var(--cream);aspect-ratio:16/9}
+  .jar .warp{display:grid;gap:clamp(1rem,2vw,1.6rem);margin-top:clamp(2rem,5vh,3.2rem)}
+  @media (min-width:700px){.jar .warp{grid-template-columns:1fr 1fr}}
+  .jar .warp p{margin-top:0;grid-column:1/-1;max-width:56ch}
 
-  /* ---------------- 4. the close ---------------- */
-  .close{text-align:center;padding-block:clamp(3.2rem,9vh,5rem)}
+  /* ---------------- 5. the trailer ----------------
+     Trailer A, the interim cut, sits low now. A new one is being cut from
+     the demo build. Self-hosted, preload none. */
+  .reel{padding-block:clamp(3rem,8vh,5rem)}
+  .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem}
+  .reel h2{font-size:clamp(1.9rem,4.4vw,3rem);color:var(--ink)}
+  .reel .head p{max-width:52ch}
+  .screen{margin-top:clamp(1.4rem,3.4vh,2.2rem);border:2.5px solid var(--ink);
+          box-shadow:9px 9px 0 var(--ink);background:var(--ink);line-height:0;
+          max-width:960px}
+  .screen video{width:100%;height:auto;aspect-ratio:16/9;display:block;background:var(--ink)}
+
+  /* ---------------- 6. the close ---------------- */
+  .close{text-align:center;padding-block:clamp(3.2rem,9vh,5rem);border-top:2px solid var(--ink)}
   .close h2{font-size:clamp(1.8rem,4.4vw,3rem);max-width:18ch;margin-inline:auto}
   .close .btn{margin-top:1.8rem}
   .close .note{margin-top:1.2rem;color:var(--ink);max-width:44ch;margin-inline:auto}
@@ -210,6 +235,7 @@
   <div class="hold">
     <a class="who mono" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
     <nav class="mono">
+      <a href="#games">Games</a>
       <a href="#trailer">Trailer</a>
       <a href="work.html">Studio</a>
       <a href="https://store.steampowered.com/app/4995150" rel="noopener">Steam</a>
@@ -219,89 +245,138 @@
 
 <!-- 1 -->
 <header class="poster" id="top">
-  <div class="poster-art" role="img" aria-label="Painted dusk key art of the Bad Shrooms house, warm windows glowing against a purple sky"></div>
+  <div class="poster-art" role="img" aria-label="Zlorp, a tall green alien, leans on the kitchen counter under purple light with a cigarette at his lip"></div>
   <div class="poster-lift" aria-hidden="true"></div>
-  <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
-  <p class="say">Your <span class="loose"><i>friend</i></span> is the difficulty setting.</p>
-  <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-  <p class="fact mono">A free demo for two players, on one couch or over Steam.</p>
+  <div class="hold">
+    <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
+    <p class="say">Your <span class="loose"><i>friend</i></span> is the difficulty setting.</p>
+    <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
+    <p class="fact mono">A first-person party game in one apartment, hosted by the alien who lives there. Free demo for two, on one couch or over Steam.</p>
+  </div>
 </header>
 
 <svg class="bleed" viewBox="0 0 1200 104" preserveAspectRatio="none" aria-hidden="true" focusable="false">
   <path fill="currentColor" d="M1200,0 H0 V6 H70 C77.6,34 81.2,56 90,56 C98.8,56 102.4,34 110,6 H183 C187.9,21 190.3,30 196,30 C201.7,30 204.1,21 209,6 H308 C317.1,47 321.4,82 332,82 C342.6,82 346.9,47 356,6 H455 C460.7,27 463.4,42 470,42 C476.6,42 479.3,27 485,6 H565 C569.2,18 571.2,24 576,24 C580.8,24 582.8,18 587,6 H674 C683.9,41 688.6,70 700,70 C711.4,70 716.1,41 726,6 H829 C835.5,30 838.5,48 846,48 C853.5,48 856.5,30 863,6 H950 C954.6,20 956.7,28 962,28 C967.3,28 969.4,20 974,6 H1072 C1079.6,36 1083.2,60 1092,60 C1100.8,60 1104.4,36 1112,6 H1200 Z"/>
 </svg>
 
-<!-- 1b -->
+<section class="state">
+  <div class="hold">
+    <p class="mono">The free demo is <b>in with Valve</b> for review right now. The Steam page is live and takes wishlists while we wait. A new trailer is being cut from the demo build.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="house">
+  <div class="hold">
+    <h2 class="display">The apartment does not stay an apartment.</h2>
+    <p class="lede">Two of you wake up in loaner bodies in a flat that belongs to Zlorp. He wants a litre of loosh, which is the stuff you leak when you are winning, losing, or getting hit with a bucket. He runs games to get it. The rooms rearrange themselves for whichever game he has picked, and between rounds you can pick up nearly anything and throw it at nearly anyone.</p>
+  </div>
+  <div class="mosaic">
+    <div class="frame a"><img src="img/new_zlorp_armchair.jpg" loading="lazy" alt="Zlorp sitting in an orange armchair under a warm lamp, records stacked beside him and a mushroom growing out of the floor"></div>
+    <div class="frame b"><img src="img/new_charselect.jpg" loading="lazy" alt="The body select screen: a bearded viking and a mustached man in a striped shirt, under the line You can't bring your own body, borrow one of ours"></div>
+    <div class="frame c"><img src="img/new_jar_glow.jpg" loading="lazy" alt="The loosh jar glowing pink on a counter in a purple-washed room"></div>
+    <div class="frame d"><img src="img/new_radio.jpg" loading="lazy" alt="A holographic radio dial floating over an orange globe, tuned to Radiance FM"></div>
+    <div class="frame e"><img src="img/new_palm_heat.jpg" loading="lazy" alt="A hallway in hard yellow light, a Palm Heat hotel poster on the wall and a fern in a frame"></div>
+  </div>
+  <div class="hold">
+    <p class="cap">The walls change with the night. The radio has stations. The jar can be inspected up close. None of it is load-bearing and all of it is throwable.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="games" id="games">
+  <div class="hold">
+    <p class="kicker mono">Three games in the demo. Rounds run short enough that the rematch starts before anyone has finished complaining about the last one.</p>
+
+    <article class="game">
+      <div class="shots">
+        <div class="frame"><img src="img/new_bowls_lanes.jpg" loading="lazy" alt="Monkey Bowls: two glowing lanes laid across the living room floor, lined with oversized spotted mushrooms"></div>
+        <div class="frame"><img src="img/new_bowls_double_strike.jpg" loading="lazy" alt="Two white starbursts as banana pins scatter on both lanes at once"></div>
+      </div>
+      <div class="words">
+        <h3 class="display">Monkey<br>Bowls</h3>
+        <p>The living room becomes two lanes. The pins are bananas. The ball is whatever you were holding. Zlorp calls the game from the ceiling and has opinions about your form.</p>
+        <p class="rule mono">Strike or gutter, he bottles it either way.</p>
+      </div>
+    </article>
+
+    <article class="game flip">
+      <div class="shots">
+        <div class="frame"><img src="img/new_lava_magenta.jpg" loading="lazy" alt="Floor Is Lava: the floor is a boiling magenta field, a second player silhouetted against it, a pistol raised"></div>
+        <div class="frame"><img src="img/new_lava_stars.jpg" loading="lazy" alt="A burst of pastel stars and smoke as a flea-sized player lands a grab"></div>
+      </div>
+      <div class="words">
+        <h3 class="display">Floor<br>Is Lava</h3>
+        <p>You are shrunk to flea size and the floor goes molten. The furniture is the map now. Climb the fridge, ride the flying food, and take the other flea's island while they are not looking.</p>
+        <p class="rule mono">Every dry second pays. Height pays more.</p>
+      </div>
+    </article>
+
+    <article class="game">
+      <div class="shots">
+        <div class="frame"><img src="img/new_dash_banana.jpg" loading="lazy" alt="Zlorp Dash: a kitchen counter under blue light, a banana mid-air and a pistol in hand"></div>
+        <div class="frame"><img src="img/new_dash_next_order.jpg" loading="lazy" alt="A pink alien stands in a purple-warped living room while an order ticket pings on the wall screen"></div>
+      </div>
+      <div class="words">
+        <h3 class="display">Zlorp<br>Dash</h3>
+        <p>Orders come in. You raid the fridge for the right food, pack your box, and ship it through the microwave. Your rival is packing from the same fridge and will happily knock your carrot into the sink.</p>
+        <p class="rule mono">A fuller box tips better. A wrong box tips nothing.</p>
+      </div>
+    </article>
+
+    <p class="after">Early Access takes it to <b>seven games</b> in a bigger house, for four players. <b>Mecha Chameleon</b> and <b>Snack Heist</b> are next in, then <b>Gun Box Gallery</b>, plus one we haven't settled on yet.</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="jar">
+  <div class="hold">
+    <div class="top">
+      <div>
+        <p class="zlorp">I'm Zlorp. I live here. At your best, you leak loosh. I jar it.</p>
+        <h2 class="display">One jar.<br>You both<br>fill it.</h2>
+        <p>No points race. Every win pours <strong>loosh</strong> into one shared litre. When it brims, Zlorp comes all the way through, and the apartment stops pretending to be somewhere you have been before.</p>
+      </div>
+      <div class="frame"><img src="img/new_zlorp_intro.jpg" loading="lazy" alt="Zlorp up close in the kitchen, black eyes catching the light, introducing himself"></div>
+    </div>
+    <div class="warp">
+      <div class="frame"><img src="img/new_finale_warp.jpg" loading="lazy" alt="The living room after the jar fills: walls streaked purple and green, a pink alien standing in the middle of it"></div>
+      <div class="frame"><img src="img/new_finale_cyan.jpg" loading="lazy" alt="The same kitchen washed entirely in cyan and green as reality slips"></div>
+      <p>The colours you see at the end are the ones the room was hiding the whole time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
 <section class="reel" id="trailer">
   <div class="hold">
     <div class="head">
-      <h2 class="display">The trailer</h2>
-      <p class="run mono">43 seconds. Put the sound on.</p>
+      <h2 class="display">The trailer, for now</h2>
+      <p class="mono">43 seconds from an earlier build. The next one is being cut from the demo itself.</p>
     </div>
     <div class="screen">
-      <video controls preload="none" playsinline poster="img/shot_zlorp_impact.jpg"
+      <video controls preload="none" playsinline poster="img/new_bowls_win.jpg"
              aria-label="Bad Shrooms trailer">
         <source src="vid/badshrooms_trailer_a.mp4" type="video/mp4">
         Your browser can't play this video.
         <a href="vid/badshrooms_trailer_a.mp4">Download it instead.</a>
       </video>
     </div>
-    <p class="state mono">The Steam page is <b>sitting with Valve</b> right now, so the wishlist
-    button won't work until they wave it through. The free demo goes in for review this week.</p>
   </div>
 </section>
 
-<!-- 2 -->
-<section class="three">
-  <div class="hold">
-    <p class="kicker mono">Three games in the demo. Rounds run short enough that the rematch starts before anyone has finished complaining about the last one.</p>
-    <div class="trio">
-      <article class="plate">
-        <div class="frame"><img src="img/plate_bowling.jpg" loading="lazy" alt="Monkey Bowls: two glowing lanes laid across the living-room floor, lined with oversized purple and red mushrooms, banana pins waiting at the far end"></div>
-        <h2 class="display">Monkey<br>Bowls</h2>
-        <p>Banana pins. Maximum judgment.</p>
-      </article>
-      <article class="plate">
-        <div class="frame"><img src="img/plate_lava.jpg" loading="lazy" alt="Floor Is Lava: the apartment floor is a churning orange lava field seen over a drawn pistol, with a kitchen counter as the next safe platform"></div>
-        <h2 class="display">Floor<br>Is Lava</h2>
-        <p>Shrink to flea size and take their island.</p>
-      </article>
-      <article class="plate">
-        <div class="frame"><img src="img/plate_dash.jpg" loading="lazy" alt="Zlorp Dash: the open fridge stacked with produce and leftovers, a prompt to grab the butter, and a pistol still in hand"></div>
-        <h2 class="display">Zlorp<br>Dash</h2>
-        <p>Steal the order. Pack the box.</p>
-      </article>
-    </div>
-    <p class="after">Early Access takes it to <b>seven games</b> in a bigger house, for four players. <b>Mecha Chameleon</b> and <b>Snack Heist</b> are next in, then <b>Gun Box Gallery</b>, plus one we haven't settled on yet.</p>
-  </div>
-</section>
-
-<!-- 3 -->
-<section class="jar">
-  <div class="hold">
-    <div>
-      <p class="zlorp">The jar wants a litre of you. It isn't fussy about whose.</p>
-      <h2 class="display">One jar.<br>You both<br>fill it.</h2>
-      <p>No points race. Every win pours <strong>loosh</strong> into one shared litre. When it brims the night ends — and the room has been warping the whole time you weren't looking.</p>
-    </div>
-    <figure>
-      <img src="img/shot_zlorp_impact.jpg" loading="lazy" alt="A white impact starburst erupts against Zlorp in a hallway whose walls have melted into churning yellow and purple patterns">
-    </figure>
-  </div>
-</section>
-
-<!-- 4 -->
+<!-- 6 -->
 <section class="close">
   <div class="hold">
     <h2 class="display">Bad Shrooms is coming to Steam.</h2>
     <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-    <p class="mono note">Wishlisting opens as soon as Valve approves the page.</p>
+    <p class="mono note">Wishlist now. The free two-player demo goes public the day Valve clears it.</p>
   </div>
 </section>
 
 <footer class="mono">
   <div class="hold">
-    <p>Crunchrock Games is a Unity studio for hire. <a href="work.html">See the work</a></p>
+    <p>Crunchrock Games is a Unity studio. <a href="work.html">See the studio</a></p>
     <div class="links">
       <a href="mailto:hello@crunchrock.games">Contact</a>
       <a href="privacy.html">Privacy</a>
@@ -321,26 +396,22 @@
 
   var REST = 6 * Math.PI / 180;   // it never hangs straight
   var K = 26;                     // spring toward rest
-  var C = 4.0;                    // damping — ~0.4 ratio, springs 2-3 times then settles
+  var C = 4.0;                    // damping
   var MAX = 0.95;                 // ~54deg. A word on a pin, not a propeller.
-  var VMAX = 7;                   // cap on throw energy, so a violent flick still reads
+  var VMAX = 7;                   // cap on throw energy
 
   var angle = REST, vel = 0, grabbed = false, grabOffset = 0;
-  var pointerAngle = 0, lastPointerAngle = 0, lastT = 0, raf = null, idle = 0;
+  var pointerAngle = 0, lastT = 0, raf = null, idle = 0;
 
   function pivot() {
     var r = word.getBoundingClientRect();
-    // transform-origin is 14% 6% of the un-rotated box; the rect is close
-    // enough at small angles and re-read every grab.
     return { x: r.left + r.width * 0.14, y: r.top + r.height * 0.06 };
   }
-
   function angleTo(e, p) { return Math.atan2(e.clientY - p.y, e.clientX - p.x); }
 
   function frame(t) {
     var dt = lastT ? Math.min((t - lastT) / 1000, 1 / 30) : 1 / 60;
     lastT = t;
-
     if (grabbed) {
       var target = pointerAngle - grabOffset;
       if (target > MAX) target = MAX;
@@ -348,7 +419,6 @@
       var raw = (target - angle) / Math.max(dt, 0.001);
       if (raw > VMAX) raw = VMAX;
       if (raw < -VMAX) raw = -VMAX;
-      // smooth it, or a single big pointer jump stores absurd energy
       vel = vel * 0.55 + raw * 0.45;
       angle = target;
     } else {
@@ -358,15 +428,12 @@
       if (angle > MAX) { angle = MAX; vel *= -0.4; }
       if (angle < -MAX) { angle = -MAX; vel *= -0.4; }
     }
-
     word.style.transform = 'rotate(' + angle.toFixed(4) + 'rad)';
-
     var settled = !grabbed && Math.abs(vel) < 0.004 && Math.abs(angle - REST) < 0.004;
     if (settled) { idle++; } else { idle = 0; }
     if (idle > 20) { word.style.transform = 'rotate(' + REST.toFixed(4) + 'rad)'; raf = null; lastT = 0; return; }
     raf = requestAnimationFrame(frame);
   }
-
   function run() { if (raf === null) { lastT = 0; idle = 0; raf = requestAnimationFrame(frame); } }
 
   word.addEventListener('pointerdown', function (e) {
@@ -374,17 +441,14 @@
     grabbed = true;
     var p = pivot();
     grabOffset = angleTo(e, p) - angle;
-    pointerAngle = lastPointerAngle = angleTo(e, p);
+    pointerAngle = angleTo(e, p);
     run();
-    // Capture is a nicety, not a requirement — never let it kill the grab.
     try { word.setPointerCapture(e.pointerId); } catch (err) {}
   });
-
   word.addEventListener('pointermove', function (e) {
     if (!grabbed) return;
     pointerAngle = angleTo(e, pivot());
   });
-
   function release(e) {
     if (!grabbed) return;
     grabbed = false;
@@ -394,7 +458,6 @@
   word.addEventListener('pointerup', release);
   word.addEventListener('pointercancel', release);
 
-  // Announce that it moves, once, when it first scrolls into view.
   function nudge() { vel = -2.2; run(); }
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
