@@ -114,6 +114,14 @@ dimming them. Source: `marketing/BRAND.md` §1 in the game repo, owner-directed 
   sheets, HUD cropped out (score bar top ~13%, dialogue box bottom), exported at ~1600px JPEG q86.
   The old `shot_*.jpg` and `plate_*.jpg` files are no longer referenced.
 
+### The loops
+
+`vid/loop_*.mp4` are muted 2.5 to 5 second cuts from the same clip folders, 960px, CRF 27,
+150 to 550 KB each, HUD cropped in the encode. They sit in the mosaic, the second slot of each
+game row, and the finale, and play only while on screen (never under reduced-motion or on a
+metered connection; the `img/loop_*.jpg` posters carry the content otherwise). Recut with
+`ffmpeg -ss S -t T -i clip.mp4 -an -vf "crop=iw:ih*0.80:0:ih*0.13,scale=960:-2,fps=30" -crf 27`.
+
 ### The trailer
 
 `vid/badshrooms_trailer_a.mp4` is a 16 MB CRF-26 encode. The master is 139 MB and lives outside

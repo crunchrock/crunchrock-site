@@ -71,7 +71,7 @@
   /* sticker frame for every capture */
   .frame{overflow:hidden;border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink);
          background:var(--ink);line-height:0}
-  .frame img{width:100%;height:100%;object-fit:cover}
+  .frame img,.frame video{width:100%;height:100%;object-fit:cover;display:block}
 
   /* ---------------- top bar ---------------- */
   .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
@@ -100,7 +100,7 @@
   .poster-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
      transparent 0%, transparent 50%, rgba(20,16,43,.55) 80%, rgba(20,16,43,.9) 100%)}
   .poster .hold{width:100%}
-  .wordmark{width:min(78vw,520px)}
+  .wordmark{width:min(80vw,600px)}
   .say{margin-top:1.4rem;color:var(--cream);font-family:'Titan One',system-ui,sans-serif;
        font-weight:400;font-size:clamp(1.4rem,3.4vw,2.3rem);line-height:1.08;max-width:17ch;
        text-shadow:0 3px 20px rgba(20,16,43,.9)}
@@ -158,6 +158,21 @@
   }
   .house .cap{margin-top:1.4rem;max-width:56ch}
 
+  /* ---------------- the band ----------------
+     One full-bleed wide plate for scale: the living room, gone bowling. */
+  .band{position:relative;isolation:isolate;overflow:hidden;background:var(--ink);
+        border-block:2.5px solid var(--ink);min-height:min(62vh,640px);
+        display:flex;align-items:flex-end}
+  .band-art{position:absolute;inset:0;z-index:-2;
+            background:url('img/band_lanes.jpg') 50% 45%/cover no-repeat}
+  .band-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
+     transparent 40%, rgba(20,16,43,.72) 100%)}
+  .band .hold{padding-block:clamp(2rem,6vh,3.6rem)}
+  .band h2{color:var(--cream);font-size:clamp(1.9rem,5vw,3.8rem);max-width:16ch;
+           text-shadow:0 3px 20px rgba(20,16,43,.9)}
+  .band p{margin-top:.8rem;color:var(--cream);max-width:48ch;
+          text-shadow:0 2px 12px rgba(20,16,43,.9)}
+
   /* ---------------- 3. the games ----------------
      One game per row, alternating sides, two captures each. The demo has
      three games; that is this page's one three. */
@@ -197,6 +212,15 @@
   .jar .warp{display:grid;gap:clamp(1rem,2vw,1.6rem);margin-top:clamp(2rem,5vh,3.2rem)}
   @media (min-width:700px){.jar .warp{grid-template-columns:1fr 1fr}}
   .jar .warp p{margin-top:0;grid-column:1/-1;max-width:56ch}
+  /* Zlorp's actual lines, straight off the captures. Uneven on purpose. */
+  .lines{margin-top:clamp(2.4rem,6vh,3.6rem);border-top:2px solid var(--cream);
+         padding-top:clamp(1.4rem,3vh,2rem)}
+  .lines h3{font-size:clamp(1.4rem,2.8vw,2rem);color:var(--cream)}
+  .lines ul{list-style:none;margin-top:1rem;display:grid;gap:.7rem 2.4rem}
+  @media (min-width:760px){.lines ul{grid-template-columns:1fr 1fr}}
+  .lines li{color:var(--teal);font-weight:600;font-size:clamp(1.05rem,1.6vw,1.25rem);
+            max-width:34ch}
+  .lines li::before{content:'\201C'}.lines li::after{content:'\201D'}
 
   /* ---------------- 5. the trailer ----------------
      Trailer A, the interim cut, sits low now. A new one is being cut from
@@ -272,14 +296,23 @@
     <p class="lede">Two of you wake up in loaner bodies in a flat that belongs to Zlorp. He wants a litre of loosh, which is the stuff you leak when you are winning, losing, or getting hit with a bucket. He runs games to get it. The rooms rearrange themselves for whichever game he has picked, and between rounds you can pick up nearly anything and throw it at nearly anyone.</p>
   </div>
   <div class="mosaic">
-    <div class="frame a"><img src="img/new_zlorp_armchair.jpg" loading="lazy" alt="Zlorp sitting in an orange armchair under a warm lamp, records stacked beside him and a mushroom growing out of the floor"></div>
+    <div class="frame a"><video src="vid/loop_armchair.mp4" poster="img/new_zlorp_armchair.jpg" muted loop playsinline preload="none" aria-label="Zlorp teleports onto an orange armchair under a warm lamp and settles in"></video></div>
     <div class="frame b"><img src="img/new_charselect.jpg" loading="lazy" alt="The body select screen: a bearded viking and a mustached man in a striped shirt, under the line You can't bring your own body, borrow one of ours"></div>
-    <div class="frame c"><img src="img/new_jar_glow.jpg" loading="lazy" alt="The loosh jar glowing pink on a counter in a purple-washed room"></div>
-    <div class="frame d"><img src="img/new_radio.jpg" loading="lazy" alt="A holographic radio dial floating over an orange globe, tuned to Radiance FM"></div>
+    <div class="frame c"><video src="vid/loop_pod.mp4" poster="img/loop_pod.jpg" muted loop playsinline preload="none" aria-label="A purple pod materialises in the kitchen with Zlorp inside it"></video></div>
+    <div class="frame d"><video src="vid/loop_radio.mp4" poster="img/loop_radio.jpg" muted loop playsinline preload="none" aria-label="A holographic radio dial flips stations over an orange globe"></video></div>
     <div class="frame e"><img src="img/new_palm_heat.jpg" loading="lazy" alt="A hallway in hard yellow light, a Palm Heat hotel poster on the wall and a fern in a frame"></div>
   </div>
   <div class="hold">
     <p class="cap">The walls change with the night. The radio has stations. The jar can be inspected up close. None of it is load-bearing and all of it is throwable.</p>
+  </div>
+</section>
+
+<section class="band" aria-label="The living room turned into two bowling lanes">
+  <div class="band-art" role="img" aria-label="Two glowing bowling lanes laid across the living room floor, oversized spotted mushrooms crowding both sides"></div>
+  <div class="band-lift" aria-hidden="true"></div>
+  <div class="hold">
+    <h2 class="display">Pick a game. The room rebuilds itself.</h2>
+    <p>You walk up to the picker. Zlorp announces the game. The furniture leaves, the lanes arrive, and the mushrooms come to watch.</p>
   </div>
 </section>
 
@@ -291,7 +324,7 @@
     <article class="game">
       <div class="shots">
         <div class="frame"><img src="img/new_bowls_lanes.jpg" loading="lazy" alt="Monkey Bowls: two glowing lanes laid across the living room floor, lined with oversized spotted mushrooms"></div>
-        <div class="frame"><img src="img/new_bowls_double_strike.jpg" loading="lazy" alt="Two white starbursts as banana pins scatter on both lanes at once"></div>
+        <div class="frame"><video src="vid/loop_bowls.mp4" poster="img/loop_bowls.jpg" muted loop playsinline preload="none" aria-label="A throw down the lane ends in a white starburst as the banana pins scatter"></video></div>
       </div>
       <div class="words">
         <h3 class="display">Monkey<br>Bowls</h3>
@@ -303,7 +336,7 @@
     <article class="game flip">
       <div class="shots">
         <div class="frame"><img src="img/new_lava_magenta.jpg" loading="lazy" alt="Floor Is Lava: the floor is a boiling magenta field, a second player silhouetted against it, a pistol raised"></div>
-        <div class="frame"><img src="img/new_lava_stars.jpg" loading="lazy" alt="A burst of pastel stars and smoke as a flea-sized player lands a grab"></div>
+        <div class="frame"><video src="vid/loop_lavaroom.mp4" poster="img/loop_lavaroom.jpg" muted loop playsinline preload="none" aria-label="Walking the apartment while the floor churns as magenta lava"></video></div>
       </div>
       <div class="words">
         <h3 class="display">Floor<br>Is Lava</h3>
@@ -315,7 +348,7 @@
     <article class="game">
       <div class="shots">
         <div class="frame"><img src="img/new_dash_banana.jpg" loading="lazy" alt="Zlorp Dash: a kitchen counter under blue light, a banana mid-air and a pistol in hand"></div>
-        <div class="frame"><img src="img/new_dash_next_order.jpg" loading="lazy" alt="A pink alien stands in a purple-warped living room while an order ticket pings on the wall screen"></div>
+        <div class="frame"><video src="vid/loop_dash.mp4" poster="img/loop_dash.jpg" muted loop playsinline preload="none" aria-label="A packed box goes into the microwave and ships in a burst of purple stars"></video></div>
       </div>
       <div class="words">
         <h3 class="display">Zlorp<br>Dash</h3>
@@ -341,8 +374,19 @@
     </div>
     <div class="warp">
       <div class="frame"><img src="img/new_finale_warp.jpg" loading="lazy" alt="The living room after the jar fills: walls streaked purple and green, a pink alien standing in the middle of it"></div>
-      <div class="frame"><img src="img/new_finale_cyan.jpg" loading="lazy" alt="The same kitchen washed entirely in cyan and green as reality slips"></div>
+      <div class="frame"><video src="vid/loop_finale.mp4" poster="img/loop_finale.jpg" muted loop playsinline preload="none" aria-label="The jar hits the brim and the whole apartment slips into cyan and green"></video></div>
       <p>The colours you see at the end are the ones the room was hiding the whole time.</p>
+    </div>
+    <div class="lines">
+      <h3 class="display">He talks the whole time.</h3>
+      <ul>
+        <li>Every banana that falls over is a mood swing I can bottle.</li>
+        <li>Nothing fell. The jar ate anyway. That's the beauty of the operation.</li>
+        <li>Reinforcements. They're fruit. Don't overthink it.</li>
+        <li>A point. Lower shelf still counts.</li>
+        <li>Good. The buyers hate foam.</li>
+        <li>You can't bring your own body. Borrow one of ours.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -386,6 +430,24 @@
 </footer>
 
 <script>
+// Loops play only while on screen, never under reduced-motion, never on a
+// metered connection. The posters already carry the content.
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var conn = navigator.connection || {};
+  var saveData = conn.saveData === true || /^([23]g|slow-2g)$/.test(conn.effectiveType || '');
+  var vids = document.querySelectorAll('video[muted]');
+  if (reduce || saveData || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) { if (v.preload === 'none') v.preload = 'auto'; v.play().catch(function () {}); }
+      else { v.pause(); }
+    });
+  }, { rootMargin: '200px 0px', threshold: 0.15 });
+  vids.forEach(function (v) { io.observe(v); });
+})();
+
 // The loose friend. Torsional spring about a rest angle that is deliberately
 // not zero, plus grab-and-throw, because that is the game's verb.
 (function () {
