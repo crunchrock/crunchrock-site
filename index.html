@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bad Shrooms | Crunchrock Games</title>
 <meta name="description" content="Bad Shrooms is a two-four person first-person party with friends game. You are forced to play games with an alien.">
-<link rel="icon" type="image/png" href="img/favicon_shroom.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="Bad Shrooms | Crunchrock Games">
 <meta property="og:description" content="Play Zlorp's weird game and fill his jar in this two to four player online and splitscreen first-person party game.">
 <meta property="og:image" content="https://crunchrock.games/img/og-game.jpg">
@@ -75,15 +77,28 @@
 
   /* ---------------- top bar ---------------- */
   .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
-  .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-             padding-block:.7rem}
-  .bar .who{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
-  .bar .who img{width:30px}
+  .bar .hold{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;
+             padding-block:.6rem}
+  .bar .who{justify-self:center;display:flex;align-items:center;line-height:0}
+  .bar .who .logo-wide{height:48px;width:auto;display:block}
+  .bar .who .logo-mark{height:40px;width:auto;display:none}
   .bar nav{display:flex;gap:1.5rem;align-items:center}
+  .bar nav.left{justify-self:start}
+  .bar nav.right{justify-self:end}
   .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700;
              letter-spacing:.02em}
   .bar nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
-  @media (max-width:560px){.bar .who span{display:none}.bar nav{gap:.8rem;font-size:.82rem}}
+  @media (max-width:560px){.bar .who .logo-wide{display:none}.bar .who .logo-mark{display:block}
+                           .bar nav{gap:.8rem;font-size:.82rem}}
+
+  /* ---------------- studio sign-off ---------------- */
+  .signoff{border-top:2px solid var(--ink);background:var(--paper)}
+  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem;
+                 padding-block:clamp(2.8rem,7vh,4.8rem)}
+  .signoff img{width:min(64vw,400px);height:auto;display:block}
+  .signoff a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+  .signoff a:hover{border-bottom-color:var(--lime)}
+  .signoff a.mark{border-bottom:0;line-height:0}
 
   /* ---------------- 1. the poster ----------------
      In-engine: Zlorp in the kitchen, the same plate as the Steam capsule.
@@ -251,10 +266,15 @@
 
 <div class="bar">
   <div class="hold">
-    <a class="who mono" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
-    <nav class="mono">
+    <nav class="mono left">
       <a href="#games">Games</a>
       <a href="#trailer">Trailer</a>
+    </nav>
+    <a class="who" href="#top" aria-label="Crunchrock Games">
+      <img class="logo-wide" src="img/logo_crunchrock_wide.svg" alt="Crunchrock Games">
+      <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
+    </a>
+    <nav class="mono right">
       <a href="work.html">Studio</a>
       <a href="https://store.steampowered.com/app/4995150" rel="noopener">Steam</a>
     </nav>
@@ -280,24 +300,24 @@
 <!-- 2 -->
 <section class="house">
   <div class="hold">
-    <h2 class="display">Play games for Zlorp.</h2>
-    <p class="lede">Zlorp stuck you in loaner bodies and makes you play his games for loosh. Fill his one-litre jar, then trash the small house while he sets up the next round.</p>
+    <h2 class="display">Tripping with friends.</h2>
+    <p class="lede">The shrooms weren't bunk but they were not good either. Now you're playing sick games for a weirdo alien.</p>
   </div>
   <div class="mosaic">
-    <div class="frame a"><video src="vid/loop_grief.mp4" poster="img/loop_grief.jpg" muted loop playsinline preload="none" aria-label="A bowling ball ricochets off the living-room furniture beside the glowing lanes"></video></div>
-    <div class="frame b"><img src="img/new_charselect.jpg?v=2" loading="lazy" alt="Two players collide in the kitchen, one close to camera while the other raises a pistol"></div>
-    <div class="frame c"><video src="vid/loop_pod.mp4" poster="img/loop_pod.jpg" muted loop playsinline preload="none" aria-label="A purple pod materialises in the kitchen with Zlorp inside it"></video></div>
-    <div class="frame d"><video src="vid/loop_radio.mp4" poster="img/loop_radio.jpg" muted loop playsinline preload="none" aria-label="A holographic radio dial flips stations over an orange globe"></video></div>
-    <div class="frame e"><img src="img/new_palm_heat.jpg?v=2" loading="lazy" alt="A player raises a bat beside the house fireplace while Zlorp watches"></div>
+    <div class="frame a"><video src="vid/loop_grief.mp4" poster="img/loop_grief.jpg" muted loop playsinline preload="none" aria-label="Bowling is cool."></video></div>
+    <div class="frame b"><img src="img/new_charselect.jpg?v=2" loading="lazy" alt="Minigames are cool."></div>
+    <div class="frame c"><video src="vid/loop_pod.mp4" poster="img/loop_pod.jpg" muted loop playsinline preload="none" aria-label="Zlorp is kind of cool."></video></div>
+    <div class="frame d"><video src="vid/loop_radio.mp4" poster="img/loop_radio.jpg" muted loop playsinline preload="none" aria-label="I made a dank holographic radio player with over 96 songs."></video></div>
+    <div class="frame e"><img src="img/new_palm_heat.jpg?v=2" loading="lazy" alt="Loosh is vital life energy and aliens pay a lot for it."></div>
   </div>
 </section>
 
-<section class="band" aria-label="The living room turned into two bowling lanes">
-  <div class="band-art" role="img" aria-label="Two glowing bowling lanes laid across the living room floor, oversized spotted mushrooms crowding both sides"></div>
+<section class="band" aria-label="Zlorp can turn the living room into 2-4 bowling lanes but he has no beer.">
+  <div class="band-art" role="img" aria-label="We keep adding more and more mushrooms to make the bowling minigame less generic."></div>
   <div class="band-lift" aria-hidden="true"></div>
   <div class="hold">
     <h2 class="display">The room becomes the game.</h2>
-    <p>Bowling lanes, molten carpet, or a kitchen delivery race. Zlorp rebuilds the small house every round.</p>
+    <p>Zlorp rebuilds the house every round.</p>
   </div>
 </section>
 
@@ -388,9 +408,15 @@
   </div>
 </section>
 
+<section class="signoff">
+  <div class="hold">
+    <a class="mark" href="work.html"><img src="img/logo_crunchrock_stacked.svg" alt="Crunchrock Games"></a>
+    <p class="mono">Crunchrock Games is a Unity studio. <a href="work.html">See the studio</a></p>
+  </div>
+</section>
+
 <footer class="mono">
   <div class="hold">
-    <p>Crunchrock Games is a Unity studio. <a href="work.html">See the studio</a></p>
     <div class="links">
       <a href="mailto:hello@crunchrock.games">Contact</a>
       <a href="privacy.html">Privacy</a>

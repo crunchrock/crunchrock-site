@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contract Work — Crunchrock Games</title>
 <meta name="description" content="Crunchrock Games takes the Unity work that's hard to scope: hardware protocols, live-service mobile, WebGL budgets, VR comfort. Seven years of it.">
-<link rel="icon" type="image/png" href="img/favicon_shroom.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="Contract Work — Crunchrock Games">
 <meta property="og:description" content="Unity contract studio. Hardware integration, live-service mobile, WebGL, VR. Seven years of the jobs nobody could write a ticket for.">
 <meta property="og:image" content="https://crunchrock.games/img/og-work.jpg">
@@ -66,14 +68,24 @@
 
   /* ---------------- top bar ---------------- */
   .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
-  .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-             padding-block:.7rem}
-  .bar .who{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
-  .bar .who img{width:30px}
+  .bar .hold{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;
+             padding-block:.6rem}
+  .bar .who{justify-self:center;display:flex;align-items:center;line-height:0}
+  .bar .who .logo-wide{height:48px;width:auto;display:block}
+  .bar .who .logo-mark{height:40px;width:auto;display:none}
   .bar nav{display:flex;gap:1.5rem;align-items:center}
+  .bar nav.left{justify-self:start}
+  .bar nav.right{justify-self:end}
   .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700}
   .bar nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
-  @media (max-width:560px){.bar .who span{display:none}}
+  @media (max-width:560px){.bar .who .logo-wide{display:none}.bar .who .logo-mark{display:block}}
+
+  /* ---------------- studio sign-off ---------------- */
+  .signoff{border-top:2px solid var(--ink);background:var(--paper)}
+  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem;
+                 padding-block:clamp(2.8rem,7vh,4.8rem)}
+  .signoff img{width:min(64vw,400px);height:auto;display:block}
+  .signoff a.mark{line-height:0}
 
   /* ---------------- the statement ----------------
      The game page leads on art. This one leads on type, because that is what a
@@ -163,9 +175,14 @@
 
 <div class="bar">
   <div class="hold">
-    <a class="who mono" href="#top"><img src="img/logo_crunchrock.png" alt=""><span>Crunchrock Games</span></a>
-    <nav class="mono">
+    <nav class="mono left">
       <a href="index.html">Bad Shrooms</a>
+    </nav>
+    <a class="who" href="#top" aria-label="Crunchrock Games">
+      <img class="logo-wide" src="img/logo_crunchrock_wide.svg" alt="Crunchrock Games">
+      <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
+    </a>
+    <nav class="mono right">
       <a href="#hire">Hire us</a>
     </nav>
   </div>
@@ -316,6 +333,12 @@
       <a href="https://www.linkedin.com/in/crunchrock" rel="noopener">LinkedIn</a>
       <a href="https://store.steampowered.com/app/4995150" rel="noopener">Bad Shrooms on Steam</a>
     </div>
+  </div>
+</section>
+
+<section class="signoff">
+  <div class="hold">
+    <a class="mark" href="#top"><img src="img/logo_crunchrock_stacked.svg" alt="Crunchrock Games"></a>
   </div>
 </section>
 

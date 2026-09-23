@@ -100,6 +100,14 @@ dimming them. Source: `marketing/BRAND.md` §1 in the game repo, owner-directed 
 
 ## Assets
 
+- **The studio mark** is Pet Rock (chosen 2026-09-22): `img/logo_crunchrock_wide.svg` is the bar
+  lockup (centred, 48px tall; `img/crunchrock_mark.png` is the face that replaces it under 560px),
+  `img/logo_crunchrock_stacked.svg` the sign-off above the footer on both pages,
+  `img/logo_crunchrock.png` a PNG of the horizontal lockup (colour rock, ink type, for paper),
+  `img/favicon.svg` / `img/favicon-32.png` / `img/apple-touch-icon.png` / `/favicon.ico` the icon set,
+  `img/og-crunchrock.png` a 1200×630 studio card. Masters are the SVGs in the Pet Rock kit
+  (`crunchrock-petrock-kit/01-masters-svg`, 2026-09-22); keep a copy in the game repo under
+  `marketing/assets/studio-logo/`. Never redraw; re-export from the SVG masters.
 - **The wordmark** is `img/logo_bad_shrooms.png`: the keeper (logo_B_01, 2026-08-28) from
   `Assets/_BadShrooms/Art/Generated/logo_bad_shrooms_dott.png` in the game repo, with the same
   subtle deep-navy silhouette the Steam capsule exporter puts under it (offset ~1.2% x / 2.2% y,
