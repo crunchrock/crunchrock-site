@@ -154,7 +154,7 @@ The public schedule lives in **one place**: the `.state` line under the poster. 
 per stage; nothing else on the page has to.
 
 - **Demo submitted, in Valve review** → the `.state` line says so and the close says the demo goes
-  public when Valve clears it. This is the current state (submitted 2026-08-29).
+  public when Valve clears it. This is the current state (submitted 2026-09-24).
 - **Demo released** → the `.state` line becomes the demo link, the close button can point at it,
   and the trailer section swaps to Trailer B when it is cut. The Steam page has a matching
   before/after copy switch in `marketing/assets/steam/copy-drafts.md`.
