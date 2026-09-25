@@ -7,3 +7,5 @@ Trip progression is described from current source; the supporting radio image do
 The site remains in Coming Soon state. After playable release is verified, change the demo CTA to Play the free demo and update metadata. Keep the full-game wishlist link distinct.
 No claim of a completed seven-game Early Access build is made.
 Source cuts and review package: game repository marketing/launch-2026-09-25.
+
+Owner correction: the old Randy kitchen imagery predates a fixed misplaced knife. The current hero is provisional and must be replaced from the new Randy recording before deployment. New Steam capsule exports are waiting for that corrected plate.
