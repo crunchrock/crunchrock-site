@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-launch-review="2026-09-25">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bad Shrooms | Crunchrock Games</title>
-<meta name="description" content="Bad Shrooms is a two to four player first-person party with friends game. You are forced to play games with an alien.">
+<meta name="description" content="A first-person party game for 2–4 players. Try Monkey Bowls, Hot Boys and The Bathrooms in the free Steam demo. Coming soon.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="Bad Shrooms | Crunchrock Games">
-<meta property="og:description" content="Play Zlorp's weird game and fill his jar in this two to four player online and splitscreen first-person party game.">
+<meta property="og:description" content="Randy’s house gets stranger as the jar fills. A first-person party game for 2–4 players, in local split-screen or over Steam.">
 <meta property="og:image" content="https://crunchrock.games/img/og-game.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Bad Shrooms wordmark over Zlorp, a green alien, leaning on a kitchen counter under purple light">
+<meta property="og:image:alt" content="The Bad Shrooms wordmark over Randy, a green alien, leaning on a kitchen counter under purple light">
 <meta property="og:site_name" content="Crunchrock Games">
 <meta property="og:url" content="https://crunchrock.games/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="The Bad Shrooms wordmark over Zlorp in the kitchen">
+<meta name="twitter:image:alt" content="The Bad Shrooms wordmark over Randy in the kitchen">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
     /* Canon palette, field inverted: BoneCream is the paper, CaveInk is the ink.
        TEXT ON PAPER IS INK. Not purple, not lime, not orange (owner, 2026-08-15).
        The colours are fills, borders and highlights only. Emphasis comes from
-       weight, not hue. AlienTeal only appears on the dark plates, where Zlorp lives. */
+       weight, not hue. AlienTeal only appears on the dark plates, where Randy lives. */
     --paper:#F6EFDD;
     --ink:#14102B;
     --navy:#241E4E;
@@ -101,15 +101,15 @@
   .signoff a.mark{border-bottom:0;line-height:0}
 
   /* ---------------- 1. the poster ----------------
-     In-engine: Zlorp in the kitchen, the same plate as the Steam capsule.
+     In-engine: Randy in the kitchen, the same plate as the Steam capsule.
      The old painted key art is retired (2026-08-29). */
   .poster{position:relative;background:var(--ink);isolation:isolate;overflow:hidden;
           min-height:min(92svh,900px);display:flex;flex-direction:column;
           justify-content:flex-end;
           padding:clamp(4rem,12vh,8rem) 0 clamp(3rem,9vh,5rem)}
   .poster-art{position:absolute;inset:0;z-index:-2;
-              background:url('img/cover_zlorp_kitchen.jpg') 62% 40%/cover no-repeat}
-  @media (max-width:700px){.poster-art{background-image:url('img/cover_zlorp_kitchen_portrait.jpg');
+              background:url('img/launch-20260925/still-randy-clean.jpg') 0% 40%/cover no-repeat}
+  @media (max-width:700px){.poster-art{background-image:url('img/launch-20260925/still-randy-clean.jpg');
                                        background-position:50% 30%}}
   /* Just enough lift at the foot to seat the type. The art is not muffled. */
   .poster-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
@@ -173,7 +173,7 @@
         border-block:2.5px solid var(--ink);min-height:min(62vh,640px);
         display:flex;align-items:flex-end}
   .band-art{position:absolute;inset:0;z-index:-2;
-            background:url('img/band_lanes.jpg') 50% 45%/cover no-repeat}
+            background:url('img/launch-20260925/still-bowls-wide.jpg') 50% 45%/cover no-repeat}
   .band-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
      transparent 40%, rgba(20,16,43,.72) 100%)}
   .band .hold{padding-block:clamp(2rem,6vh,3.6rem)}
@@ -207,7 +207,7 @@
          font-size:1.2em;line-height:1.34;text-wrap:balance}
   .after b{font-weight:700}
 
-  /* ---------------- 4. Zlorp and the jar ---------------- */
+  /* ---------------- 4. Randy and the jar ---------------- */
   .jar{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
   .jar .hold{padding-block:clamp(3.4rem,9vh,6rem)}
   .jar .top{display:grid;gap:clamp(2rem,4vw,3.4rem);align-items:center}
@@ -221,7 +221,7 @@
   .jar .warp{display:grid;gap:clamp(1rem,2vw,1.6rem);margin-top:clamp(2rem,5vh,3.2rem)}
   @media (min-width:700px){.jar .warp{grid-template-columns:1fr 1fr}}
   .jar .warp p{margin-top:0;grid-column:1/-1;max-width:56ch}
-  /* Zlorp's actual lines, straight off the captures. Uneven on purpose. */
+  /* Randy's actual lines, straight off the captures. Uneven on purpose. */
   .lines{margin-top:clamp(2.4rem,6vh,3.6rem);border-top:2px solid var(--cream);
          padding-top:clamp(1.4rem,3vh,2rem)}
   .lines h3{font-size:clamp(1.4rem,2.8vw,2rem);color:var(--cream)}
@@ -283,13 +283,13 @@
 
 <!-- 1 -->
 <header class="poster" id="top">
-  <div class="poster-art" role="img" aria-label="Zlorp, a tall green alien, leans on the kitchen counter under purple light with a cigarette at his lip"></div>
+  <div class="poster-art" role="img" aria-label="Randy looks at the player from the kitchen"></div>
   <div class="poster-lift" aria-hidden="true"></div>
   <div class="hold">
     <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
     <p class="say">Your <span class="loose"><i>friends</i></span> are the difficulty setting.</p>
-    <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-    <p class="fact mono">Zlorp has six unique smoking devices currently. Wishlist my game and I'll make it 12.</p>
+    <a class="btn" href="https://store.steampowered.com/app/5163790/" rel="noopener">See the demo on Steam</a>
+    <p class="fact mono">2–4 players in local split-screen or over Steam. Free demo coming soon.</p>
   </div>
 </header>
 
@@ -304,58 +304,58 @@
     <p class="lede">The shrooms weren't bunk but they were not good either. Now you're playing sick games for a weirdo alien.</p>
   </div>
   <div class="mosaic">
-    <div class="frame a"><video src="vid/loop_grief.mp4" poster="img/loop_grief.jpg" muted loop playsinline preload="none" aria-label="Bowling is cool."></video></div>
-    <div class="frame b"><img src="img/new_charselect.jpg?v=2" loading="lazy" alt="Minigames are cool."></div>
-    <div class="frame c"><video src="vid/loop_pod.mp4" poster="img/loop_pod.jpg" muted loop playsinline preload="none" aria-label="Zlorp is kind of cool."></video></div>
-    <div class="frame d"><video src="vid/loop_radio.mp4" poster="img/loop_radio.jpg" muted loop playsinline preload="none" aria-label="I made a dank holographic radio player with over 96 songs."></video></div>
-    <div class="frame e"><img src="img/new_palm_heat.jpg?v=2" loading="lazy" alt="Loosh is vital life energy and aliens pay a lot for it."></div>
+    <div class="frame a"><video src="vid/launch-20260925/loop-bowls.mp4" poster="img/launch-20260925/still-bowls.jpg" muted loop playsinline preload="none" aria-label="Monkey Bowls gameplay in the living room"></video></div>
+    <div class="frame b"><img src="img/launch-20260925/still-party.jpg" loading="lazy" alt="The party gathers in Randy’s house"></div>
+    <div class="frame c"><video src="vid/launch-20260925/loop-house.mp4" poster="img/launch-20260925/still-house.jpg" muted loop playsinline preload="none" aria-label="Picking up food in the interactive kitchen"></video></div>
+    <div class="frame d"><video src="vid/launch-20260925/loop-radio.mp4" poster="img/launch-20260925/still-radio.jpg" muted loop playsinline preload="none" aria-label="The holographic radio in the pod chair"></video></div>
+    <div class="frame e"><img src="img/launch-20260925/still-house.jpg" loading="lazy" alt="An open fridge full of things to pick up"></div>
   </div>
 </section>
 
-<section class="band" aria-label="Zlorp can turn the living room into 2-4 bowling lanes but he has no beer.">
-  <div class="band-art" role="img" aria-label="We keep adding more and more mushrooms to make the bowling minigame less generic."></div>
+<section class="band" aria-label="The living room becomes Monkey Bowls.">
+  <div class="band-art" role="img" aria-label="Mushrooms line the bowling lanes in the living room."></div>
   <div class="band-lift" aria-hidden="true"></div>
   <div class="hold">
     <h2 class="display">The room becomes the game.</h2>
-    <p>Zlorp rebuilds the house every round.</p>
+    <p>Randy rebuilds the house every round.</p>
   </div>
 </section>
 
 <!-- 3 -->
 <section class="games" id="games">
   <div class="hold">
-    <p class="kicker mono">The demo has three games.</p>
+    <p class="kicker mono">The demo has three games, plus a shorter Randy finale.</p>
 
     <article class="game">
       <div class="shots">
-        <div class="frame"><img src="img/new_bowls_lanes.jpg?v=2" loading="lazy" alt="Monkey Bowls: two glowing lanes laid across the living room floor, lined with oversized spotted mushrooms"></div>
-        <div class="frame"><video src="vid/loop_bowls.mp4" poster="img/loop_bowls.jpg" muted loop playsinline preload="none" aria-label="A throw down the lane ends in a white starburst as the banana pins scatter"></video></div>
+        <div class="frame"><img src="img/launch-20260925/still-bowls-wide.jpg" loading="lazy" alt="Monkey Bowls: glowing lanes and banana pins in the living room"></div>
+        <div class="frame"><video src="vid/launch-20260925/loop-bowls.mp4" poster="img/launch-20260925/still-bowls.jpg" muted loop playsinline preload="none" aria-label="A throw down the lane ends in a white starburst as the banana pins scatter"></video></div>
       </div>
       <div class="words">
         <h3 class="display">Monkey<br>Bowls</h3>
-        <p>Throw furniture down Zlorp's bowling lanes and smash the banana pins.</p>
+        <p>Bowl with guns. Chain tricks, smash banana pins and interfere with the other players.</p>
       </div>
     </article>
 
     <article class="game flip">
       <div class="shots">
-        <div class="frame"><img src="img/new_lava_magenta.jpg?v=2" loading="lazy" alt="Floor Is Lava: a player looks across the orange molten room from a safe platform"></div>
-        <div class="frame"><video src="vid/loop_lava.mp4" poster="img/loop_lava.jpg" muted loop playsinline preload="none" aria-label="Walking through the house while the floor churns as magenta lava"></video></div>
+        <div class="frame"><img src="img/launch-20260925/still-hotboys.jpg" loading="lazy" alt="Hot Boys begins with the party shrinking in the living room"></div>
+        <div class="frame"><video src="vid/launch-20260925/loop-hotboys.mp4" poster="img/launch-20260925/still-hotboys.jpg" muted loop playsinline preload="none" aria-label="The shrink effect at the start of Hot Boys"></video></div>
       </div>
       <div class="words">
-        <h3 class="display">Floor<br>Is Lava</h3>
-        <p>You shrink to flea size. Climb the furniture while the floor burns below you.</p>
+        <h3 class="display">Hot<br>Boys</h3>
+        <p>The house fills with lava. You shrink, climb the furniture and try to keep your money while the other players make that difficult.</p>
       </div>
     </article>
 
     <article class="game">
       <div class="shots">
-        <div class="frame"><img src="img/new_dash_banana.jpg?v=2" loading="lazy" alt="Placeholder image, a real capture of The Bathrooms is pending"></div>
-        <div class="frame"><video src="vid/loop_dash.mp4" poster="img/loop_dash.jpg" muted loop playsinline preload="none" aria-label="Placeholder clip, a real capture of The Bathrooms is pending"></video></div>
+        <div class="frame"><img src="img/launch-20260925/still-bathroom-wide.jpg" loading="lazy" alt="The Bathrooms: a tiled corridor inside the generated maze"></div>
+        <div class="frame"><video src="vid/launch-20260925/loop-bathrooms.mp4" poster="img/launch-20260925/still-bathrooms.jpg" muted loop playsinline preload="none" aria-label="Walking through The Bathrooms before Randy catches up"></video></div>
       </div>
       <div class="words">
         <h3 class="display">The<br>Bathrooms</h3>
-        <p>Grab coins through a maze of bathroom stalls, dodge the traps, and beat your friends to the one Exit before the Jail catches you.</p>
+        <p>Grab money in a generated bathroom maze. Find a stall when Crazy Randy freaks out, then make for the exit.</p>
       </div>
     </article>
 
@@ -367,16 +367,16 @@
   <div class="hold">
     <div class="top">
       <div>
-        <p class="zlorp">I'm Zlorp. Play my games. Fill my jar.</p>
+        <p class="kicker mono">Randy has quotas.</p>
         <h2 class="display">Fill the<br>loosh jar.</h2>
-        <p>Each win adds loosh to the same one-litre jar. When it brims, Zlorp comes through for the finale.</p>
+        <p>As the loosh jar fills, the house gets stranger. The walls and lighting change with the party. A full jar brings you to Rumble With Randy; the demo includes a shorter fight.</p>
       </div>
-      <div class="frame"><img src="img/new_zlorp_intro.jpg?v=2" loading="lazy" alt="Zlorp sits in an orange armchair under warm lamplight while a player approaches"></div>
+      <div class="frame"><img src="img/launch-20260925/still-jar.jpg" loading="lazy" alt="Randy introduces the loosh jar to the party"></div>
     </div>
-    <div class="warp">
-      <div class="frame"><img src="img/new_finale_warp.jpg?v=2" loading="lazy" alt="The small house after the jar fills, walls streaked green with Zlorp standing among the mushrooms"></div>
-      <div class="frame"><video src="vid/loop_finale.mp4" poster="img/loop_finale.jpg" muted loop playsinline preload="none" aria-label="The jar hits the brim and the whole house slips into cyan and green"></video></div>
-      <p>A full jar starts the finale.</p>
+    <div class="warp" aria-label="More of Randy’s house">
+      <div class="frame"><img src="img/launch-20260925/still-radio.jpg" loading="lazy" alt="The holographic radio in Randy’s house"></div>
+      <div class="frame"><video src="vid/launch-20260925/loop-radio.mp4" poster="img/launch-20260925/still-radio.jpg" muted loop playsinline preload="none" aria-label="Changing stations on the house radio"></video></div>
+      <p>The demo ends with a shortened Rumble With Randy. The full fight belongs to the full game.</p>
     </div>
   </div>
 </section>
@@ -385,26 +385,35 @@
 <section class="reel" id="trailer">
   <div class="hold">
     <div class="head">
-      <h2 class="display">The current trailer</h2>
-      <p class="mono">43 seconds from an earlier build. New trailer coming.</p>
+      <h2 class="display">The demo trailer rough</h2>
+      <p class="mono">Work in progress. Black cards show the last shots being recorded; this cut is for preview.</p>
     </div>
     <div class="screen">
-      <video controls preload="none" playsinline poster="img/new_bowls_win.jpg?v=2"
+      <video controls preload="none" playsinline poster="img/launch-20260925/still-bowls-wide.jpg"
              aria-label="Bad Shrooms trailer">
-        <source src="vid/badshrooms_trailer_a.mp4" type="video/mp4">
+        <source src="vid/launch-20260925/demo-rough-20260925.mp4" type="video/mp4">
         Your browser can't play this video.
-        <a href="vid/badshrooms_trailer_a.mp4">Download it instead.</a>
+        <a href="vid/launch-20260925/demo-rough-20260925.mp4">Download it instead.</a>
       </video>
     </div>
   </div>
 </section>
 
+<section class="house" id="demo-details"><div class="hold">
+<h2 class="display">Bring somebody.</h2>
+<p class="lede">Bad Shrooms is for 2–4 players. Play together in local split-screen or over Steam. It is not a single-player demo.</p>
+<p>On Windows, one player can use keyboard and mouse; compatible controllers support the local party. Online play needs an internet connection.</p>
+<p>The demo includes Monkey Bowls, Hot Boys and The Bathrooms. Randy’s Gig Work and the other planned Early Access games are outside this demo.</p>
+<p><a href="https://store.steampowered.com/app/4995150/">Wishlist the full game on Steam</a>. Early Access is coming later; seven minigames are the launch target.</p>
+<p>Something went wrong? Send the build number, player count and what happened to <a href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>.</p>
+</div></section>
+
 <!-- 6 -->
 <section class="close">
   <div class="hold">
     <h2 class="display">Bad Shrooms is coming to Steam.</h2>
-    <a class="btn" href="https://store.steampowered.com/app/4995150" rel="noopener">Wishlist on Steam</a>
-    <p class="mono note">The demo goes public when Valve clears it. Until then, wishlists are open.</p>
+    <a class="btn" href="https://store.steampowered.com/app/5163790/" rel="noopener">See the demo on Steam</a>
+    <p class="mono note">The free demo is coming soon. Visit its Steam page for availability. Early Access is a separate release.</p>
   </div>
 </section>
 
