@@ -169,6 +169,29 @@
     .btn{transition:none}
     .btn:hover,.btn:active{transform:none}
   }
+
+/* Owner direction, 2026-09-26: white on black, teal light, no framed cards. */
+:root{--paper:#000;--ink:#fff;--navy:#000;--cream:#fff;--teal:#38dcc6;--lime:#38dcc6;--purple:#38dcc6;--orange:#8beafa;--rule:#193b36}
+body,.bar,.signoff,.jar,.poster,.screen,.screen video,.reel .cell,.frame,.close{background:#000;color:#fff}
+::selection{background:#38dcc6;color:#000}
+a:focus-visible,button:focus-visible{outline-color:#38dcc6}
+.bar{border:0;position:relative}
+.bar::after{content:'';display:block;height:1px;background:linear-gradient(90deg,#000,#168478,#6fe9dc,#000)}
+.bar nav a:hover,footer a:hover{color:#38dcc6}
+.bar .logo-wide,.signoff img{filter:invert(1) hue-rotate(180deg)}
+.frame,.jar .frame,.screen,.reel .cell{border:0;box-shadow:none;border-radius:0;background:transparent}
+.game,.after,.lines,.close,.signoff,footer,.reel{border-color:#193b36}
+.jar,.band{border:0}
+.btn,.poster .btn,.close .btn{background:transparent;color:#fff;border:0;border-bottom:2px solid #38dcc6;border-radius:0;box-shadow:none;padding:.65rem 0;transition:color .15s ease}
+.btn:hover,.btn:active,.poster .btn:hover,.poster .btn:active,.close .btn:hover,.close .btn:active{transform:none;box-shadow:none;color:#38dcc6}
+.poster-lift{background:linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.1) 76%),linear-gradient(0deg,#000,transparent 48%)}
+.band-lift{background:linear-gradient(0deg,#000,transparent 76%)}
+.say,.poster .fact,.band h2,.band p{text-shadow:0 2px 12px #000}
+.bleed{display:none}
+.loose::before{background:#38dcc6;box-shadow:none}
+.close{background:linear-gradient(115deg,#000 25%,#001c18 76%,#003d33 100%)}
+.signoff a.mark{border:0}
+
 </style>
 </head>
 <body>
@@ -297,9 +320,9 @@
     <p class="mono" style="margin-top:.8rem;color:var(--ink)">The client work pays for the studio. This is what it's for.</p>
     <div class="ours">
       <article>
-        <div class="frame"><img src="img/launch-20260925/still-bowls-wide.jpg" loading="lazy" alt="Monkey Bowls gameplay in Bad Shrooms"></div>
+        <div class="frame"><img src="img/demo/still_bowls_arena.jpg" loading="lazy" alt="Monkey Bowls gameplay in Bad Shrooms"></div>
         <h3 class="display">Bad Shrooms</h3>
-        <p class="when mono">Free demo coming soon. Early Access is a separate release.</p>
+        <p class="when mono">Free demo out now on Steam. Early Access is a separate release.</p>
         <p>A psychedelic first-person party game for 2–4 players in local split-screen or over Steam. The demo includes Monkey Bowls, Hot Boys and The Bathrooms, plus a shorter Randy finale. Seven minigames are planned for Early Access launch.</p>
         <a href="index.html">See the game page</a>
       </article>

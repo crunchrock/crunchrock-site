@@ -1,265 +1,182 @@
 <!DOCTYPE html>
-<html lang="en" data-launch-review="2026-09-25">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bad Shrooms | Crunchrock Games</title>
-<meta name="description" content="A first-person party game for 2–4 players. Try Monkey Bowls, Hot Boys and The Bathrooms in the free Steam demo. Coming soon.">
+<meta name="description" content="A free 2–4 player demo of violent first-person party games inside Randy's hyper-interactive, very chill home. Local split-screen or over Steam. Out now.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<meta property="og:title" content="Bad Shrooms | Crunchrock Games">
-<meta property="og:description" content="Randy’s house gets stranger as the jar fills. A first-person party game for 2–4 players, in local split-screen or over Steam.">
-<meta property="og:image" content="https://crunchrock.games/img/og-game.jpg">
+<meta property="og:title" content="Bad Shrooms | Free demo on Steam">
+<meta property="og:description" content="Violent first-person party games inside Randy's very chill home. 2–4 players, local split-screen or over Steam. The free demo is out now.">
+<meta property="og:image" content="https://crunchrock.games/img/og-game.jpg?v=20260929">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Bad Shrooms wordmark over Randy, a green alien, leaning on a kitchen counter under purple light">
+<meta property="og:image:alt" content="Randy, a green alien, in a purple kitchen next to the Bad Shrooms wordmark">
 <meta property="og:site_name" content="Crunchrock Games">
 <meta property="og:url" content="https://crunchrock.games/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="The Bad Shrooms wordmark over Randy in the kitchen">
+<meta name="twitter:image:alt" content="Randy in the kitchen next to the Bad Shrooms wordmark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+  /* Owner direction 2026-09-26: white type on black, the capsule's teal light, smooth
+     gradients, flat layout, unframed media. No panels, no nested boxes, no dimmed text.
+     Titan One display, Baloo 2 body, JetBrains Mono for facts. */
   :root{
-    /* Canon palette, field inverted: BoneCream is the paper, CaveInk is the ink.
-       TEXT ON PAPER IS INK. Not purple, not lime, not orange (owner, 2026-08-15).
-       The colours are fills, borders and highlights only. Emphasis comes from
-       weight, not hue. AlienTeal only appears on the dark plates, where Randy lives. */
-    --paper:#F6EFDD;
-    --ink:#14102B;
-    --navy:#241E4E;
-    --lime:#B7E561;
-    --purple:#6A3FA0;
-    --orange:#F2913D;
-    --cream:#F6EFDD;
+    --bg:#000;
+    --fg:#fff;
     --teal:#3FBFAD;
-    --rule:rgba(20,16,43,.20);
+    --teal-glow:rgba(63,191,173,.34);
+    --teal-deep:#06231f;
   }
   *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--bg)}
   body{
-    background:var(--paper);color:var(--ink);
-    font-family:'Baloo 2',system-ui,sans-serif;
-    font-size:clamp(1.05rem,.5vw + .95rem,1.15rem);line-height:1.5;
+    background:var(--bg);color:var(--fg);
+    font-family:'Baloo 2',system-ui,sans-serif;font-weight:500;
+    font-size:clamp(1.08rem,.5vw + .98rem,1.2rem);line-height:1.5;
     overflow-x:hidden;-webkit-font-smoothing:antialiased;
   }
-  ::selection{background:var(--lime);color:var(--ink)}
-  img{max-width:100%;height:auto;display:block}
+  ::selection{background:var(--teal);color:#000}
+  img,video{max-width:100%;display:block}
+  a{color:var(--fg)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 
-  /* mono is the technical voice: facts, labels, dates, nav */
-  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;
-        letter-spacing:-.01em;line-height:1.5}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;letter-spacing:-.01em;line-height:1.5}
+  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;line-height:.94}
+  .hold{max-width:1240px;margin:0 auto;padding-inline:clamp(1rem,3.4vw,2.4rem)}
+  p{max-width:46ch}
+  b{font-weight:700}
 
-  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;
-           text-transform:uppercase;line-height:.92}
+  /* buttons: flat, square, full strength */
+  .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;
+       text-decoration:none;font-size:clamp(1.05rem,1.7vw,1.3rem);padding:.9rem 1.8rem;
+       background:var(--fg);color:#000;border-radius:2px;transition:background .15s ease,color .15s ease}
+  .btn:hover,.btn:focus-visible{background:var(--teal);color:#000}
+  .link{color:var(--fg);text-decoration:none;border-bottom:2px solid var(--teal);padding-bottom:1px}
+  .link:hover{color:var(--teal)}
 
-  a{color:var(--ink)}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
-
-  .hold{max-width:1240px;margin:0 auto;padding-inline:clamp(1.1rem,3.4vw,2.4rem)}
-
-  /* ---------------- sticker button ---------------- */
-  .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;
-       text-transform:uppercase;text-decoration:none;font-size:clamp(1.05rem,1.7vw,1.3rem);
-       padding:.85rem 1.7rem;background:var(--lime);color:var(--ink);
-       border:2.5px solid var(--ink);border-radius:2px;
-       box-shadow:6px 6px 0 var(--ink);
-       transition:transform .1s ease,box-shadow .1s ease}
-  .btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
-  .btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
-
-  /* sticker frame for every capture */
-  .frame{overflow:hidden;border:2.5px solid var(--ink);box-shadow:7px 7px 0 var(--ink);
-         background:var(--ink);line-height:0}
-  .frame img,.frame video{width:100%;height:100%;object-fit:cover;display:block}
+  /* media sits directly on the page */
+  .shot{line-height:0;overflow:hidden;background:#000}
+  .shot img,.shot video{width:100%;height:100%;object-fit:cover}
 
   /* ---------------- top bar ---------------- */
-  .bar{border-bottom:2px solid var(--ink);background:var(--paper)}
-  .bar .hold{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;
-             padding-block:.6rem}
+  .bar{background:var(--bg)}
+  .bar .hold{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;padding-block:.7rem}
   .bar .who{justify-self:center;display:flex;align-items:center;line-height:0}
-  .bar .who .logo-wide{height:48px;width:auto;display:block}
+  .bar .who .logo-wide{height:44px;width:auto;display:block}
   .bar .who .logo-mark{height:40px;width:auto;display:none}
   .bar nav{display:flex;gap:1.5rem;align-items:center}
   .bar nav.left{justify-self:start}
   .bar nav.right{justify-self:end}
-  .bar nav a{color:var(--ink);text-decoration:none;text-transform:uppercase;font-weight:700;
-             letter-spacing:.02em}
-  .bar nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
-  @media (max-width:560px){.bar .who .logo-wide{display:none}.bar .who .logo-mark{display:block}
-                           .bar nav{gap:.8rem;font-size:.82rem}}
-
-  /* ---------------- studio sign-off ---------------- */
-  .signoff{border-top:2px solid var(--ink);background:var(--paper)}
-  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem;
-                 padding-block:clamp(2.8rem,7vh,4.8rem)}
-  .signoff img{width:min(64vw,400px);height:auto;display:block}
-  .signoff a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
-  .signoff a:hover{border-bottom-color:var(--lime)}
-  .signoff a.mark{border-bottom:0;line-height:0}
+  .bar nav a{color:var(--fg);text-decoration:none;text-transform:uppercase;font-weight:700;letter-spacing:.02em}
+  .bar nav a:hover{color:var(--teal)}
+  @media (max-width:560px){.bar .who .logo-wide{display:none}.bar .who .logo-mark{display:block}.bar nav{gap:.8rem;font-size:.82rem}}
 
   /* ---------------- 1. the poster ----------------
-     In-engine: Randy in the kitchen, the same plate as the Steam capsule.
-     The old painted key art is retired (2026-08-29). */
-  .poster{position:relative;background:var(--ink);isolation:isolate;overflow:hidden;
-          min-height:min(92svh,900px);display:flex;flex-direction:column;
-          justify-content:flex-end;
-          padding:clamp(4rem,12vh,8rem) 0 clamp(3rem,9vh,5rem)}
-  .poster-art{position:absolute;inset:0;z-index:-2;
-              background:url('img/launch-20260925/still-randy-clean.jpg') 0% 40%/cover no-repeat}
-  @media (max-width:700px){.poster-art{background-image:url('img/launch-20260925/still-randy-clean.jpg');
-                                       background-position:50% 30%}}
-  /* Just enough lift at the foot to seat the type. The art is not muffled. */
-  .poster-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
-     transparent 0%, transparent 50%, rgba(20,16,43,.55) 80%, rgba(20,16,43,.9) 100%)}
+     The Steam capsule plate: Randy in the kitchen, in engine. Teal light comes from the
+     plate itself; the gradient at the foot only seats the type. */
+  .poster{position:relative;isolation:isolate;overflow:hidden;min-height:min(94svh,940px);
+          display:flex;flex-direction:column;justify-content:flex-end;
+          padding:clamp(4rem,12vh,8rem) 0 clamp(3rem,9vh,5.5rem)}
+  .poster-art{position:absolute;inset:0;z-index:-2;background:url('img/demo/hero_randy_kitchen.jpg?v=20260929') 74% 50%/cover no-repeat}
+  @media (max-width:700px){.poster-art{background-image:url('img/demo/hero_randy_kitchen_phone.jpg?v=20260929');background-position:50% 20%}}
+  .poster-lift{position:absolute;inset:0;z-index:-1;
+     background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,.72) 72%,#000 100%),
+                radial-gradient(70% 55% at 18% 92%,var(--teal-glow),transparent 70%)}
   .poster .hold{width:100%}
-  .wordmark{width:min(80vw,600px)}
-  .say{margin-top:1.4rem;color:var(--cream);font-family:'Titan One',system-ui,sans-serif;
-       font-weight:400;font-size:clamp(1.4rem,3.4vw,2.3rem);line-height:1.08;max-width:17ch;
-       text-shadow:0 3px 20px rgba(20,16,43,.9)}
-  .poster .btn{margin-top:1.9rem;border-color:var(--cream);box-shadow:6px 6px 0 var(--cream)}
-  .poster .btn:hover{box-shadow:3px 3px 0 var(--cream)}
-  .poster .btn:active{box-shadow:0 0 0 var(--cream)}
-  .poster .fact{margin-top:1.5rem;color:var(--cream);max-width:46ch;
-                text-shadow:0 2px 12px rgba(20,16,43,.9)}
+  .wordmark{width:min(78vw,560px)}
+  .say{margin-top:1.3rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;
+       font-size:clamp(1.5rem,3.6vw,2.5rem);line-height:1.08;max-width:17ch;text-shadow:0 3px 22px rgba(0,0,0,.9)}
+  .poster .btn{margin-top:1.8rem}
+  .poster .fact{margin-top:1.4rem;max-width:44ch;text-shadow:0 2px 12px rgba(0,0,0,.9)}
 
-  /* ---------------- the loose friend ----------------
-     The game's verb is grab-and-throw, so the one interactive thing on the
-     site is the word "friend": pinned, already crooked, and flingable. It
-     settles back askew because your friend never settles back straight. */
+  /* the loose friend: the game's verb is grab-and-throw, so the one interactive thing on
+     the page is the word "friends", pinned, crooked, flingable. */
   .loose{display:inline-block;position:relative}
-  .loose i{display:inline-block;font-style:normal;transform-origin:14% 6%;
-           cursor:grab;touch-action:none;will-change:transform}
+  .loose i{display:inline-block;font-style:normal;transform-origin:14% 6%;cursor:grab;touch-action:none;will-change:transform}
   .loose i:active{cursor:grabbing}
-  .loose::before{content:'';position:absolute;left:calc(14% - 3px);top:-2px;
-                 width:7px;height:7px;border-radius:50%;background:var(--lime);
-                 box-shadow:0 0 0 2px rgba(20,16,43,.55);z-index:2;pointer-events:none}
-  @media (prefers-reduced-motion: reduce){
-    .loose i{cursor:auto;transform:rotate(6deg)}
-  }
+  .loose::before{content:'';position:absolute;left:calc(14% - 3px);top:-2px;width:7px;height:7px;border-radius:50%;
+                 background:var(--teal);z-index:2;pointer-events:none}
+  @media (prefers-reduced-motion: reduce){.loose i{cursor:auto;transform:rotate(6deg)}}
 
-  /* the wordmark's own signature, used once: the plate bleeds onto the paper */
-  .bleed{display:block;width:100%;height:clamp(30px,3.4vw,58px);color:var(--lime);
-         margin-top:-1px}
-
-  /* ---------------- 2. the house ----------------
-     An uneven mosaic, because the small house is not a grid either. */
-  .house{padding-block:clamp(3rem,8vh,5rem)}
-  .house h2{font-size:clamp(2rem,5.2vw,3.8rem);max-width:15ch}
-  .house .lede{margin-top:1.1rem;max-width:54ch}
-  /* A direct child of the section, so it is full-bleed without the 100vw trick
-     (which mis-centres by half a scrollbar). */
-  .mosaic{display:grid;gap:clamp(1rem,2vw,1.6rem);margin-top:clamp(1.6rem,4vh,2.6rem);
-          padding-inline:clamp(1.1rem,3.4vw,2.4rem);
-          grid-template-columns:repeat(2,1fr)}
-  .mosaic .frame{aspect-ratio:16/9}
-  .mosaic .a{grid-column:1/-1}
-  @media (min-width:820px){
-    .mosaic{grid-template-columns:repeat(6,1fr)}
-    .mosaic .a{grid-column:1/4}
-    .mosaic .b{grid-column:4/7}
-    .mosaic .c{grid-column:1/3}
-    .mosaic .d{grid-column:3/5}
-    .mosaic .e{grid-column:5/7}
-    .mosaic .c,.mosaic .d,.mosaic .e{aspect-ratio:3/2}
-  }
-  .house .cap{margin-top:1.4rem;max-width:56ch}
-
-  /* ---------------- the band ----------------
-     One full-bleed wide plate for scale: the living room, gone bowling. */
-  .band{position:relative;isolation:isolate;overflow:hidden;background:var(--ink);
-        border-block:2.5px solid var(--ink);min-height:min(62vh,640px);
-        display:flex;align-items:flex-end}
-  .band-art{position:absolute;inset:0;z-index:-2;
-            background:url('img/launch-20260925/still-bowls-wide.jpg') 50% 45%/cover no-repeat}
-  .band-lift{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,
-     transparent 40%, rgba(20,16,43,.72) 100%)}
-  .band .hold{padding-block:clamp(2rem,6vh,3.6rem)}
-  .band h2{color:var(--cream);font-size:clamp(1.9rem,5vw,3.8rem);max-width:16ch;
-           text-shadow:0 3px 20px rgba(20,16,43,.9)}
-  .band p{margin-top:.8rem;color:var(--cream);max-width:48ch;
-          text-shadow:0 2px 12px rgba(20,16,43,.9)}
+  /* ---------------- 2. the house becomes the game ---------------- */
+  .turn{padding-block:clamp(3rem,9vh,6rem) 0;background:linear-gradient(180deg,#000 0%,var(--teal-deep) 100%)}
+  .turn h2{font-size:clamp(2.2rem,6.2vw,4.8rem);max-width:12ch}
+  .turn .lede{margin-top:1rem;max-width:50ch}
+  .turn .shot{margin-top:clamp(1.6rem,4vh,2.6rem);aspect-ratio:16/9;max-height:80vh}
+  .turn .shot video{object-position:50% 45%}
 
   /* ---------------- 3. the games ----------------
-     One game per row, alternating sides, two captures each. The demo has
-     three games; that is this page's one three. */
-  .games{padding-block:clamp(2rem,6vh,4rem) clamp(3rem,8vh,5rem)}
-  .games .kicker{max-width:50ch}
-  .game{display:grid;gap:clamp(1.2rem,3vw,2.4rem);align-items:center;
-        padding-block:clamp(2rem,5vh,3.4rem);border-top:2px solid var(--ink)}
-  .game:first-of-type{margin-top:clamp(1.4rem,4vh,2.4rem)}
+     One game per row, alternating sides. The demo has three games; that is this page's one three. */
+  .games{padding-block:clamp(2.5rem,7vh,4.5rem) clamp(3rem,8vh,5rem);
+         background:linear-gradient(180deg,var(--teal-deep) 0%,#000 22%,#000 100%)}
+  .games .kicker{max-width:52ch}
+  .game{display:grid;gap:clamp(1.2rem,3vw,2.6rem);align-items:center;padding-block:clamp(2.2rem,6vh,3.8rem)}
   @media (min-width:820px){
-    .game{grid-template-columns:1.3fr 1fr}
-    .game.flip{grid-template-columns:1fr 1.3fr}
+    .game{grid-template-columns:1.25fr 1fr}
+    .game.flip{grid-template-columns:1fr 1.25fr}
     .game.flip .words{order:-1}
   }
-  .game .shots{display:grid;gap:clamp(.9rem,1.6vw,1.3rem);grid-template-columns:1fr}
-  .game .shots .frame:first-child{aspect-ratio:3/2}
-  .game .shots .frame:last-child{aspect-ratio:16/9}
-  @media (min-width:560px){.game .shots{grid-template-columns:1.1fr .9fr;align-items:start}}
-  .game h3{font-size:clamp(2rem,4.6vw,3.4rem)}
+  .game .shots{display:grid;gap:clamp(.7rem,1.4vw,1rem);grid-template-columns:1fr}
+  .game .shots .shot{aspect-ratio:16/9}
+  .game h3{font-size:clamp(2.1rem,4.8vw,3.6rem)}
   .game .words p{margin-top:.9rem;max-width:36ch}
   .game .words .rule{font-weight:700}
-  .after{margin-top:clamp(2rem,5vh,3rem);padding-top:clamp(1.2rem,2.4vh,1.7rem);
-         border-top:2px solid var(--ink);max-width:40ch;
-         font-size:1.2em;line-height:1.34;text-wrap:balance}
-  .after b{font-weight:700}
+  .after{margin-top:clamp(1.4rem,4vh,2.4rem);max-width:42ch;font-size:1.15em;line-height:1.36;text-wrap:balance}
 
   /* ---------------- 4. Randy and the jar ---------------- */
-  .jar{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink)}
-  .jar .hold{padding-block:clamp(3.4rem,9vh,6rem)}
-  .jar .top{display:grid;gap:clamp(2rem,4vw,3.4rem);align-items:center}
+  .jar{background:linear-gradient(180deg,#000 0%,var(--teal-deep) 55%,#000 100%)}
+  .jar .hold{padding-block:clamp(3rem,9vh,6rem)}
+  .jar .top{display:grid;gap:clamp(1.6rem,4vw,3.4rem);align-items:center}
   @media (min-width:900px){.jar .top{grid-template-columns:.98fr 1.02fr}}
-  .zlorp{color:var(--teal);font-size:clamp(1.15rem,2vw,1.45rem);font-weight:600;
-         max-width:30ch;margin-bottom:1.2rem}
-  .zlorp::before{content:'“'}.zlorp::after{content:'”'}
-  .jar h2{font-size:clamp(2.3rem,5.6vw,4.4rem);color:var(--cream)}
-  .jar p{margin-top:1.2rem;color:var(--cream);max-width:44ch}
-  .jar .frame{border-color:var(--cream);box-shadow:7px 7px 0 var(--cream);aspect-ratio:16/9}
-  .jar .warp{display:grid;gap:clamp(1rem,2vw,1.6rem);margin-top:clamp(2rem,5vh,3.2rem)}
+  .randy{color:var(--teal);font-size:clamp(1.15rem,2vw,1.45rem);font-weight:700;max-width:30ch;margin-bottom:1rem}
+  .randy::before{content:'\201C'}.randy::after{content:'\201D'}
+  .jar h2{font-size:clamp(2.2rem,5.6vw,4.4rem)}
+  .jar p{margin-top:1.1rem;max-width:44ch}
+  .jar .shot{aspect-ratio:16/9}
+  .jar .warp{display:grid;gap:clamp(.8rem,2vw,1.4rem);margin-top:clamp(1.8rem,5vh,3rem)}
   @media (min-width:700px){.jar .warp{grid-template-columns:1fr 1fr}}
-  .jar .warp p{margin-top:0;grid-column:1/-1;max-width:56ch}
-  /* Randy's actual lines, straight off the captures. Uneven on purpose. */
-  .lines{margin-top:clamp(2.4rem,6vh,3.6rem);border-top:2px solid var(--cream);
-         padding-top:clamp(1.4rem,3vh,2rem)}
-  .lines h3{font-size:clamp(1.4rem,2.8vw,2rem);color:var(--cream)}
-  .lines ul{list-style:none;margin-top:1rem;display:grid;gap:.7rem 2.4rem}
-  @media (min-width:760px){.lines ul{grid-template-columns:1fr 1fr}}
-  .lines li{color:var(--teal);font-weight:600;font-size:clamp(1.05rem,1.6vw,1.25rem);
-            max-width:34ch}
-  .lines li::before{content:'\201C'}.lines li::after{content:'\201D'}
+  .jar .warp .shot{aspect-ratio:16/9}
+  .jar .warp p{grid-column:1/-1;margin-top:.2rem;max-width:56ch}
 
-  /* ---------------- 5. the trailer ----------------
-     Trailer A, the interim cut, sits low now. A new one is being cut from
-     the demo build. Self-hosted, preload none. */
+  /* ---------------- 5. the trailer ---------------- */
   .reel{padding-block:clamp(3rem,8vh,5rem)}
   .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem}
-  .reel h2{font-size:clamp(1.9rem,4.4vw,3rem);color:var(--ink)}
+  .reel h2{font-size:clamp(1.9rem,4.4vw,3rem)}
   .reel .head p{max-width:52ch}
-  .screen{margin-top:clamp(1.4rem,3.4vh,2.2rem);border:2.5px solid var(--ink);
-          box-shadow:9px 9px 0 var(--ink);background:var(--ink);line-height:0;
-          max-width:960px}
-  .screen video{width:100%;height:auto;aspect-ratio:16/9;display:block;background:var(--ink)}
+  .screen{margin-top:clamp(1.2rem,3vh,2rem);line-height:0;max-width:1000px}
+  .screen video{width:100%;height:auto;aspect-ratio:16/9;background:#000}
 
-  /* ---------------- 6. the close ---------------- */
-  .close{text-align:center;padding-block:clamp(3.2rem,9vh,5rem);border-top:2px solid var(--ink)}
-  .close h2{font-size:clamp(1.8rem,4.4vw,3rem);max-width:18ch;margin-inline:auto}
+  /* ---------------- 6. bring somebody ---------------- */
+  .bring{background:linear-gradient(180deg,#000 0%,var(--teal-deep) 100%)}
+  .bring .hold{padding-block:clamp(3rem,8vh,5rem)}
+  .bring h2{font-size:clamp(2rem,5vw,3.8rem);max-width:14ch}
+  .bring p{margin-top:1rem;max-width:52ch}
+  .bring .grid{display:grid;gap:clamp(1.4rem,4vw,3rem);align-items:center;margin-top:1.2rem}
+  @media (min-width:820px){.bring .grid{grid-template-columns:1fr 1fr}}
+  .bring .shot{aspect-ratio:16/9}
+
+  /* ---------------- 7. the close ---------------- */
+  .close{text-align:center;padding-block:clamp(3.4rem,10vh,6rem);
+         background:linear-gradient(180deg,var(--teal-deep) 0%,#000 100%)}
+  .close h2{font-size:clamp(1.9rem,4.6vw,3.2rem);max-width:18ch;margin-inline:auto}
   .close .btn{margin-top:1.8rem}
-  .close .note{margin-top:1.2rem;color:var(--ink);max-width:44ch;margin-inline:auto}
+  .close .note{margin-top:1.2rem;max-width:46ch;margin-inline:auto}
+  .close .note a{color:var(--fg)}
 
-  footer{border-top:2px solid var(--ink);padding-block:1.6rem 2.4rem}
-  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;
-               justify-content:space-between}
-  footer a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
-  footer a:hover{border-bottom-color:var(--lime)}
+  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem;padding-block:clamp(2.6rem,7vh,4.6rem)}
+  .signoff img{width:min(60vw,360px);height:auto;display:block}
+  .signoff a.mark{line-height:0}
+  footer{padding-block:1.4rem 2.4rem}
+  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;justify-content:space-between}
   footer .links{display:flex;gap:1.4rem;flex-wrap:wrap}
 
-  @media (prefers-reduced-motion: reduce){
-    .btn{transition:none}
-    .btn:hover,.btn:active{transform:none}
-  }
+  @media (prefers-reduced-motion: reduce){.btn{transition:none}}
 </style>
 </head>
 <body>
@@ -271,94 +188,79 @@
       <a href="#trailer">Trailer</a>
     </nav>
     <a class="who" href="#top" aria-label="Crunchrock Games">
-      <img class="logo-wide" src="img/logo_crunchrock_wide.svg" alt="Crunchrock Games">
+      <img class="logo-wide" src="img/logo_crunchrock_wide_white.svg" alt="Crunchrock Games">
       <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
     </a>
     <nav class="mono right">
       <a href="work.html">Studio</a>
-      <a href="https://store.steampowered.com/app/4995150" rel="noopener">Steam</a>
+      <a href="https://store.steampowered.com/app/4995150/Bad_Shrooms/" rel="noopener">Steam</a>
     </nav>
   </div>
 </div>
 
 <!-- 1 -->
 <header class="poster" id="top">
-  <div class="poster-art" role="img" aria-label="Randy looks at the player from the kitchen"></div>
+  <div class="poster-art" role="img" aria-label="Randy, a green alien with a cigarette, in a purple kitchen"></div>
   <div class="poster-lift" aria-hidden="true"></div>
   <div class="hold">
     <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
     <p class="say">Your <span class="loose"><i>friends</i></span> are the difficulty setting.</p>
-    <a class="btn" href="https://store.steampowered.com/app/5163790/" rel="noopener">See the demo on Steam</a>
-    <p class="fact mono">2–4 players in local split-screen or over Steam. Free demo coming soon.</p>
+    <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/" rel="noopener">Play the free demo</a>
+    <p class="fact mono">Out now on Steam. 2–4 players, local split-screen or online.</p>
   </div>
 </header>
 
-<svg class="bleed" viewBox="0 0 1200 104" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-  <path fill="currentColor" d="M1200,0 H0 V6 H70 C77.6,34 81.2,56 90,56 C98.8,56 102.4,34 110,6 H183 C187.9,21 190.3,30 196,30 C201.7,30 204.1,21 209,6 H308 C317.1,47 321.4,82 332,82 C342.6,82 346.9,47 356,6 H455 C460.7,27 463.4,42 470,42 C476.6,42 479.3,27 485,6 H565 C569.2,18 571.2,24 576,24 C580.8,24 582.8,18 587,6 H674 C683.9,41 688.6,70 700,70 C711.4,70 716.1,41 726,6 H829 C835.5,30 838.5,48 846,48 C853.5,48 856.5,30 863,6 H950 C954.6,20 956.7,28 962,28 C967.3,28 969.4,20 974,6 H1072 C1079.6,36 1083.2,60 1092,60 C1100.8,60 1104.4,36 1112,6 H1200 Z"/>
-</svg>
-
 <!-- 2 -->
-<section class="house">
+<section class="turn">
   <div class="hold">
-    <h2 class="display">Tripping with friends.</h2>
-    <p class="lede">The shrooms weren't bunk but they were not good either. Now you're playing sick games for a weirdo alien.</p>
+    <h2 class="display">The house becomes the game.</h2>
+    <p class="lede">You paid a stranger in a bathroom thirty dollars for mushrooms. Now an alien named Randy is in your apartment, and every round he rebuilds it.</p>
   </div>
-  <div class="mosaic">
-    <div class="frame a"><video src="vid/launch-20260925/loop-bowls.mp4" poster="img/launch-20260925/still-bowls.jpg" muted loop playsinline preload="none" aria-label="Monkey Bowls gameplay in the living room"></video></div>
-    <div class="frame b"><img src="img/launch-20260925/still-party.jpg" loading="lazy" alt="The party gathers in Randy’s house"></div>
-    <div class="frame c"><video src="vid/launch-20260925/loop-house.mp4" poster="img/launch-20260925/still-house.jpg" muted loop playsinline preload="none" aria-label="Picking up food in the interactive kitchen"></video></div>
-    <div class="frame d"><video src="vid/launch-20260925/loop-radio.mp4" poster="img/launch-20260925/still-radio.jpg" muted loop playsinline preload="none" aria-label="The holographic radio in the pod chair"></video></div>
-    <div class="frame e"><img src="img/launch-20260925/still-house.jpg" loading="lazy" alt="An open fridge full of things to pick up"></div>
-  </div>
-</section>
-
-<section class="band" aria-label="The living room becomes Monkey Bowls.">
-  <div class="band-art" role="img" aria-label="Mushrooms line the bowling lanes in the living room."></div>
-  <div class="band-lift" aria-hidden="true"></div>
-  <div class="hold">
-    <h2 class="display">The room becomes the game.</h2>
-    <p>Randy rebuilds the house every round.</p>
+  <div class="shot">
+    <video src="vid/demo/loop_lanes.mp4" poster="img/demo/loop_lanes.jpg" muted loop playsinline preload="none" aria-label="The living room grows bowling lanes through a purple ring"></video>
   </div>
 </section>
 
 <!-- 3 -->
 <section class="games" id="games">
   <div class="hold">
-    <p class="kicker mono">The demo has three games, plus a shorter Randy finale.</p>
+    <p class="kicker mono">Three games in the free demo, then a short Rumble With Randy.</p>
 
     <article class="game">
       <div class="shots">
-        <div class="frame"><img src="img/launch-20260925/still-bowls-wide.jpg" loading="lazy" alt="Monkey Bowls: glowing lanes and banana pins in the living room"></div>
-        <div class="frame"><video src="vid/launch-20260925/loop-bowls.mp4" poster="img/launch-20260925/still-bowls.jpg" muted loop playsinline preload="none" aria-label="A throw down the lane ends in a white starburst as the banana pins scatter"></video></div>
+        <div class="shot"><video src="vid/demo/loop_combo.mp4" poster="img/demo/loop_combo.jpg" muted loop playsinline preload="none" aria-label="A throw down the lane, the pins explode and the combo banks"></video></div>
+        <div class="shot"><img src="img/demo/still_bowls_throw.jpg" loading="lazy" alt="Monkey Bowls: a pistol in hand, a white starburst at the pins"></div>
       </div>
       <div class="words">
         <h3 class="display">Monkey<br>Bowls</h3>
-        <p>Bowl with guns. Chain tricks, smash banana pins and interfere with the other players.</p>
+        <p>Trippy bowling with a combo chain. Hit crazy combo throws with tricks like bunny hops, 360s and griefing multipliers.</p>
+        <p class="rule">There are zero actual monkeys in this minigame, stop asking about them!</p>
       </div>
     </article>
 
     <article class="game flip">
       <div class="shots">
-        <div class="frame"><img src="img/launch-20260925/still-hotboys.jpg" loading="lazy" alt="Hot Boys begins with the party shrinking in the living room"></div>
-        <div class="frame"><video src="vid/launch-20260925/loop-hotboys.mp4" poster="img/launch-20260925/still-hotboys.jpg" muted loop playsinline preload="none" aria-label="The shrink effect at the start of Hot Boys"></video></div>
+        <div class="shot"><video src="vid/demo/loop_lava.mp4" poster="img/demo/loop_lava.jpg" muted loop playsinline preload="none" aria-label="Randy says LAVA and the living room floor floods"></video></div>
+        <div class="shot"><img src="img/demo/still_hotboys_lava.jpg" loading="lazy" alt="Hot Boys: tiny first-person view over a room full of lava"></div>
       </div>
       <div class="words">
         <h3 class="display">Hot<br>Boys</h3>
-        <p>The house fills with lava. You shrink, climb the furniture and try to keep your money while the other players make that difficult.</p>
+        <p>The house fills with lava and turns you all into tiny Hot Boys. Get money while shooting your opponents into the lava and staying out of it yourself.</p>
       </div>
     </article>
 
     <article class="game">
       <div class="shots">
-        <div class="frame"><img src="img/launch-20260925/still-bathroom-wide.jpg" loading="lazy" alt="The Bathrooms: a tiled corridor inside the generated maze"></div>
-        <div class="frame"><video src="vid/launch-20260925/loop-bathrooms.mp4" poster="img/launch-20260925/still-bathrooms.jpg" muted loop playsinline preload="none" aria-label="Walking through The Bathrooms before Randy catches up"></video></div>
+        <div class="shot"><video src="vid/demo/loop_stall.mp4" poster="img/demo/loop_stall.jpg" muted loop playsinline preload="none" aria-label="Crazy Randy is freaking out: run down the corridor and get in a stall"></video></div>
+        <div class="shot"><img src="img/demo/still_bathrooms_corridor.jpg" loading="lazy" alt="The Bathrooms: a tiled corridor in the generated maze"></div>
       </div>
       <div class="words">
         <h3 class="display">The<br>Bathrooms</h3>
-        <p>Grab money in a generated bathroom maze. Find a stall when Crazy Randy freaks out, then make for the exit.</p>
+        <p>Get lost in an aesthetically cohesive but ultimately hollow and terrifying minigame. Make money on the run from Crazy Randy in a generated nightmare hell maze from hell with extra hell.</p>
       </div>
     </article>
 
+    <p class="after">Every minigame and round is what you make it. Play it straight, strategic or only grief your opponent. Randy gets his juices whether anybody wins or loses.</p>
   </div>
 </section>
 
@@ -367,16 +269,16 @@
   <div class="hold">
     <div class="top">
       <div>
-        <p class="kicker mono">Randy has quotas.</p>
-        <h2 class="display">Fill the<br>loosh jar.</h2>
-        <p>As the loosh jar fills, the house gets stranger. The walls and lighting change with the party. A full jar brings you to Rumble With Randy; the demo includes a shorter fight.</p>
+        <p class="randy">My clients require a litre of loosh. You play my games, you fill my jar. Then we finish each other off.</p>
+        <h2 class="display">Randy has quotas.</h2>
+        <p>He is in the apartment holding a big jar and talking about your juices. He is not a monster about it. Every round pours loosh into the jar, and the fuller it gets, the stranger your house looks.</p>
       </div>
-      <div class="frame"><img src="img/launch-20260925/still-jar.jpg" loading="lazy" alt="Randy introduces the loosh jar to the party"></div>
+      <div class="shot"><video src="vid/demo/loop_jar.mp4" poster="img/demo/loop_jar.jpg" muted loop playsinline preload="none" aria-label="The loosh jar on the kitchen table, Randy's quota counting up to 600 of 1000"></video></div>
     </div>
-    <div class="warp" aria-label="More of Randy’s house">
-      <div class="frame"><img src="img/launch-20260925/still-radio.jpg" loading="lazy" alt="The holographic radio in Randy’s house"></div>
-      <div class="frame"><video src="vid/launch-20260925/loop-radio.mp4" poster="img/launch-20260925/still-radio.jpg" muted loop playsinline preload="none" aria-label="Changing stations on the house radio"></video></div>
-      <p>The demo ends with a shortened Rumble With Randy. The full fight belongs to the full game.</p>
+    <div class="warp">
+      <div class="shot"><video src="vid/demo/loop_sword.mp4" poster="img/demo/loop_sword.jpg" muted loop playsinline preload="none" aria-label="Randy closes in with a sword in the purple living room"></video></div>
+      <div class="shot"><video src="vid/demo/loop_eggs.mp4" poster="img/demo/loop_eggs.jpg" muted loop playsinline preload="none" aria-label="Randy at the stove after the fight: You lost. I'm still making eggs."></video></div>
+      <p>When the jar is full, it all ends in a Rumble With Randy. The demo has the short version. There will be eggs.</p>
     </div>
   </div>
 </section>
@@ -385,51 +287,57 @@
 <section class="reel" id="trailer">
   <div class="hold">
     <div class="head">
-      <h2 class="display">The demo trailer rough</h2>
-      <p class="mono">Work in progress. Black cards show the last shots being recorded; this cut is for preview.</p>
+      <h2 class="display">The demo trailer</h2>
+      <p class="mono">One night in the house, start to eggs.</p>
     </div>
     <div class="screen">
-      <video controls preload="none" playsinline poster="img/launch-20260925/still-bowls-wide.jpg"
-             aria-label="Bad Shrooms trailer">
-        <source src="vid/launch-20260925/demo-rough-20260925.mp4" type="video/mp4">
+      <video controls preload="none" playsinline poster="img/demo/still_bowls_throw.jpg" aria-label="Bad Shrooms demo trailer">
+        <source src="vid/demo/badshrooms_demo_trailer.mp4?v=20260929" type="video/mp4">
         Your browser can't play this video.
-        <a href="vid/launch-20260925/demo-rough-20260925.mp4">Download it instead.</a>
+        <a href="vid/demo/badshrooms_demo_trailer.mp4">Download it instead.</a>
       </video>
     </div>
   </div>
 </section>
 
-<section class="house" id="demo-details"><div class="hold">
-<h2 class="display">Bring somebody.</h2>
-<p class="lede">Bad Shrooms is for 2–4 players. Play together in local split-screen or over Steam. It is not a single-player demo.</p>
-<p>On Windows, one player can use keyboard and mouse; compatible controllers support the local party. Online play needs an internet connection.</p>
-<p>The demo includes Monkey Bowls, Hot Boys and The Bathrooms. Randy’s Gig Work and the other planned Early Access games are outside this demo.</p>
-<p><a href="https://store.steampowered.com/app/4995150/">Wishlist the full game on Steam</a>. Early Access is coming later; seven minigames are the launch target.</p>
-<p>Something went wrong? Send the build number, player count and what happened to <a href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>.</p>
-</div></section>
-
 <!-- 6 -->
+<section class="bring">
+  <div class="hold">
+    <h2 class="display">Bring somebody.</h2>
+    <div class="grid">
+      <div>
+        <p>Bad Shrooms is for 2–4 players. Play in local split-screen or over Steam. It is not a single-player demo.</p>
+        <p>Controller recommended. Local split-screen supports 2–4 players using keyboard and mouse plus compatible controllers. Online play needs an internet connection.</p>
+        <p>The demo gives you Monkey Bowls, Hot Boys and The Bathrooms. Early Access opens with seven minigames and a much worse Rumble With Randy. <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/" rel="noopener">Wishlist the full game</a>.</p>
+        <p>Something went wrong? Send the build number, player count and what happened to <a class="link" href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>.</p>
+      </div>
+      <div class="shot"><img src="img/demo/still_four_players.jpg" loading="lazy" alt="Character select: you can't bring your own body, borrow one of ours"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
 <section class="close">
   <div class="hold">
-    <h2 class="display">Bad Shrooms is coming to Steam.</h2>
-    <a class="btn" href="https://store.steampowered.com/app/5163790/" rel="noopener">See the demo on Steam</a>
-    <p class="mono note">The free demo is coming soon. Visit its Steam page for availability. Early Access is a separate release.</p>
+    <h2 class="display">The free demo is out now.</h2>
+    <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/" rel="noopener">Play the free demo</a>
+    <p class="mono note">Then <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/" rel="noopener">wishlist Bad Shrooms</a> for the Early Access release.</p>
   </div>
 </section>
 
 <section class="signoff">
   <div class="hold">
-    <a class="mark" href="work.html"><img src="img/logo_crunchrock_stacked.svg" alt="Crunchrock Games"></a>
-    <p class="mono">Crunchrock Games is a Unity studio. <a href="work.html">See the studio</a></p>
+    <a class="mark" href="work.html"><img src="img/logo_crunchrock_stacked_white.svg" alt="Crunchrock Games"></a>
+    <p class="mono">Crunchrock Games is a Unity studio. <a class="link" href="work.html">See the studio</a></p>
   </div>
 </section>
 
 <footer class="mono">
   <div class="hold">
     <div class="links">
-      <a href="mailto:hello@crunchrock.games">Contact</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="eula.html">EULA</a>
+      <a class="link" href="mailto:hello@crunchrock.games">Contact</a>
+      <a class="link" href="privacy.html">Privacy</a>
+      <a class="link" href="eula.html">EULA</a>
     </div>
   </div>
 </footer>
@@ -461,12 +369,8 @@
   var word = host.querySelector('i');
   if (!word || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var REST = 6 * Math.PI / 180;   // it never hangs straight
-  var K = 26;                     // spring toward rest
-  var C = 4.0;                    // damping
-  var MAX = 0.95;                 // ~54deg. A word on a pin, not a propeller.
-  var VMAX = 7;                   // cap on throw energy
-
+  var REST = 6 * Math.PI / 180;
+  var K = 26, C = 4.0, MAX = 0.95, VMAX = 7;
   var angle = REST, vel = 0, grabbed = false, grabOffset = 0;
   var pointerAngle = 0, lastT = 0, raf = null, idle = 0;
 
