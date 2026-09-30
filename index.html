@@ -58,6 +58,13 @@
        background:var(--fg);color:#000;border-radius:2px;transition:background .15s ease,color .15s ease}
   .btn:hover,.btn:focus-visible{background:var(--teal);color:#000}
   .link{color:var(--fg);text-decoration:none;border-bottom:2px solid var(--teal);padding-bottom:1px}
+  .btn.ghost{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 2px var(--fg)}
+  .btn.ghost:hover,.btn.ghost:focus-visible{background:var(--teal);color:#000;box-shadow:none}
+  .ctas{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+  .ctas .btn{margin-top:0}
+  .close .ctas{justify-content:center}
+  .follow{margin-top:1.6rem;max-width:none}
+  .follow a{margin-inline:.35rem}
   .link:hover{color:var(--teal)}
 
   /* media sits directly on the page */
@@ -193,7 +200,7 @@
     </a>
     <nav class="mono right">
       <a href="work.html">Studio</a>
-      <a href="https://store.steampowered.com/app/4995150/Bad_Shrooms/" rel="noopener">Steam</a>
+      <a href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Steam</a>
     </nav>
   </div>
 </div>
@@ -205,7 +212,10 @@
   <div class="hold">
     <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
     <p class="say">Your <span class="loose"><i>friends</i></span> are the difficulty setting.</p>
-    <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/" rel="noopener">Play the free demo</a>
+    <div class="ctas">
+      <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
+      <a class="btn ghost" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
+    </div>
     <p class="fact mono">Out now on Steam. 2–4 players, local split-screen or online.</p>
   </div>
 </header>
@@ -308,7 +318,7 @@
       <div>
         <p>Bad Shrooms is for 2–4 players. Play in local split-screen or over Steam. It is not a single-player demo.</p>
         <p>Controller recommended. Local split-screen supports 2–4 players using keyboard and mouse plus compatible controllers. Online play needs an internet connection.</p>
-        <p>The demo gives you Monkey Bowls, Hot Boys and The Bathrooms. Early Access opens with seven minigames and a much worse Rumble With Randy. <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/" rel="noopener">Wishlist the full game</a>.</p>
+        <p>The demo gives you Monkey Bowls, Hot Boys and The Bathrooms. Early Access opens with seven minigames and a much worse Rumble With Randy. <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Wishlist the full game</a>.</p>
         <p>Something went wrong? Send the build number, player count and what happened to <a class="link" href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>.</p>
       </div>
       <div class="shot"><img src="img/demo/still_four_players.jpg" loading="lazy" alt="Four named players in Monkey Bowls, a ball halfway down the lane, WARNING SHOT on the board"></div>
@@ -320,8 +330,16 @@
 <section class="close">
   <div class="hold">
     <h2 class="display">The free demo is out now.</h2>
-    <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/" rel="noopener">Play the free demo</a>
-    <p class="mono note">Then <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/" rel="noopener">wishlist Bad Shrooms</a> for the Early Access release.</p>
+    <div class="ctas">
+      <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
+      <a class="btn ghost" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
+    </div>
+    <p class="mono note">Early Access opens with seven minigames. Wishlist it and Steam tells you the day it lands.</p>
+    <p class="mono note follow">New clips on
+      <a class="link" href="https://www.tiktok.com/@crunch_rock" rel="noopener">TikTok</a>
+      <a class="link" href="https://www.youtube.com/@crunchrock" rel="noopener">YouTube</a>
+      <a class="link" href="https://www.instagram.com/crunch_rock/" rel="noopener">Instagram</a>
+      <a class="link" href="https://x.com/crunch_rock" rel="noopener">X</a></p>
   </div>
 </section>
 
@@ -336,6 +354,10 @@
   <div class="hold">
     <div class="links">
       <a class="link" href="mailto:hello@crunchrock.games">Contact</a>
+      <a class="link" href="https://www.tiktok.com/@crunch_rock" rel="noopener">TikTok</a>
+      <a class="link" href="https://www.youtube.com/@crunchrock" rel="noopener">YouTube</a>
+      <a class="link" href="https://www.instagram.com/crunch_rock/" rel="noopener">Instagram</a>
+      <a class="link" href="https://x.com/crunch_rock" rel="noopener">X</a>
       <a class="link" href="privacy.html">Privacy</a>
       <a class="link" href="eula.html">EULA</a>
     </div>
