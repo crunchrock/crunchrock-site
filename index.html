@@ -23,284 +23,342 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  /* Owner direction 2026-09-26: white type on black, the capsule's teal light, smooth
-     gradients, flat layout, unframed media. No panels, no nested boxes, no dimmed text.
-     Titan One display, Baloo 2 body, JetBrains Mono for facts. */
+  /* Owner direction 2026-10-08: the site carries the game's new UI material, the C1
+     Alien Chromatophore Ink reading field (docs/art/ui-concepts in the game repo): a cream
+     field with a lime-to-teal rim and a near-black ink well, hard offset ink shadows, cut-paper
+     edges between sections, sparse ring and pore-dot motifs, all on the house's dusk-purple night.
+     Skeleton after aggrocrab.com: key art hero with one big button, a huge statement in display
+     type on paper, one game per row in alternating layout, very little copy, lots of air. */
   :root{
-    --bg:#000;
-    --fg:#fff;
-    --teal:#3FBFAD;
-    --teal-glow:rgba(63,191,173,.34);
-    --teal-deep:#06231f;
+    --night:#241E4E;     /* DeepTripNavy, the page */
+    --night-deep:#1A1238;
+    --ink:#17121F;       /* the ink well and every hard shadow */
+    --cream:#F6EFDD;     /* the reading field */
+    --lime:#B7E561;      /* ToxicLime, the one button colour */
+    --teal:#3FBFAD;      /* RandyBlue */
+    --rim:#2E7F74;       /* deep teal rim */
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{background:var(--bg)}
+  html{background:var(--night-deep);scroll-behavior:smooth}
   body{
-    background:var(--bg);color:var(--fg);
-    font-family:'Baloo 2',system-ui,sans-serif;font-weight:500;
-    font-size:clamp(1.08rem,.5vw + .98rem,1.2rem);line-height:1.5;
+    background:var(--night);color:var(--cream);
+    font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
+    font-size:clamp(1.12rem,.5vw + 1rem,1.3rem);line-height:1.45;
     overflow-x:hidden;-webkit-font-smoothing:antialiased;
   }
-  ::selection{background:var(--teal);color:#000}
+  ::selection{background:var(--lime);color:var(--ink)}
   img,video{max-width:100%;display:block}
-  a{color:var(--fg)}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
+  a{color:inherit}
+  a:focus-visible{outline:4px solid var(--lime);outline-offset:4px}
+  p{max-width:40ch}
 
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;letter-spacing:-.01em;line-height:1.5}
-  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;line-height:.94}
-  .hold{max-width:1240px;margin:0 auto;padding-inline:clamp(1rem,3.4vw,2.4rem)}
-  p{max-width:46ch}
-  b{font-weight:700}
+  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;line-height:.92}
+  .hold{max-width:1360px;margin:0 auto;padding-inline:clamp(1rem,4.5vw,4.5rem)}
 
-  /* buttons: flat, square, full strength */
+  /* ---------- fields and the cut-paper edges between them ---------- */
+  .field{position:relative;overflow:hidden}
+  .paper{background:var(--cream);color:var(--ink)}
+  .night{background:var(--night);color:var(--cream)}
+  .cut-r{clip-path:polygon(0 0,100% 3.4vw,100% 100%,0 100%);margin-top:-3.4vw;padding-top:3.4vw}
+  .cut-l{clip-path:polygon(0 3.4vw,100% 0,100% 100%,0 100%);margin-top:-3.4vw;padding-top:3.4vw}
+  .field + .field{z-index:2}
+  .field .hold{position:relative;z-index:1}
+
+  /* ---------- the button: lime, ink border, hard offset ink shadow ---------- */
   .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;
-       text-decoration:none;font-size:clamp(1.05rem,1.7vw,1.3rem);padding:.9rem 1.8rem;
-       background:var(--fg);color:#000;border-radius:2px;transition:background .15s ease,color .15s ease}
-  .btn:hover,.btn:focus-visible{background:var(--teal);color:#000}
-  .link{color:var(--fg);text-decoration:none;border-bottom:2px solid var(--teal);padding-bottom:1px}
-  .btn.ghost{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 2px var(--fg)}
-  .btn.ghost:hover,.btn.ghost:focus-visible{background:var(--teal);color:#000;box-shadow:none}
-  .ctas{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
-  .ctas .btn{margin-top:0}
-  .close .ctas{justify-content:center}
-  .follow{margin-top:1.6rem;max-width:none}
-  .follow a{margin-inline:.35rem}
-  .link:hover{color:var(--teal)}
+       text-decoration:none;font-size:clamp(1.1rem,1.7vw,1.4rem);line-height:1;padding:1.05rem 2.2rem 1rem;
+       background:var(--lime);color:var(--ink);border:3px solid var(--ink);border-radius:999px;
+       box-shadow:7px 7px 0 var(--ink);transition:transform .12s ease,box-shadow .12s ease}
+  .btn:hover,.btn:focus-visible{transform:translate(3px,3px);box-shadow:4px 4px 0 var(--ink)}
+  .btn:active{transform:translate(7px,7px);box-shadow:0 0 0 var(--ink)}
+  .btn.alt{background:var(--cream)}
+  .night .btn{box-shadow:7px 7px 0 var(--teal)}
+  .night .btn:hover,.night .btn:focus-visible{box-shadow:4px 4px 0 var(--teal)}
+  .night .btn:active{box-shadow:0 0 0 var(--teal)}
+  .ctas{display:flex;flex-wrap:wrap;gap:1rem 1.2rem;margin-top:1.8rem}
+  .link{text-decoration:none;border-bottom:3px solid var(--teal);padding-bottom:1px;font-weight:700}
+  .link:hover{border-bottom-color:var(--lime)}
 
-  /* media sits directly on the page */
-  .shot{line-height:0;overflow:hidden;background:#000}
+  /* ---------- media: a sticker on the page, ink edge and hard offset shadow ---------- */
+  .shot{line-height:0;overflow:hidden;background:#000;border:3px solid var(--ink);border-radius:14px;
+        box-shadow:12px 12px 0 var(--ink)}
+  .night .shot{box-shadow:12px 12px 0 var(--rim)}
   .shot img,.shot video{width:100%;height:100%;object-fit:cover}
+  .tilt-l{transform:rotate(-1.2deg)}
+  .tilt-r{transform:rotate(1.1deg)}
 
-  /* ---------------- top bar ---------------- */
-  .bar{background:var(--bg)}
-  .bar .hold{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;padding-block:.7rem}
-  .bar .who{justify-self:center;display:flex;align-items:center;line-height:0}
-  .bar .who .logo-wide{height:44px;width:auto;display:block}
-  .bar .who .logo-mark{height:40px;width:auto;display:none}
-  .bar nav{display:flex;gap:1.5rem;align-items:center}
-  .bar nav.left{justify-self:start}
-  .bar nav.right{justify-self:end}
-  .bar nav a{color:var(--fg);text-decoration:none;text-transform:uppercase;font-weight:700;letter-spacing:.02em}
-  .bar nav a:hover{color:var(--teal)}
-  @media (max-width:560px){.bar .who .logo-wide{display:none}.bar .who .logo-mark{display:block}.bar nav{gap:.8rem;font-size:.82rem}}
+  /* ---------- the slab: C1's reading field, a cream shape with a lime-to-teal rim ---------- */
+  .slab{position:relative;isolation:isolate;color:var(--ink);
+        padding:clamp(1.3rem,2.6vw,2.2rem) clamp(1.5rem,3vw,2.8rem);
+        border:4px solid var(--rim);
+        border-radius:2.4rem 3.8rem 2.6rem 4.2rem / 3.2rem 2.4rem 4rem 2.2rem}
+  .slab::before{content:'';position:absolute;inset:-12px;z-index:-1;border-radius:inherit;
+        background:linear-gradient(115deg,var(--lime) 0%,var(--teal) 48%,var(--rim) 100%);
+        box-shadow:12px 12px 0 var(--ink)}
+  .slab::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--cream)}
+  .slab p{max-width:none;font-size:clamp(1.2rem,1.6vw,1.55rem);line-height:1.35;font-weight:600}
+  .slab .who{display:inline-block;font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;
+        font-size:clamp(1rem,1.3vw,1.2rem);line-height:1;color:var(--cream);background:var(--ink);
+        padding:.55rem 1.1rem .5rem;margin-bottom:.8rem;transform:rotate(-2deg);
+        border-radius:1.4rem 2rem 1.2rem 1.8rem / 1.6rem 1.2rem 2rem 1.4rem}
+  .slab .spiral{position:absolute;right:1.2rem;top:.9rem;width:46px;height:46px;color:var(--rim);opacity:.45}
 
-  /* ---------------- 1. the poster ----------------
-     The Steam capsule plate: Randy in the kitchen, in engine. Teal light comes from the
-     plate itself; the gradient at the foot only seats the type. */
-  .poster{position:relative;isolation:isolate;overflow:hidden;min-height:min(94svh,940px);
-          display:flex;flex-direction:column;justify-content:flex-end;
-          padding:clamp(4rem,12vh,8rem) 0 clamp(3rem,9vh,5.5rem)}
-  .poster-art{position:absolute;inset:0;z-index:-2;background:url('img/demo/hero_randy_kitchen.jpg?v=20260929') 74% 50%/cover no-repeat}
-  @media (max-width:700px){.poster-art{background-image:url('img/demo/hero_randy_kitchen_phone.jpg?v=20260929');background-position:50% 20%}}
-  .poster-lift{position:absolute;inset:0;z-index:-1;
-     background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,.72) 72%,#000 100%),
-                radial-gradient(70% 55% at 18% 92%,var(--teal-glow),transparent 70%)}
-  .poster .hold{width:100%}
-  .wordmark{width:min(78vw,560px)}
-  .say{margin-top:1.3rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;
-       font-size:clamp(1.5rem,3.6vw,2.5rem);line-height:1.08;max-width:20ch;text-wrap:balance;text-shadow:0 3px 22px rgba(0,0,0,.9)}
-  .poster .btn{margin-top:1.8rem}
-  .poster .fact{margin-top:1.4rem;max-width:44ch;text-shadow:0 2px 12px rgba(0,0,0,.9)}
+  /* motifs: pore dots in one corner, one ring. Never under reading. */
+  .dots{position:absolute;pointer-events:none;z-index:0;width:min(44vw,520px);height:min(44vw,520px);
+        background-image:radial-gradient(currentColor 1.4px,transparent 1.7px);background-size:14px 14px;
+        -webkit-mask-image:radial-gradient(circle at var(--mx,0) var(--my,0),#000 0,transparent 70%);
+                mask-image:radial-gradient(circle at var(--mx,0) var(--my,0),#000 0,transparent 70%)}
+  .paper .dots{color:var(--ink);opacity:.5}
+  .night .dots{color:var(--cream);opacity:.28}
+  .ring{position:absolute;pointer-events:none;z-index:0;border-radius:50%;border:5px solid currentColor}
+  .ring.d{box-shadow:inset 0 0 0 7px var(--cream),inset 0 0 0 11px currentColor}
 
-  /* the loose friend: the game's verb is grab-and-throw, so the one interactive thing on
-     the page is the word "friends", pinned, crooked, flingable. */
+  /* ---------- the top bar, over the key art ---------- */
+  .bar{position:absolute;top:0;left:0;right:0;z-index:10;padding-block:1rem}
+  .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .bar .who{line-height:0}
+  .bar .logo-wide{height:46px;width:auto;display:block;filter:drop-shadow(3px 3px 0 var(--ink))}
+  .bar .logo-mark{height:42px;width:auto;display:none;filter:drop-shadow(3px 3px 0 var(--ink))}
+  .bar nav{display:flex;gap:clamp(.9rem,2.2vw,1.8rem);align-items:center}
+  .bar nav a{font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;text-decoration:none;
+             font-size:clamp(.95rem,1.3vw,1.15rem);color:var(--cream);text-shadow:2px 2px 0 var(--ink)}
+  .bar nav a:hover{color:var(--lime)}
+  @media (max-width:560px){.bar .logo-wide{display:none}.bar .logo-mark{display:block;height:36px}.bar nav{gap:.7rem}.bar nav a{font-size:.85rem}}
+
+  /* ---------- 1. the key art ---------- */
+  .hero{min-height:min(100svh,880px);display:flex;flex-direction:column;justify-content:flex-end;
+        padding:clamp(6rem,16vh,9rem) 0 clamp(4rem,10vh,7rem)}
+  .hero-art{position:absolute;inset:0;z-index:0;background:url('img/demo/hero_randy_kitchen.jpg?v=20260929') 40% 50%/cover no-repeat}
+  @media (max-width:700px){.hero-art{background-image:url('img/demo/hero_randy_kitchen_phone.jpg?v=20260929');background-position:12% 20%}}
+  .hero-lift{position:absolute;inset:0;z-index:0;
+     background:linear-gradient(180deg,rgba(23,18,31,.55) 0%,rgba(23,18,31,0) 26%,rgba(23,18,31,0) 50%,rgba(36,30,78,.86) 86%,var(--night) 100%)}
+  .hero .hold{width:100%}
+  .wordmark{width:min(82vw,640px);height:auto;filter:drop-shadow(9px 9px 0 var(--ink))}
+  .say{margin-top:1.6rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;color:var(--cream);
+       font-size:clamp(1.7rem,3.8vw,2.8rem);line-height:1.04;max-width:18ch;text-wrap:balance;text-shadow:4px 4px 0 var(--ink)}
+  .hero .fact{margin-top:1.2rem;max-width:46ch;font-weight:700;text-shadow:2px 2px 0 var(--ink)}
+  .hero .ctas{margin-top:2rem}
+
+  /* the loose friend: grab and throw is the game's verb, so the one word you can grab is
+     "friends", pinned, crooked, flingable */
   .loose{display:inline-block;position:relative}
   .loose i{display:inline-block;font-style:normal;transform-origin:14% 6%;cursor:grab;touch-action:none;will-change:transform}
   .loose i:active{cursor:grabbing}
-  .loose::before{content:'';position:absolute;left:calc(14% - 3px);top:-2px;width:7px;height:7px;border-radius:50%;
-                 background:var(--teal);z-index:2;pointer-events:none}
+  .loose::before{content:'';position:absolute;left:calc(14% - 5px);top:-3px;width:11px;height:11px;border-radius:50%;
+                 background:var(--lime);border:2px solid var(--ink);z-index:2;pointer-events:none}
   @media (prefers-reduced-motion: reduce){.loose i{cursor:auto;transform:rotate(6deg)}}
 
-  /* ---------------- 2. the house becomes the game ---------------- */
-  .turn{padding-block:clamp(3rem,9vh,6rem) 0;background:linear-gradient(180deg,#000 0%,var(--teal-deep) 100%)}
-  .turn h2{font-size:clamp(2.2rem,6.2vw,4.8rem);max-width:12ch}
-  .turn .lede{margin-top:1rem;max-width:50ch}
-  .turn .shot{margin-top:clamp(1.6rem,4vh,2.6rem);aspect-ratio:16/9;max-height:80vh}
-  .turn .shot video{object-position:50% 45%}
+  /* ---------- 2. the premise, on paper ---------- */
+  .premise{padding-block:clamp(3rem,9vh,7rem) clamp(4rem,10vh,8rem)}
+  .premise h2{position:relative;font-size:clamp(2.5rem,7vw,6.4rem);max-width:13ch;text-wrap:balance}
+  .premise .blob{position:absolute;z-index:-1;left:-6%;top:-18%;width:min(62vw,560px);height:min(52vw,440px);
+        background:linear-gradient(135deg,var(--lime) 0%,var(--teal) 100%);
+        border-radius:58% 42% 61% 39% / 44% 62% 38% 56%;transform:rotate(-8deg)}
+  .premise .lede{margin-top:1.6rem;font-size:clamp(1.25rem,1.8vw,1.6rem);line-height:1.38;max-width:38ch}
+  .meet{display:grid;gap:clamp(1.8rem,4vw,3.5rem);align-items:center;margin-top:clamp(3rem,7vh,5rem)}
+  @media (min-width:860px){.meet{grid-template-columns:1.1fr 1fr}}
+  .meet .slab{margin:12px 12px 12px 0}
+  .premise .dots{right:-4%;bottom:-6%;--mx:100%;--my:100%}
+  .premise .ring{width:120px;height:120px;right:8%;top:10%;color:var(--rim)}
 
-  /* ---------------- 3. the games ----------------
-     One game per row, alternating sides. The demo has three games; that is this page's one three. */
-  .games{padding-block:clamp(2.5rem,7vh,4.5rem) clamp(3rem,8vh,5rem);
-         background:linear-gradient(180deg,var(--teal-deep) 0%,#000 22%,#000 100%)}
-  .games .kicker{max-width:52ch}
-  .game{display:grid;gap:clamp(1.2rem,3vw,2.6rem);align-items:center;padding-block:clamp(2.2rem,6vh,3.8rem)}
-  @media (min-width:820px){
-    .game{grid-template-columns:1.25fr 1fr}
-    .game.flip{grid-template-columns:1fr 1.25fr}
-    .game.flip .words{order:-1}
+  /* ---------- 3. the house, on night ---------- */
+  .house{padding-block:clamp(4rem,10vh,7rem) clamp(2rem,5vh,3rem)}
+  .house h2{font-size:clamp(2.6rem,7vw,6rem);max-width:12ch;text-wrap:balance}
+  .house .lede{margin-top:1rem;font-size:clamp(1.2rem,1.6vw,1.5rem);max-width:34ch}
+  .house .shot{margin-top:clamp(1.8rem,4vh,2.8rem);aspect-ratio:16/9;max-height:78vh;transform:rotate(-.6deg)}
+  .house .dots{left:-6%;top:-4%;--mx:0;--my:0}
+  .house .ring{width:170px;height:170px;right:-40px;top:6%;color:var(--teal)}
+
+  /* ---------- 4. the games: one per row, alternating. The demo has three; that is this page's one three ---------- */
+  .games{padding-block:clamp(2rem,5vh,3rem) clamp(3rem,7vh,5rem)}
+  .games .count{font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;font-size:clamp(1.15rem,1.8vw,1.5rem);
+        color:var(--lime);display:inline-block;transform:rotate(-1.5deg);margin-bottom:1rem;text-shadow:2px 2px 0 var(--ink)}
+  .row{display:grid;gap:clamp(1.6rem,4vw,4.5rem);align-items:center;padding-block:clamp(2.6rem,7vh,5.5rem)}
+  @media (min-width:880px){
+    .row{grid-template-columns:1.25fr 1fr}
+    .row.flip .media{order:2}
+    .row.flip .words{text-align:right}
+    .row.flip .words p{margin-left:auto}
   }
-  .game .shots{display:grid;gap:clamp(.7rem,1.4vw,1rem);grid-template-columns:1fr}
-  .game .shots .shot{aspect-ratio:16/9}
-  .game h3{font-size:clamp(2.1rem,4.8vw,3.6rem)}
-  .game .words p{margin-top:.9rem;max-width:36ch}
-  .game .words .rule{font-weight:700}
-  .after{margin-top:clamp(1.4rem,4vh,2.4rem);max-width:42ch;font-size:1.15em;line-height:1.36;text-wrap:balance}
+  .row .media .shot{aspect-ratio:16/9}
+  .row h3{font-size:clamp(2.8rem,6vw,5.4rem);text-shadow:4px 4px 0 var(--ink)}
+  .row .words p{margin-top:1rem;max-width:34ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
+  .row .words .rule{color:var(--lime)}
+  .games .dots{right:-8%;top:34%;--mx:100%;--my:50%}
 
-  /* ---------------- 4. Randy and the jar ---------------- */
-  .jar{background:linear-gradient(180deg,#000 0%,var(--teal-deep) 55%,#000 100%)}
-  .jar .hold{padding-block:clamp(3rem,9vh,6rem)}
-  .jar .top{display:grid;gap:clamp(1.6rem,4vw,3.4rem);align-items:center}
-  @media (min-width:900px){.jar .top{grid-template-columns:.98fr 1.02fr}}
-  .randy{color:var(--teal);font-size:clamp(1.15rem,2vw,1.45rem);font-weight:700;max-width:30ch;margin-bottom:1rem}
-  .randy::before{content:'\201C'}.randy::after{content:'\201D'}
-  .jar h2{font-size:clamp(2.2rem,5.6vw,4.4rem)}
-  .jar p{margin-top:1.1rem;max-width:44ch}
-  .jar .shot{aspect-ratio:16/9}
-  .jar .warp{display:grid;gap:clamp(.8rem,2vw,1.4rem);margin-top:clamp(1.8rem,5vh,3rem)}
-  @media (min-width:700px){.jar .warp{grid-template-columns:1fr 1fr}}
-  .jar .warp .shot{aspect-ratio:16/9}
-  .jar .warp p{grid-column:1/-1;margin-top:.2rem;max-width:56ch}
+  /* ---------- 5. Randy and the jar ---------- */
+  .jar{padding-block:clamp(3rem,8vh,6rem) clamp(4rem,10vh,8rem)}
+  .jar .top{display:grid;gap:clamp(1.8rem,4vw,4rem);align-items:center}
+  @media (min-width:880px){.jar .top{grid-template-columns:1fr 1.2fr}}
+  .jar h2{font-size:clamp(2.6rem,6.4vw,5.6rem);max-width:10ch}
+  .jar .top p{margin-top:1rem;max-width:30ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
+  .jar .top .shot{aspect-ratio:16/9}
+  .jar .ring{width:220px;height:220px;left:-90px;bottom:4%;color:var(--teal)}
 
-  /* ---------------- 5. the trailer ---------------- */
-  .reel{padding-block:clamp(3rem,8vh,5rem)}
-  .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem}
-  .reel h2{font-size:clamp(1.9rem,4.4vw,3rem)}
-  .reel .head p{max-width:52ch}
-  .screen{margin-top:clamp(1.2rem,3vh,2rem);line-height:0;max-width:1000px}
-  .screen video{width:100%;height:auto;aspect-ratio:16/9;background:#000}
+  /* ---------- 6. the trailer, on paper ---------- */
+  .reel{padding-block:clamp(4rem,10vh,7rem) clamp(4rem,10vh,8rem)}
+  .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.4rem}
+  .reel h2{font-size:clamp(2.2rem,5.4vw,4.4rem)}
+  .reel .head p{max-width:none;font-weight:700}
+  .screen{margin-top:clamp(1.6rem,3.5vh,2.4rem);max-width:1180px;transform:rotate(.5deg)}
+  .screen video{aspect-ratio:16/9;height:auto}
+  .reel .dots{left:-5%;top:-8%;--mx:0;--my:0}
 
-  /* ---------------- 6. bring somebody ---------------- */
-  .bring{background:linear-gradient(180deg,#000 0%,var(--teal-deep) 100%)}
-  .bring .hold{padding-block:clamp(3rem,8vh,5rem)}
-  .bring h2{font-size:clamp(2rem,5vw,3.8rem);max-width:14ch}
-  .bring p{margin-top:1rem;max-width:52ch}
-  .bring .grid{display:grid;gap:clamp(1.4rem,4vw,3rem);align-items:center;margin-top:1.2rem}
-  @media (min-width:820px){.bring .grid{grid-template-columns:1fr 1fr}}
-  .bring .shot{aspect-ratio:16/9}
+  /* ---------- 7. the close ---------- */
+  .close{padding-block:clamp(5rem,12vh,8rem) clamp(2rem,5vh,3rem);text-align:center}
+  .close .hold{display:flex;flex-direction:column;align-items:center}
+  .close h2{font-size:clamp(2.4rem,6vw,5rem);max-width:14ch;text-wrap:balance;text-shadow:4px 4px 0 var(--ink)}
+  .close .note{margin-top:1.2rem;max-width:36ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
+  .close .ctas{justify-content:center;margin-top:2.2rem}
+  .close .follow{margin-top:2.4rem;font-weight:700;max-width:none}
+  .close .follow a{margin-inline:.4rem}
+  .close .dots{left:50%;top:-10%;transform:translateX(-50%);--mx:50%;--my:0}
 
-  /* ---------------- 7. the close ---------------- */
-  .close{text-align:center;padding-block:clamp(3.4rem,10vh,6rem);
-         background:linear-gradient(180deg,var(--teal-deep) 0%,#000 100%)}
-  .close h2{font-size:clamp(1.9rem,4.6vw,3.2rem);max-width:18ch;margin-inline:auto;text-wrap:balance}
-  .close .btn{margin-top:1.8rem}
-  .close .note{margin-top:1.2rem;max-width:46ch;margin-inline:auto}
-  .close .note a{color:var(--fg)}
-
-  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem;padding-block:clamp(2.6rem,7vh,4.6rem)}
-  .signoff img{width:min(60vw,360px);height:auto;display:block}
+  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2rem;padding-block:clamp(2.6rem,7vh,4.6rem) 1.6rem}
+  .signoff img{width:min(56vw,320px);height:auto;display:block;filter:drop-shadow(5px 5px 0 var(--ink))}
   .signoff a.mark{line-height:0}
-  footer{padding-block:1.4rem 2.4rem}
-  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;justify-content:space-between}
-  footer .links{display:flex;gap:1.4rem;flex-wrap:wrap}
+  .signoff p{max-width:none}
+  footer{padding-block:1rem 2.6rem}
+  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;justify-content:center}
 
-  @media (prefers-reduced-motion: reduce){.btn{transition:none}}
+  @media (max-width:720px){
+    .cut-r,.cut-l{clip-path:polygon(0 0,100% 5vw,100% 100%,0 100%);margin-top:-5vw;padding-top:5vw}
+    .cut-l{clip-path:polygon(0 5vw,100% 0,100% 100%,0 100%)}
+    .shot{box-shadow:8px 8px 0 var(--ink)}
+    .night .shot{box-shadow:8px 8px 0 var(--rim)}
+    .slab::before{inset:-9px;box-shadow:8px 8px 0 var(--ink)}
+    .premise .blob{left:-20%;top:-10%}
+    .hero{min-height:min(92svh,820px)}
+    .row{padding-block:2rem}
+    .ring{display:none}
+  }
+  @media (prefers-reduced-motion: reduce){.btn{transition:none}.tilt-l,.tilt-r,.house .shot,.screen{transform:none}}
 </style>
 </head>
 <body>
 
-<div class="bar">
-  <div class="hold">
-    <nav class="mono left">
-      <a href="#games">Games</a>
-      <a href="#trailer">Trailer</a>
-    </nav>
-    <a class="who" href="#top" aria-label="Crunchrock Games">
-      <img class="logo-wide" src="img/logo_crunchrock_wide_white.svg" alt="Crunchrock Games">
-      <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
-    </a>
-    <nav class="mono right">
-      <a href="work.html">Studio</a>
-      <a href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Steam</a>
-    </nav>
-  </div>
-</div>
-
 <!-- 1 -->
-<header class="poster" id="top">
-  <div class="poster-art" role="img" aria-label="Randy, a green alien with a cigarette, in a purple kitchen"></div>
-  <div class="poster-lift" aria-hidden="true"></div>
+<header class="hero field" id="top">
+  <div class="bar">
+    <div class="hold">
+      <a class="who" href="#top" aria-label="Crunchrock Games">
+        <img class="logo-wide" src="img/logo_crunchrock_wide_white.svg" alt="Crunchrock Games">
+        <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
+      </a>
+      <nav>
+        <a href="#games">Games</a>
+        <a href="#trailer">Trailer</a>
+        <a href="work.html">Studio</a>
+        <a href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Steam</a>
+      </nav>
+    </div>
+  </div>
+  <div class="hero-art" role="img" aria-label="Randy, a green alien with a cigarette, in a purple kitchen"></div>
+  <div class="hero-lift" aria-hidden="true"></div>
   <div class="hold">
     <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
     <p class="say">Make your <span class="loose"><i>friends'</i></span> night worse than yours.</p>
     <div class="ctas">
       <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
     </div>
-    <p class="fact mono">Out now on Steam. 2–4 players, local split-screen or online.</p>
-    <p class="fact mono">Early Access is next, targeting October 19. <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Wishlist the full game</a>.</p>
+    <p class="fact mono">Free on Steam. 2 to 4 players, one couch or online.</p>
   </div>
 </header>
 
 <!-- 2 -->
-<section class="turn">
+<section class="premise field paper cut-r">
+  <div class="dots" aria-hidden="true"></div>
+  <div class="ring d" aria-hidden="true"></div>
   <div class="hold">
-    <h2 class="display">The house becomes the game.</h2>
-    <p class="lede">You paid a stranger in a bathroom thirty dollars for mushrooms. Now an alien named Randy is in your apartment, and every round he rebuilds it.</p>
-  </div>
-  <div class="shot">
-    <video src="vid/demo/loop_lanes.mp4" poster="img/demo/loop_lanes.jpg" muted loop playsinline preload="none" aria-label="The living room grows bowling lanes through a purple ring"></video>
+    <h2 class="display"><span class="blob" aria-hidden="true"></span>You bought mushrooms from a guy in a trenchcoat.</h2>
+    <p class="lede">Nothing happened, so you went home. Now an alien named Randy is in your apartment holding a big jar and talking about your juices. He is not a monster about it. He simply has quotas.</p>
+    <div class="meet">
+      <div class="shot tilt-l"><img src="img/demo/still_meet_randy.jpg" loading="lazy" alt="Randy, a tall green alien, fills the kitchen doorway and introduces himself"></div>
+      <div class="slab">
+        <svg class="spiral" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 24c0-3 3-5 6-4s4 5 2 8-7 4-11 2-6-8-3-13 10-7 16-4 8 11 4 17-13 9-20 5-10-15-5-22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <span class="who">Randy</span>
+        <p>I'm Randy. I live here. At your best, you leak loosh. I jar it.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- 3 -->
-<section class="games" id="games">
+<section class="house field night cut-l">
+  <div class="dots" aria-hidden="true"></div>
+  <div class="ring" aria-hidden="true"></div>
   <div class="hold">
-    <p class="kicker mono">Three games in the free demo, then a short Rumble With Randy.</p>
-
-    <article class="game">
-      <div class="shots">
-        <div class="shot"><video src="vid/demo/loop_combo.mp4" poster="img/demo/loop_combo.jpg" muted loop playsinline preload="none" aria-label="A throw down the lane, the pins explode and the combo banks"></video></div>
-        <div class="shot"><img src="img/demo/still_bowls_throw.jpg" loading="lazy" alt="Monkey Bowls: pins explode through a LANE JACKED combo, score and style multiplier on screen"></div>
-      </div>
-      <div class="words">
-        <h3 class="display">Monkey<br>Bowls</h3>
-        <p>Trippy bowling with a combo chain. Hit crazy combo throws with tricks like bunny hops, 360s and griefing multipliers.</p>
-        <p class="rule">There are zero actual monkeys in this minigame, stop asking about them!</p>
-      </div>
-    </article>
-
-    <article class="game flip">
-      <div class="shots">
-        <div class="shot"><video src="vid/demo/loop_lava.mp4" poster="img/demo/loop_lava.jpg" muted loop playsinline preload="none" aria-label="Randy says LAVA and the living room floor floods"></video></div>
-        <div class="shot"><img src="img/demo/still_hotboys_lava.jpg" loading="lazy" alt="Hot Boys: shrunk to the size of a coin, lava everywhere, Randy dancing on the kitchen table"></div>
-      </div>
-      <div class="words">
-        <h3 class="display">Hot<br>Boys</h3>
-        <p>The house fills with lava and turns you all into tiny Hot Boys. Get money while shooting your opponents into the lava and staying out of it yourself.</p>
-      </div>
-    </article>
-
-    <article class="game">
-      <div class="shots">
-        <div class="shot"><video src="vid/demo/loop_stall.mp4" poster="img/demo/loop_stall.jpg" muted loop playsinline preload="none" aria-label="Crazy Randy is freaking out: run down the corridor and get in a stall"></video></div>
-        <div class="shot"><img src="img/demo/still_bathrooms_corridor.jpg" loading="lazy" alt="The Bathrooms in local split-screen: one player runs the corridor, the other sees x-ray Randy through the wall"></div>
-      </div>
-      <div class="words">
-        <h3 class="display">The<br>Bathrooms</h3>
-        <p>Get lost in an aesthetically cohesive but ultimately hollow and terrifying minigame. Make money on the run from Crazy Randy in a randomly built nightmare hell maze from hell with extra hell.</p>
-      </div>
-    </article>
-
-    <p class="after">Every minigame and round is what you make it. Play it straight, or spend the whole round griefing your opponent. Randy gets his juices whether anybody wins or loses.</p>
+    <h2 class="display">The house becomes the game.</h2>
+    <p class="lede">Every round, Randy rebuilds the apartment.</p>
+    <div class="shot">
+      <video src="vid/demo/loop_lanes.mp4" poster="img/demo/loop_lanes.jpg" muted loop playsinline preload="none" aria-label="The living room grows bowling lanes through a purple ring"></video>
+    </div>
   </div>
 </section>
 
 <!-- 4 -->
-<section class="jar">
+<section class="games field night" id="games">
+  <div class="dots" aria-hidden="true"></div>
   <div class="hold">
-    <div class="top">
-      <div>
-        <p class="randy">My clients require a litre of loosh. You play my games, you fill my jar. Then we finish each other off.</p>
-        <h2 class="display">Randy has quotas.</h2>
-        <p>He is in the apartment holding a big jar and talking about your juices. He is not a monster about it. Every round pours loosh into the jar, and the fuller it gets, the stranger your house looks.</p>
+    <p class="count">Three games in the free demo.</p>
+
+    <article class="row">
+      <div class="media">
+        <div class="shot tilt-l"><video src="vid/demo/loop_combo.mp4" poster="img/demo/loop_combo.jpg" muted loop playsinline preload="none" aria-label="A lane, a release, pins falling and the combo chain banking"></video></div>
       </div>
-      <div class="shot"><video src="vid/demo/loop_jar.mp4" poster="img/demo/loop_jar.jpg" muted loop playsinline preload="none" aria-label="The loosh jar on the kitchen table, Randy's quota counting up to 600 of 1000"></video></div>
-    </div>
-    <div class="warp">
-      <div class="shot"><video src="vid/demo/loop_sword.mp4" poster="img/demo/loop_sword.jpg" muted loop playsinline preload="none" aria-label="Randy closes in with a sword in the purple living room"></video></div>
-      <div class="shot"><video src="vid/demo/loop_eggs.mp4" poster="img/demo/loop_eggs.jpg" muted loop playsinline preload="none" aria-label="Randy at the stove after the fight: You lost. I'm still making eggs."></video></div>
-      <p>When the jar is full, it all ends in a Rumble With Randy. The demo has the short version. There will be eggs.</p>
-    </div>
+      <div class="words">
+        <h3 class="display">Monkey Bowls</h3>
+        <p>Trippy bowling with a combo chain.</p>
+        <p class="rule">There are zero actual monkeys in this minigame, stop asking about them!</p>
+      </div>
+    </article>
+
+    <article class="row flip">
+      <div class="media">
+        <div class="shot tilt-r"><video src="vid/demo/loop_lava.mp4" poster="img/demo/loop_lava.jpg" muted loop playsinline preload="none" aria-label="Randy says LAVA and the floor floods"></video></div>
+      </div>
+      <div class="words">
+        <h3 class="display">Hot Boys</h3>
+        <p>The house fills with lava and turns you all into tiny Hot Boys.</p>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="media">
+        <div class="shot tilt-l"><video src="vid/demo/loop_stall.mp4" poster="img/demo/loop_stall.jpg" muted loop playsinline preload="none" aria-label="RUN, a tiled corridor, a stall door"></video></div>
+      </div>
+      <div class="words">
+        <h3 class="display">The Bathrooms</h3>
+        <p>On the run from Crazy Randy in a randomly built nightmare hell maze from hell with extra hell.</p>
+      </div>
+    </article>
   </div>
 </section>
 
 <!-- 5 -->
-<section class="reel" id="trailer">
+<section class="jar field night">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="hold">
+    <div class="top">
+      <div>
+        <h2 class="display">Randy has quotas.</h2>
+        <p>When the jar is full, it all ends in a Rumble With Randy. There will be eggs.</p>
+      </div>
+      <div class="shot tilt-r"><video src="vid/demo/loop_eggs.mp4" poster="img/demo/loop_eggs.jpg" muted loop playsinline preload="none" aria-label="Randy at the stove after the fight: You lost. I'm still making eggs."></video></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="reel field paper cut-r" id="trailer">
+  <div class="dots" aria-hidden="true"></div>
   <div class="hold">
     <div class="head">
       <h2 class="display">The demo trailer</h2>
       <p class="mono">One night in the house, start to eggs.</p>
     </div>
-    <div class="screen">
+    <div class="shot screen">
       <video controls preload="none" playsinline poster="img/demo/still_bowls_throw.jpg" aria-label="Bad Shrooms demo trailer">
         <source src="vid/demo/badshrooms_demo_trailer.mp4?v=20260929" type="video/mp4">
         Your browser can't play this video.
@@ -310,32 +368,17 @@
   </div>
 </section>
 
-<!-- 6 -->
-<section class="bring">
-  <div class="hold">
-    <h2 class="display">Bring somebody.</h2>
-    <div class="grid">
-      <div>
-        <p>Bad Shrooms needs at least two of you and takes up to four, on one couch or over Steam. There is no single-player mode.</p>
-        <p>Controller recommended. Local split-screen takes keyboard and mouse plus compatible controllers. Online, everyone installs the free demo, and Steam keeps it updated on its own.</p>
-        <p>Something went wrong? Send the build number from the pause screen, the player count and what happened to <a class="link" href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>. What has changed so far is in the <a class="link" href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">patch notes</a>.</p>
-      </div>
-      <div class="shot"><img src="img/demo/still_four_players.jpg" loading="lazy" alt="Four named players in Monkey Bowls, a ball halfway down the lane, WARNING SHOT on the board"></div>
-    </div>
-  </div>
-</section>
-
 <!-- 7 -->
-<section class="close">
+<section class="close field night cut-l">
+  <div class="dots" aria-hidden="true"></div>
   <div class="hold">
     <h2 class="display">Early Access is next.</h2>
-    <p class="note">Seven minigames at launch, and a much worse Rumble With Randy. Five already run in the development build: the demo three plus Randy's Gig Work and Schizo Sniper. Mecha Chameleon and Déjà Room are being built.</p>
-    <p class="mono note">Target: October 19, 2026. Wishlist it and Steam tells you the day it actually lands.</p>
+    <p class="note">Seven minigames, a bigger house and a much worse Rumble With Randy. Target: October 19.</p>
     <div class="ctas">
       <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
-      <a class="btn ghost" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
+      <a class="btn alt" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
     </div>
-    <p class="mono note follow">New clips on
+    <p class="mono follow">New clips on
       <a class="link" href="https://www.tiktok.com/@crunch_rock" rel="noopener">TikTok</a>
       <a class="link" href="https://www.youtube.com/@crunchrock" rel="noopener">YouTube</a>
       <a class="link" href="https://www.instagram.com/crunch_rock/" rel="noopener">Instagram</a>
@@ -343,24 +386,19 @@
   </div>
 </section>
 
-<section class="signoff">
+<section class="signoff night">
   <div class="hold">
     <a class="mark" href="work.html"><img src="img/logo_crunchrock_stacked_white.svg" alt="Crunchrock Games"></a>
     <p class="mono">Crunchrock Games is a Unity studio. <a class="link" href="work.html">See the studio</a></p>
   </div>
 </section>
 
-<footer class="mono">
+<footer class="mono night">
   <div class="hold">
-    <div class="links">
-      <a class="link" href="mailto:hello@crunchrock.games">Contact</a>
-      <a class="link" href="https://www.tiktok.com/@crunch_rock" rel="noopener">TikTok</a>
-      <a class="link" href="https://www.youtube.com/@crunchrock" rel="noopener">YouTube</a>
-      <a class="link" href="https://www.instagram.com/crunch_rock/" rel="noopener">Instagram</a>
-      <a class="link" href="https://x.com/crunch_rock" rel="noopener">X</a>
-      <a class="link" href="privacy.html">Privacy</a>
-      <a class="link" href="eula.html">EULA</a>
-    </div>
+    <a class="link" href="mailto:hello@crunchrock.games">Contact</a>
+    <a class="link" href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Patch notes</a>
+    <a class="link" href="privacy.html">Privacy</a>
+    <a class="link" href="eula.html">EULA</a>
   </div>
 </footer>
 

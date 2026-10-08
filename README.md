@@ -54,32 +54,58 @@ python -m http.server 8901 --bind 127.0.0.1
 Headless proof without a browser window (Chrome or Edge):
 
 ```
-chrome --headless=new --hide-scrollbars --window-size=1440,4200 --screenshot=desktop.png http://127.0.0.1:8901/
-chrome --headless=new --hide-scrollbars --window-size=390,6200 --screenshot=phone.png http://127.0.0.1:8901/
+chrome --headless=new --hide-scrollbars --window-size=1440,7400 --screenshot=desktop.png http://127.0.0.1:8901/
 ```
 
-## The design — owner direction 2026-09-26
+Desktop Chrome will not open a window narrower than about 500px, so a 390-wide `--window-size`
+quietly lays the page out at 500 and crops. To prove the phone layout, screenshot a scratch page
+that embeds the site in a 390px iframe:
 
-**White text on black.** The light is teal, taken from the capsule plate (the game's AlienTeal,
-`#3FBFAD`), and it arrives as smooth gradients: a radial glow under the hero type, slow
-black-to-deep-teal (`#06231f`) bands between sections. Nothing else is coloured; the game's purple
-lives in the captures, not in the chrome.
+```
+echo '<iframe src="/" style="border:0;width:390px;height:7200px"></iframe>' > _phone.html
+chrome --headless=new --hide-scrollbars --window-size=600,7200 --screenshot=phone.png http://127.0.0.1:8901/_phone.html
+del _phone.html
+```
 
-**Flat, unframed.** Media sits directly on the page: no borders, no offset shadows, no cards, no
-boxes inside boxes, no capsule-shaped containers, no blotchy fields, no dark-purple panels.
-Buttons are white blocks with black Titan One type, square corners, teal on hover. Links are
-white with a teal underline.
+## The design — owner direction 2026-10-08
+
+**The site wears the game's new UI material.** The game is moving toward authored, handmade
+surfaces in the Psychonauts 2 and Double Fine register, with its own mushrooms and alien
+elements. The lead concept is C1 Alien Chromatophore Ink (`docs/art/ui-concepts/` in the game
+repo, `UI-BRAND-GUIDE.md` there): a cream reading field with a lime-to-teal rim and a near-black
+ink well for the speaker's name. The site carries that onto the page:
+
+- **The page is the house's dusk-purple night** (DeepTripNavy `#241E4E`), with cream type at full
+  strength. Sections of cream paper (`#F6EFDD`) with ink type cut into it at an angle, one
+  cut-paper edge per boundary, alternating direction.
+- **Media are stickers.** Every capture has a 3px ink edge, a 14px radius and a hard offset
+  shadow: ink on paper, deep teal (`#2E7F74`) on the night. Some sit a degree off level.
+- **One slab per page.** The Randy line sits in the C1 reading field: cream, lime-to-teal rim,
+  ink shadow, Randy's name in an ink well. It is the one quote device and it ties the site to the
+  game's dialogue UI. Do not add more.
+- **One button.** Lime (`#B7E561`) pill, 3px ink border, hard offset shadow, pressed on hover.
+  The wishlist button is the same pill in cream.
+- **Motifs** are the C1 vocabulary only: pore dots fading from one corner, a ring or double ring,
+  one small spiral in the slab's cap. Never under reading. One or two per section at most.
+- **Copy is short.** One or two sentences per game, one line under each big heading, the premise
+  in one paragraph. Aggro Crab is the register: flat, uneven, no filler. If a line can go, it goes.
+
+The skeleton is after [aggrocrab.com](https://aggrocrab.com): full-bleed key art with the wordmark
+and one button, a huge statement in display type on paper, one game per row in alternating layout,
+lots of air, a short close. The hero plate is positioned at 40% so Randy stands right of the
+wordmark; the phone crop sits at 12% for the same reason.
 
 **One three per page.** The demo really has three games, so the three game rows are this page's
 one three. Everything else runs at its natural uneven length.
 
-Titan One for display, Baloo 2 for body, JetBrains Mono for the technical voice — facts, labels,
-dates, nav. No serif anywhere.
+Titan One for display, Baloo 2 for body, JetBrains Mono for the technical voice. No serif.
 
-This supersedes the paper/ink sticker design (BoneCream paper, hard offset shadows, lime
-sticker buttons) that ran from 2026-08-15 to 2026-09-25. Do not bring it back by half: the old
-`.frame` and `.btn` sticker rules are gone from `index.html`; `work.html` still carries the paper
-design until it gets the same pass.
+`work.html` wears the same chrome through the override block at the end of its stylesheet:
+night page, cream type, the lime pill, sticker media, a cut into a cream close.
+
+This supersedes the white-on-black teal-gradient direction of 2026-09-26, and before it the
+paper/ink sticker design of 2026-08-15. The flat, unframed, media-on-black page read as a generated
+landing page and carried none of the game's identity.
 
 ### The clanker tells — banned, all of them
 
@@ -100,8 +126,8 @@ Owner-set 2026-08-15, permanent, no exceptions. Full table with reasons and repl
 7. **Everything in patterns of three.** Budget: one three per page, and only when the world
    actually has three of that thing. Subtraction test: delete one of the three. If nothing is
    lost, it was rhythm — leave it deleted.
-8. **A skinny accent line on one edge of a card.** No hairline rules on panels; there are no
-   panels.
+8. **A skinny accent line on one edge of a card.** No hairline rules. The slab's rim goes all
+   the way round; the sticker shadow is a block on two edges, not a line.
 
 **Register reference: [aggrocrab.com](https://aggrocrab.com).** Flat, uneven, conversational game
 copy, one game per row in alternating layout, one CTA.
@@ -119,12 +145,12 @@ Source: `marketing/BRAND.md` §1 in the game repo, owner-directed 2026-08-15.
 
 ## Copy
 
-Player-facing words are the owner's. The game rows and the Randy section carry the demo copy the
-owner approved for Steam on 2026-09-14 (`docs/steam/store-refresh-2026-09-14/05_DEMO_PASTE_READY.txt`
-in the game repo). The tagline "Your friends are the difficulty setting." and the flingable
+Player-facing words are the owner's. The premise and the game rows are cut down from the demo copy
+the owner approved for Steam on 2026-09-14 (`docs/steam/store-refresh-2026-09-14/05_DEMO_PASTE_READY.txt`
+in the game repo); nothing on the page is a new sentence of his voice except the one-line ledes.
+Randy's slab line is his in-game intro from the demo build. The tagline "Your friends are the difficulty setting." and the flingable
 word "friends" survive from the previous design on purpose: the game's verb is grab-and-throw,
-so that is the one interactive thing on the page. Randy's line under "Randy has quotas." is his
-actual in-game intro line from the 2026-09-29 build. Zero em dashes in player-facing copy.
+so that is the one interactive thing on the page. Zero em dashes in player-facing copy.
 
 ## Assets
 

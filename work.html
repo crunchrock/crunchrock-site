@@ -170,27 +170,51 @@
     .btn:hover,.btn:active{transform:none}
   }
 
-/* Owner direction, 2026-09-26: white on black, teal light, no framed cards. */
-:root{--paper:#000;--ink:#fff;--navy:#000;--cream:#fff;--teal:#38dcc6;--lime:#38dcc6;--purple:#38dcc6;--orange:#8beafa;--rule:#193b36}
-body,.bar,.signoff,.jar,.poster,.screen,.screen video,.reel .cell,.frame,.close{background:#000;color:#fff}
-::selection{background:#38dcc6;color:#000}
-a:focus-visible,button:focus-visible{outline-color:#38dcc6}
-.bar{border:0;position:relative}
-.bar::after{content:'';display:block;height:1px;background:linear-gradient(90deg,#000,#168478,#6fe9dc,#000)}
-.bar nav a:hover,footer a:hover{color:#38dcc6}
-.bar .logo-wide,.signoff img{filter:invert(1) hue-rotate(180deg)}
-.frame,.jar .frame,.screen,.reel .cell{border:0;box-shadow:none;border-radius:0;background:transparent}
-.game,.after,.lines,.close,.signoff,footer,.reel{border-color:#193b36}
-.jar,.band{border:0}
-.btn,.poster .btn,.close .btn{background:transparent;color:#fff;border:0;border-bottom:2px solid #38dcc6;border-radius:0;box-shadow:none;padding:.65rem 0;transition:color .15s ease}
-.btn:hover,.btn:active,.poster .btn:hover,.poster .btn:active,.close .btn:hover,.close .btn:active{transform:none;box-shadow:none;color:#38dcc6}
-.poster-lift{background:linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.1) 76%),linear-gradient(0deg,#000,transparent 48%)}
-.band-lift{background:linear-gradient(0deg,#000,transparent 76%)}
-.say,.poster .fact,.band h2,.band p{text-shadow:0 2px 12px #000}
-.bleed{display:none}
-.loose::before{background:#38dcc6;box-shadow:none}
-.close{background:linear-gradient(115deg,#000 25%,#001c18 76%,#003d33 100%)}
-.signoff a.mark{border:0}
+/* Owner direction, 2026-10-08: the studio page wears the game page's material. Dusk-purple
+   night, cream type, lime buttons with hard offset shadows, media as stickers with an ink edge
+   and a deep-teal shadow, one cut-paper edge into a cream close. Tokens match index.html. */
+:root{--paper:#241E4E;--ink:#F6EFDD;--navy:#241E4E;--cream:#F6EFDD;--teal:#3FBFAD;--lime:#B7E561;--purple:#6A3FA0;--rule:rgba(246,239,221,.22);--well:#17121F;--rim:#2E7F74}
+html{background:#1A1238}
+body,.bar,.signoff,.reel .cell,.frame{background:var(--paper);color:var(--cream)}
+::selection{background:var(--lime);color:var(--well)}
+a:focus-visible,button:focus-visible{outline-color:var(--lime)}
+.bar{border:0}
+.bar nav a{font-family:'Titan One',system-ui,sans-serif;font-weight:400;letter-spacing:0;text-shadow:2px 2px 0 var(--well)}
+.bar nav a:hover{color:var(--lime);text-decoration:none}
+.bar .logo-wide,.bar .logo-mark{filter:drop-shadow(3px 3px 0 var(--well))}
+.statement h1{text-shadow:4px 4px 0 var(--well)}
+.reel{border:0;background:transparent}
+.reel .cell,.frame{border:3px solid var(--well);border-radius:14px;box-shadow:10px 10px 0 var(--rim);background:#000}
+.reel .cell:nth-child(2){transform:rotate(-1.1deg)}
+.job:nth-child(even) .frame{transform:rotate(.8deg)}
+.job:nth-child(odd) .frame{transform:rotate(-.7deg)}
+.job.nocap .frame{background:var(--well);box-shadow:10px 10px 0 var(--rim)}
+.job h2,.ours h3{text-shadow:2px 2px 0 var(--well)}
+.btn,.close .btn{background:var(--lime);color:var(--well);border:3px solid var(--well);border-radius:999px;
+  padding:1rem 2rem .95rem;box-shadow:7px 7px 0 var(--teal);transition:transform .12s ease,box-shadow .12s ease}
+.btn.ghost{background:var(--cream)}
+.btn:hover,.btn:focus-visible{transform:translate(3px,3px);box-shadow:4px 4px 0 var(--teal)}
+.btn:active{transform:translate(7px,7px);box-shadow:0 0 0 var(--teal)}
+.tl{border-top:3px solid var(--cream)}
+.tl-row{border-bottom:1px solid var(--rule)}
+.ours a{border-bottom:3px solid var(--teal)}
+.ours a:hover{border-bottom-color:var(--lime)}
+.close{background:var(--cream);color:var(--well);border:0;position:relative;z-index:2;
+  clip-path:polygon(0 3.4vw,100% 0,100% 100%,0 100%);margin-top:-3.4vw;padding-top:calc(3.4vw + clamp(2.8rem,7vh,4.6rem))}
+.close h2,.close p,.close .proof{color:var(--well)}
+.close .proof b{color:var(--well)}
+.close .btn{box-shadow:7px 7px 0 var(--well)}
+.close .btn:hover,.close .btn:focus-visible{box-shadow:4px 4px 0 var(--well)}
+.close .btn:active{box-shadow:0 0 0 var(--well)}
+.close .links a{color:var(--well);border-bottom:3px solid var(--teal)}
+.close .links a:hover{border-bottom-color:var(--lime)}
+.signoff{border:0}
+.signoff img{filter:drop-shadow(5px 5px 0 var(--well))}
+footer{border:0}
+footer a{color:var(--cream);border-bottom:3px solid var(--teal)}
+footer a:hover{border-bottom-color:var(--lime);color:var(--cream)}
+@media (max-width:720px){.reel .cell,.frame{box-shadow:7px 7px 0 var(--rim)}.close{clip-path:polygon(0 5vw,100% 0,100% 100%,0 100%);margin-top:-5vw;padding-top:calc(5vw + 2.8rem)}}
+@media (prefers-reduced-motion: reduce){.reel .cell,.frame{transform:none}}
 
 </style>
 </head>
@@ -202,7 +226,7 @@ a:focus-visible,button:focus-visible{outline-color:#38dcc6}
       <a href="index.html">Bad Shrooms</a>
     </nav>
     <a class="who" href="#top" aria-label="Crunchrock Games">
-      <img class="logo-wide" src="img/logo_crunchrock_wide.svg" alt="Crunchrock Games">
+      <img class="logo-wide" src="img/logo_crunchrock_wide_white.svg" alt="Crunchrock Games">
       <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
     </a>
     <nav class="mono right">
@@ -361,7 +385,7 @@ a:focus-visible,button:focus-visible{outline-color:#38dcc6}
 
 <section class="signoff">
   <div class="hold">
-    <a class="mark" href="#top"><img src="img/logo_crunchrock_stacked.svg" alt="Crunchrock Games"></a>
+    <a class="mark" href="#top"><img src="img/logo_crunchrock_stacked_white.svg" alt="Crunchrock Games"></a>
   </div>
 </section>
 
