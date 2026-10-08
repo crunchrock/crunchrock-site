@@ -23,47 +23,43 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  /* Owner direction 2026-10-08: the site carries the game's new UI material, the C1
-     Alien Chromatophore Ink reading field (docs/art/ui-concepts in the game repo): a cream
-     field with a lime-to-teal rim and a near-black ink well, hard offset ink shadows, cut-paper
-     edges between sections, sparse ring and pore-dot motifs, all on the house's dusk-purple night.
-     Skeleton after aggrocrab.com: key art hero with one big button, a huge statement in display
-     type on paper, one game per row in alternating layout, very little copy, lots of air. */
+  /* Owner direction 2026-10-08: the site is made of the game's new UI material, C1 Alien
+     Chromatophore Ink and C2 Mycelial Cut-Paper (docs/art/ui-concepts in the game repo): a pale
+     mottled reading field with teal-to-lime pigment at its edges, printed grain, near-black ink
+     for type and wells, hard offset ink shadows. There is no dark page. Dark lives only in the
+     key art, the captures and the ink wells. Skeleton after aggrocrab.com: key art hero with one
+     button, a huge statement on paper, one game per row alternating, very little copy, air. */
   :root{
-    --night:#241E4E;     /* DeepTripNavy, the page */
-    --night-deep:#1A1238;
-    --ink:#17121F;       /* the ink well and every hard shadow */
-    --cream:#F6EFDD;     /* the reading field */
+    --paper:#F0EFD8;     /* the field: cream pulled toward lime */
+    --paper-2:#E6ECC9;   /* the slab field, one step greener */
+    --ink:#17121F;       /* type, wells, every hard shadow */
     --lime:#B7E561;      /* ToxicLime, the one button colour */
     --teal:#3FBFAD;      /* RandyBlue */
-    --rim:#2E7F74;       /* deep teal rim */
+    --rim:#2E7F74;       /* deep teal rim and small labels */
+    --moss:#8DC46E;      /* the pigment between lime and teal */
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{background:var(--night-deep);scroll-behavior:smooth}
+  html{background:var(--paper);scroll-behavior:smooth}
   body{
-    background:var(--night);color:var(--cream);
+    position:relative;background:var(--paper);color:var(--ink);
     font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
     font-size:clamp(1.12rem,.5vw + 1rem,1.3rem);line-height:1.45;
     overflow-x:hidden;-webkit-font-smoothing:antialiased;
   }
+  /* printed grain over the whole sheet */
+  body::before{content:'';position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.12 0 0 0 .9 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
   ::selection{background:var(--lime);color:var(--ink)}
   img,video{max-width:100%;display:block}
   a{color:inherit}
-  a:focus-visible{outline:4px solid var(--lime);outline-offset:4px}
+  a:focus-visible{outline:4px solid var(--rim);outline-offset:4px}
   p{max-width:40ch}
 
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;letter-spacing:-.01em;line-height:1.5}
   .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;line-height:.92}
   .hold{max-width:1360px;margin:0 auto;padding-inline:clamp(1rem,4.5vw,4.5rem)}
-
-  /* ---------- fields and the cut-paper edges between them ---------- */
-  .field{position:relative;overflow:hidden}
-  .paper{background:var(--cream);color:var(--ink)}
-  .night{background:var(--night);color:var(--cream)}
-  .cut-r{clip-path:polygon(0 0,100% 3.4vw,100% 100%,0 100%);margin-top:-3.4vw;padding-top:3.4vw}
-  .cut-l{clip-path:polygon(0 3.4vw,100% 0,100% 100%,0 100%);margin-top:-3.4vw;padding-top:3.4vw}
-  .field + .field{z-index:2}
-  .field .hold{position:relative;z-index:1}
+  section{position:relative;overflow:hidden}
+  section .hold{position:relative;z-index:1}
 
   /* ---------- the button: lime, ink border, hard offset ink shadow ---------- */
   .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;
@@ -72,47 +68,47 @@
        box-shadow:7px 7px 0 var(--ink);transition:transform .12s ease,box-shadow .12s ease}
   .btn:hover,.btn:focus-visible{transform:translate(3px,3px);box-shadow:4px 4px 0 var(--ink)}
   .btn:active{transform:translate(7px,7px);box-shadow:0 0 0 var(--ink)}
-  .btn.alt{background:var(--cream)}
-  .night .btn{box-shadow:7px 7px 0 var(--teal)}
-  .night .btn:hover,.night .btn:focus-visible{box-shadow:4px 4px 0 var(--teal)}
-  .night .btn:active{box-shadow:0 0 0 var(--teal)}
+  .btn.alt{background:var(--paper-2)}
   .ctas{display:flex;flex-wrap:wrap;gap:1rem 1.2rem;margin-top:1.8rem}
   .link{text-decoration:none;border-bottom:3px solid var(--teal);padding-bottom:1px;font-weight:700}
-  .link:hover{border-bottom-color:var(--lime)}
+  .link:hover{border-bottom-color:var(--rim)}
 
-  /* ---------- media: a sticker on the page, ink edge and hard offset shadow ---------- */
+  /* ---------- media: a sticker on the sheet, ink edge and hard offset ink shadow ---------- */
   .shot{line-height:0;overflow:hidden;background:#000;border:3px solid var(--ink);border-radius:14px;
         box-shadow:12px 12px 0 var(--ink)}
-  .night .shot{box-shadow:12px 12px 0 var(--rim)}
   .shot img,.shot video{width:100%;height:100%;object-fit:cover}
   .tilt-l{transform:rotate(-1.2deg)}
   .tilt-r{transform:rotate(1.1deg)}
 
-  /* ---------- the slab: C1's reading field, a cream shape with a lime-to-teal rim ---------- */
+  /* ---------- the slab: C1's reading field, a paler shape with a lime-to-teal rim ---------- */
   .slab{position:relative;isolation:isolate;color:var(--ink);
         padding:clamp(1.3rem,2.6vw,2.2rem) clamp(1.5rem,3vw,2.8rem);
         border:4px solid var(--rim);
         border-radius:2.4rem 3.8rem 2.6rem 4.2rem / 3.2rem 2.4rem 4rem 2.2rem}
   .slab::before{content:'';position:absolute;inset:-12px;z-index:-1;border-radius:inherit;
-        background:linear-gradient(115deg,var(--lime) 0%,var(--teal) 48%,var(--rim) 100%);
+        background:linear-gradient(115deg,var(--lime) 0%,var(--moss) 40%,var(--teal) 72%,var(--rim) 100%);
         box-shadow:12px 12px 0 var(--ink)}
-  .slab::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--cream)}
+  .slab::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--paper-2)}
   .slab p{max-width:none;font-size:clamp(1.2rem,1.6vw,1.55rem);line-height:1.35;font-weight:600}
   .slab .who{display:inline-block;font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;
-        font-size:clamp(1rem,1.3vw,1.2rem);line-height:1;color:var(--cream);background:var(--ink);
+        font-size:clamp(1rem,1.3vw,1.2rem);line-height:1;color:var(--paper);background:var(--ink);
         padding:.55rem 1.1rem .5rem;margin-bottom:.8rem;transform:rotate(-2deg);
         border-radius:1.4rem 2rem 1.2rem 1.8rem / 1.6rem 1.2rem 2rem 1.4rem}
-  .slab .spiral{position:absolute;right:1.2rem;top:.9rem;width:46px;height:46px;color:var(--rim);opacity:.45}
+  .slab .spiral{position:absolute;right:1.2rem;top:.9rem;width:46px;height:46px;color:var(--rim);opacity:.5}
 
-  /* motifs: pore dots in one corner, one ring. Never under reading. */
-  .dots{position:absolute;pointer-events:none;z-index:0;width:min(44vw,520px);height:min(44vw,520px);
+  /* ---------- pigment: C1's chromatophore patches, soft lime-to-teal, at edges and behind media,
+       never under reading. Pore dots in a corner. One ring. ---------- */
+  .wash{position:absolute;pointer-events:none;z-index:0;mix-blend-mode:multiply;opacity:.62;
+        background:linear-gradient(135deg,var(--lime) 0%,var(--moss) 46%,var(--teal) 100%);
+        border-radius:58% 42% 61% 39% / 44% 62% 38% 56%}
+  .wash::after{content:'';position:absolute;inset:6%;border-radius:52% 48% 40% 60% / 58% 36% 64% 42%;
+        background:radial-gradient(closest-side,rgba(240,239,216,.9),rgba(240,239,216,0) 70%);mix-blend-mode:screen;opacity:.55}
+  .dots{position:absolute;pointer-events:none;z-index:0;width:min(44vw,520px);height:min(44vw,520px);color:var(--rim);opacity:.45;
         background-image:radial-gradient(currentColor 1.4px,transparent 1.7px);background-size:14px 14px;
         -webkit-mask-image:radial-gradient(circle at var(--mx,0) var(--my,0),#000 0,transparent 70%);
                 mask-image:radial-gradient(circle at var(--mx,0) var(--my,0),#000 0,transparent 70%)}
-  .paper .dots{color:var(--ink);opacity:.5}
-  .night .dots{color:var(--cream);opacity:.28}
-  .ring{position:absolute;pointer-events:none;z-index:0;border-radius:50%;border:5px solid currentColor}
-  .ring.d{box-shadow:inset 0 0 0 7px var(--cream),inset 0 0 0 11px currentColor}
+  .ring{position:absolute;pointer-events:none;z-index:0;border-radius:50%;border:5px solid var(--teal)}
+  .ring.d{box-shadow:inset 0 0 0 7px var(--paper),inset 0 0 0 11px var(--teal)}
 
   /* ---------- the top bar, over the key art ---------- */
   .bar{position:absolute;top:0;left:0;right:0;z-index:10;padding-block:1rem}
@@ -122,20 +118,21 @@
   .bar .logo-mark{height:42px;width:auto;display:none;filter:drop-shadow(3px 3px 0 var(--ink))}
   .bar nav{display:flex;gap:clamp(.9rem,2.2vw,1.8rem);align-items:center}
   .bar nav a{font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;text-decoration:none;
-             font-size:clamp(.95rem,1.3vw,1.15rem);color:var(--cream);text-shadow:2px 2px 0 var(--ink)}
+             font-size:clamp(.95rem,1.3vw,1.15rem);color:var(--paper);text-shadow:2px 2px 0 var(--ink)}
   .bar nav a:hover{color:var(--lime)}
   @media (max-width:560px){.bar .logo-wide{display:none}.bar .logo-mark{display:block;height:36px}.bar nav{gap:.7rem}.bar nav a{font-size:.85rem}}
 
-  /* ---------- 1. the key art ---------- */
-  .hero{min-height:min(100svh,880px);display:flex;flex-direction:column;justify-content:flex-end;
-        padding:clamp(6rem,16vh,9rem) 0 clamp(4rem,10vh,7rem)}
+  /* ---------- 1. the key art, cut into the sheet ---------- */
+  .hero{position:relative;overflow:hidden;min-height:min(100svh,880px);display:flex;flex-direction:column;justify-content:flex-end;
+        padding:clamp(6rem,16vh,9rem) 0 clamp(5rem,12vh,8rem);color:var(--paper);
+        clip-path:polygon(0 0,100% 0,100% calc(100% - 3.4vw),0 100%)}
   .hero-art{position:absolute;inset:0;z-index:0;background:url('img/demo/hero_randy_kitchen.jpg?v=20260929') 40% 50%/cover no-repeat}
   @media (max-width:700px){.hero-art{background-image:url('img/demo/hero_randy_kitchen_phone.jpg?v=20260929');background-position:12% 20%}}
   .hero-lift{position:absolute;inset:0;z-index:0;
-     background:linear-gradient(180deg,rgba(23,18,31,.55) 0%,rgba(23,18,31,0) 26%,rgba(23,18,31,0) 50%,rgba(36,30,78,.86) 86%,var(--night) 100%)}
-  .hero .hold{width:100%}
+     background:linear-gradient(180deg,rgba(23,18,31,.5) 0%,rgba(23,18,31,0) 24%,rgba(23,18,31,0) 56%,rgba(23,18,31,.55) 100%)}
+  .hero .hold{position:relative;z-index:1;width:100%}
   .wordmark{width:min(82vw,640px);height:auto;filter:drop-shadow(9px 9px 0 var(--ink))}
-  .say{margin-top:1.6rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;color:var(--cream);
+  .say{margin-top:1.6rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;color:var(--paper);
        font-size:clamp(1.7rem,3.8vw,2.8rem);line-height:1.04;max-width:18ch;text-wrap:balance;text-shadow:4px 4px 0 var(--ink)}
   .hero .fact{margin-top:1.2rem;max-width:46ch;font-weight:700;text-shadow:2px 2px 0 var(--ink)}
   .hero .ctas{margin-top:2rem}
@@ -149,71 +146,75 @@
                  background:var(--lime);border:2px solid var(--ink);z-index:2;pointer-events:none}
   @media (prefers-reduced-motion: reduce){.loose i{cursor:auto;transform:rotate(6deg)}}
 
-  /* ---------- 2. the premise, on paper ---------- */
-  .premise{padding-block:clamp(3rem,9vh,7rem) clamp(4rem,10vh,8rem)}
+  /* ---------- 2. the premise ---------- */
+  .premise{margin-top:-3.4vw;padding-block:clamp(5rem,12vh,9rem) clamp(4rem,10vh,8rem)}
   .premise h2{position:relative;font-size:clamp(2.5rem,7vw,6.4rem);max-width:13ch;text-wrap:balance}
-  .premise .blob{position:absolute;z-index:-1;left:-6%;top:-18%;width:min(62vw,560px);height:min(52vw,440px);
-        background:linear-gradient(135deg,var(--lime) 0%,var(--teal) 100%);
-        border-radius:58% 42% 61% 39% / 44% 62% 38% 56%;transform:rotate(-8deg)}
+  .premise h2 .wash{left:-9%;top:-24%;width:min(62vw,560px);height:min(52vw,440px);transform:rotate(-8deg);z-index:-1;opacity:.55}
   .premise .lede{margin-top:1.6rem;font-size:clamp(1.25rem,1.8vw,1.6rem);line-height:1.38;max-width:38ch}
   .meet{display:grid;gap:clamp(1.8rem,4vw,3.5rem);align-items:center;margin-top:clamp(3rem,7vh,5rem)}
   @media (min-width:860px){.meet{grid-template-columns:1.1fr 1fr}}
   .meet .slab{margin:12px 12px 12px 0}
   .premise .dots{right:-4%;bottom:-6%;--mx:100%;--my:100%}
-  .premise .ring{width:120px;height:120px;right:8%;top:10%;color:var(--rim)}
+  .premise .ring{width:120px;height:120px;right:8%;top:10%}
 
-  /* ---------- 3. the house, on night ---------- */
-  .house{padding-block:clamp(4rem,10vh,7rem) clamp(2rem,5vh,3rem)}
+  /* ---------- 3. the house ---------- */
+  .house{padding-block:clamp(2rem,5vh,3rem) clamp(2rem,5vh,3rem)}
   .house h2{font-size:clamp(2.6rem,7vw,6rem);max-width:12ch;text-wrap:balance}
   .house .lede{margin-top:1rem;font-size:clamp(1.2rem,1.6vw,1.5rem);max-width:34ch}
   .house .shot{margin-top:clamp(1.8rem,4vh,2.8rem);aspect-ratio:16/9;max-height:78vh;transform:rotate(-.6deg)}
-  .house .dots{left:-6%;top:-4%;--mx:0;--my:0}
-  .house .ring{width:170px;height:170px;right:-40px;top:6%;color:var(--teal)}
+  .house .wash{right:-12%;top:18%;width:min(60vw,760px);height:min(60vw,720px);transform:rotate(14deg)}
+  .house .dots{left:-6%;bottom:-8%;--mx:0;--my:100%}
 
   /* ---------- 4. the games: one per row, alternating. The demo has three; that is this page's one three ---------- */
-  .games{padding-block:clamp(2rem,5vh,3rem) clamp(3rem,7vh,5rem)}
+  .games{padding-block:clamp(3rem,7vh,5rem) clamp(2rem,5vh,3rem)}
   .games .count{font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;font-size:clamp(1.15rem,1.8vw,1.5rem);
-        color:var(--lime);display:inline-block;transform:rotate(-1.5deg);margin-bottom:1rem;text-shadow:2px 2px 0 var(--ink)}
-  .row{display:grid;gap:clamp(1.6rem,4vw,4.5rem);align-items:center;padding-block:clamp(2.6rem,7vh,5.5rem)}
+        color:var(--rim);display:inline-block;transform:rotate(-1.5deg);margin-bottom:1rem}
+  .row{position:relative;display:grid;gap:clamp(1.6rem,4vw,4.5rem);align-items:center;padding-block:clamp(2.6rem,7vh,5.5rem)}
   @media (min-width:880px){
     .row{grid-template-columns:1.25fr 1fr}
     .row.flip .media{order:2}
     .row.flip .words{text-align:right}
     .row.flip .words p{margin-left:auto}
   }
+  .row .media{position:relative}
   .row .media .shot{aspect-ratio:16/9}
-  .row h3{font-size:clamp(2.8rem,6vw,5.4rem);text-shadow:4px 4px 0 var(--ink)}
+  .row .media .wash{left:-10%;top:-14%;width:120%;height:130%;z-index:-1;opacity:.9}
+  .row.flip .media .wash{left:auto;right:-10%;transform:rotate(9deg)}
+  .row h3{font-size:clamp(2.8rem,6vw,5.4rem)}
   .row .words p{margin-top:1rem;max-width:34ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
-  .row .words .rule{color:var(--lime)}
-  .games .dots{right:-8%;top:34%;--mx:100%;--my:50%}
+  .row .words .rule{color:var(--rim)}
+  .games .dots{right:-8%;top:48%;--mx:100%;--my:50%}
 
   /* ---------- 5. Randy and the jar ---------- */
-  .jar{padding-block:clamp(3rem,8vh,6rem) clamp(4rem,10vh,8rem)}
+  .jar{padding-block:clamp(2rem,6vh,4rem) clamp(4rem,10vh,8rem)}
   .jar .top{display:grid;gap:clamp(1.8rem,4vw,4rem);align-items:center}
   @media (min-width:880px){.jar .top{grid-template-columns:1fr 1.2fr}}
   .jar h2{font-size:clamp(2.6rem,6.4vw,5.6rem);max-width:10ch}
   .jar .top p{margin-top:1rem;max-width:30ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
   .jar .top .shot{aspect-ratio:16/9}
-  .jar .ring{width:220px;height:220px;left:-90px;bottom:4%;color:var(--teal)}
+  .jar .ring{width:220px;height:220px;left:-90px;bottom:4%}
+  .jar .wash{right:-6%;bottom:-10%;width:min(50vw,620px);height:min(40vw,480px);transform:rotate(-6deg)}
 
-  /* ---------- 6. the trailer, on paper ---------- */
-  .reel{padding-block:clamp(4rem,10vh,7rem) clamp(4rem,10vh,8rem)}
+  /* ---------- 6. the trailer ---------- */
+  .reel{padding-block:clamp(3rem,8vh,6rem) clamp(4rem,10vh,8rem)}
   .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.4rem}
   .reel h2{font-size:clamp(2.2rem,5.4vw,4.4rem)}
-  .reel .head p{max-width:none;font-weight:700}
+  .reel .head p{max-width:none;font-weight:700;color:var(--rim)}
   .screen{margin-top:clamp(1.6rem,3.5vh,2.4rem);max-width:1180px;transform:rotate(.5deg)}
   .screen video{aspect-ratio:16/9;height:auto}
   .reel .dots{left:-5%;top:-8%;--mx:0;--my:0}
+  .reel .wash{right:-10%;top:30%;width:min(56vw,700px);height:min(56vw,700px);transform:rotate(22deg)}
 
   /* ---------- 7. the close ---------- */
-  .close{padding-block:clamp(5rem,12vh,8rem) clamp(2rem,5vh,3rem);text-align:center}
+  .close{padding-block:clamp(3rem,8vh,6rem) clamp(2rem,5vh,3rem);text-align:center}
   .close .hold{display:flex;flex-direction:column;align-items:center}
-  .close h2{font-size:clamp(2.4rem,6vw,5rem);max-width:14ch;text-wrap:balance;text-shadow:4px 4px 0 var(--ink)}
+  .close h2{font-size:clamp(2.4rem,6vw,5rem);max-width:14ch;text-wrap:balance}
   .close .note{margin-top:1.2rem;max-width:36ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
   .close .ctas{justify-content:center;margin-top:2.2rem}
   .close .follow{margin-top:2.4rem;font-weight:700;max-width:none}
   .close .follow a{margin-inline:.4rem}
-  .close .dots{left:50%;top:-10%;transform:translateX(-50%);--mx:50%;--my:0}
+  .close .ring.d{width:150px;height:150px;left:6%;top:12%}
+  .close .wash{left:50%;top:-26%;width:min(60vw,760px);height:min(34vw,420px);transform:translateX(-50%) rotate(-4deg);opacity:.42}
 
   .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2rem;padding-block:clamp(2.6rem,7vh,4.6rem) 1.6rem}
   .signoff img{width:min(56vw,320px);height:auto;display:block;filter:drop-shadow(5px 5px 0 var(--ink))}
@@ -223,13 +224,11 @@
   footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;justify-content:center}
 
   @media (max-width:720px){
-    .cut-r,.cut-l{clip-path:polygon(0 0,100% 5vw,100% 100%,0 100%);margin-top:-5vw;padding-top:5vw}
-    .cut-l{clip-path:polygon(0 5vw,100% 0,100% 100%,0 100%)}
     .shot{box-shadow:8px 8px 0 var(--ink)}
-    .night .shot{box-shadow:8px 8px 0 var(--rim)}
     .slab::before{inset:-9px;box-shadow:8px 8px 0 var(--ink)}
-    .premise .blob{left:-20%;top:-10%}
-    .hero{min-height:min(92svh,820px)}
+    .premise h2 .wash{left:-20%;top:-10%}
+    .hero{min-height:min(92svh,820px);clip-path:polygon(0 0,100% 0,100% calc(100% - 5vw),0 100%)}
+    .premise{margin-top:-5vw}
     .row{padding-block:2rem}
     .ring{display:none}
   }
@@ -239,7 +238,7 @@
 <body>
 
 <!-- 1 -->
-<header class="hero field" id="top">
+<header class="hero" id="top">
   <div class="bar">
     <div class="hold">
       <a class="who" href="#top" aria-label="Crunchrock Games">
@@ -267,11 +266,11 @@
 </header>
 
 <!-- 2 -->
-<section class="premise field paper cut-r">
+<section class="premise">
   <div class="dots" aria-hidden="true"></div>
   <div class="ring d" aria-hidden="true"></div>
   <div class="hold">
-    <h2 class="display"><span class="blob" aria-hidden="true"></span>You bought mushrooms from a guy in a trenchcoat.</h2>
+    <h2 class="display"><span class="wash" aria-hidden="true"></span>You bought mushrooms from a guy in a trenchcoat.</h2>
     <p class="lede">Nothing happened, so you went home. Now an alien named Randy is in your apartment holding a big jar and talking about your juices. He is not a monster about it. He simply has quotas.</p>
     <div class="meet">
       <div class="shot tilt-l"><img src="img/demo/still_meet_randy.jpg" loading="lazy" alt="Randy, a tall green alien, fills the kitchen doorway and introduces himself"></div>
@@ -285,9 +284,9 @@
 </section>
 
 <!-- 3 -->
-<section class="house field night cut-l">
+<section class="house">
+  <div class="wash" aria-hidden="true"></div>
   <div class="dots" aria-hidden="true"></div>
-  <div class="ring" aria-hidden="true"></div>
   <div class="hold">
     <h2 class="display">The house becomes the game.</h2>
     <p class="lede">Every round, Randy rebuilds the apartment.</p>
@@ -298,13 +297,14 @@
 </section>
 
 <!-- 4 -->
-<section class="games field night" id="games">
+<section class="games" id="games">
   <div class="dots" aria-hidden="true"></div>
   <div class="hold">
     <p class="count">Three games in the free demo.</p>
 
     <article class="row">
       <div class="media">
+        <div class="wash" aria-hidden="true"></div>
         <div class="shot tilt-l"><video src="vid/demo/loop_combo.mp4" poster="img/demo/loop_combo.jpg" muted loop playsinline preload="none" aria-label="A lane, a release, pins falling and the combo chain banking"></video></div>
       </div>
       <div class="words">
@@ -316,6 +316,7 @@
 
     <article class="row flip">
       <div class="media">
+        <div class="wash" aria-hidden="true"></div>
         <div class="shot tilt-r"><video src="vid/demo/loop_lava.mp4" poster="img/demo/loop_lava.jpg" muted loop playsinline preload="none" aria-label="Randy says LAVA and the floor floods"></video></div>
       </div>
       <div class="words">
@@ -326,6 +327,7 @@
 
     <article class="row">
       <div class="media">
+        <div class="wash" aria-hidden="true"></div>
         <div class="shot tilt-l"><video src="vid/demo/loop_stall.mp4" poster="img/demo/loop_stall.jpg" muted loop playsinline preload="none" aria-label="RUN, a tiled corridor, a stall door"></video></div>
       </div>
       <div class="words">
@@ -337,8 +339,9 @@
 </section>
 
 <!-- 5 -->
-<section class="jar field night">
+<section class="jar">
   <div class="ring" aria-hidden="true"></div>
+  <div class="wash" aria-hidden="true"></div>
   <div class="hold">
     <div class="top">
       <div>
@@ -351,8 +354,9 @@
 </section>
 
 <!-- 6 -->
-<section class="reel field paper cut-r" id="trailer">
+<section class="reel" id="trailer">
   <div class="dots" aria-hidden="true"></div>
+  <div class="wash" aria-hidden="true"></div>
   <div class="hold">
     <div class="head">
       <h2 class="display">The demo trailer</h2>
@@ -369,8 +373,9 @@
 </section>
 
 <!-- 7 -->
-<section class="close field night cut-l">
-  <div class="dots" aria-hidden="true"></div>
+<section class="close">
+  <div class="wash" aria-hidden="true"></div>
+  <div class="ring d" aria-hidden="true"></div>
   <div class="hold">
     <h2 class="display">Early Access is next.</h2>
     <p class="note">Seven minigames, a bigger house and a much worse Rumble With Randy. Target: October 19.</p>
@@ -386,14 +391,14 @@
   </div>
 </section>
 
-<section class="signoff night">
+<section class="signoff">
   <div class="hold">
     <a class="mark" href="work.html"><img src="img/logo_crunchrock_stacked_white.svg" alt="Crunchrock Games"></a>
     <p class="mono">Crunchrock Games is a Unity studio. <a class="link" href="work.html">See the studio</a></p>
   </div>
 </section>
 
-<footer class="mono night">
+<footer class="mono">
   <div class="hold">
     <a class="link" href="mailto:hello@crunchrock.games">Contact</a>
     <a class="link" href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Patch notes</a>

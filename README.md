@@ -69,43 +69,49 @@ del _phone.html
 
 ## The design — owner direction 2026-10-08
 
-**The site wears the game's new UI material.** The game is moving toward authored, handmade
+**The site is made of the game's new UI material.** The game is moving toward authored, handmade
 surfaces in the Psychonauts 2 and Double Fine register, with its own mushrooms and alien
-elements. The lead concept is C1 Alien Chromatophore Ink (`docs/art/ui-concepts/` in the game
-repo, `UI-BRAND-GUIDE.md` there): a cream reading field with a lime-to-teal rim and a near-black
-ink well for the speaker's name. The site carries that onto the page:
+elements. The concepts are C1 Alien Chromatophore Ink and C2 Mycelial Cut-Paper
+(`docs/art/ui-concepts/` in the game repo, `UI-BRAND-GUIDE.md` there): a pale mottled reading
+field, teal-to-lime pigment at the edges, printed grain, near-black ink for type and wells. The
+dark purple behind those concept boards is the board's backdrop, not the material. The owner does
+not want purple as the site's main colour, and **there is no dark page**. Dark lives only in the
+key art, the captures and the ink wells.
 
-- **The page is the house's dusk-purple night** (DeepTripNavy `#241E4E`), with cream type at full
-  strength. Sections of cream paper (`#F6EFDD`) with ink type cut into it at an angle, one
-  cut-paper edge per boundary, alternating direction.
-- **Media are stickers.** Every capture has a 3px ink edge, a 14px radius and a hard offset
-  shadow: ink on paper, deep teal (`#2E7F74`) on the night. Some sit a degree off level.
-- **One slab per page.** The Randy line sits in the C1 reading field: cream, lime-to-teal rim,
-  ink shadow, Randy's name in an ink well. It is the one quote device and it ties the site to the
-  game's dialogue UI. Do not add more.
-- **One button.** Lime (`#B7E561`) pill, 3px ink border, hard offset shadow, pressed on hover.
-  The wishlist button is the same pill in cream.
-- **Motifs** are the C1 vocabulary only: pore dots fading from one corner, a ring or double ring,
-  one small spiral in the slab's cap. Never under reading. One or two per section at most.
+- **The sheet** is one continuous pale lime-cream field (`#F0EFD8`) with printed grain over
+  everything (an SVG noise tile, multiply, low opacity) and ink type at full strength.
+- **Pigment** is C1's chromatophore patch: an irregular lime-to-moss-to-teal shape, multiplied
+  onto the sheet with a defined edge, placed at section edges and behind media. Never under body
+  copy. One per section at most, sized and rotated differently each time.
+- **Media are stickers.** Every capture has a 3px ink edge, a 14px radius and a hard offset ink
+  shadow. Some sit a degree off level.
+- **One slab per page.** The Randy line sits in the C1 reading field: a greener paper
+  (`#E6ECC9`), lime-to-teal rim, ink shadow, Randy's name in an ink well. It is the one quote
+  device and it ties the site to the game's dialogue UI. Do not add more.
+- **One button.** Lime (`#B7E561`) pill, 3px ink border, hard offset ink shadow, pressed on hover.
+  The wishlist button is the same pill in the greener paper.
+- **Motifs** are the C1 vocabulary only: pore dots fading from one corner in deep teal, a ring or
+  double ring in RandyBlue, one small spiral in the slab's cap.
 - **Copy is short.** One or two sentences per game, one line under each big heading, the premise
   in one paragraph. Aggro Crab is the register: flat, uneven, no filler. If a line can go, it goes.
 
 The skeleton is after [aggrocrab.com](https://aggrocrab.com): full-bleed key art with the wordmark
-and one button, a huge statement in display type on paper, one game per row in alternating layout,
-lots of air, a short close. The hero plate is positioned at 40% so Randy stands right of the
-wordmark; the phone crop sits at 12% for the same reason.
+and one button, cut at an angle into the sheet; a huge statement in display type; one game per row
+in alternating layout; lots of air; a short close. The hero plate is positioned at 40% so Randy
+stands right of the wordmark; the phone crop sits at 12% for the same reason.
 
 **One three per page.** The demo really has three games, so the three game rows are this page's
 one three. Everything else runs at its natural uneven length.
 
 Titan One for display, Baloo 2 for body, JetBrains Mono for the technical voice. No serif.
 
-`work.html` wears the same chrome through the override block at the end of its stylesheet:
-night page, cream type, the lime pill, sticker media, a cut into a cream close.
+`work.html` is the same sheet through the override block at the end of its stylesheet: grain,
+ink type, the lime pill, sticker media, two pigment patches.
 
 This supersedes the white-on-black teal-gradient direction of 2026-09-26, and before it the
 paper/ink sticker design of 2026-08-15. The flat, unframed, media-on-black page read as a generated
-landing page and carried none of the game's identity.
+landing page and carried none of the game's identity. A dusk-purple page was tried on 2026-10-08
+and rejected within the hour: giant purple fields with white text are the default, not the game.
 
 ### The clanker tells — banned, all of them
 

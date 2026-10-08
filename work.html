@@ -170,50 +170,57 @@
     .btn:hover,.btn:active{transform:none}
   }
 
-/* Owner direction, 2026-10-08: the studio page wears the game page's material. Dusk-purple
-   night, cream type, lime buttons with hard offset shadows, media as stickers with an ink edge
-   and a deep-teal shadow, one cut-paper edge into a cream close. Tokens match index.html. */
-:root{--paper:#241E4E;--ink:#F6EFDD;--navy:#241E4E;--cream:#F6EFDD;--teal:#3FBFAD;--lime:#B7E561;--purple:#6A3FA0;--rule:rgba(246,239,221,.22);--well:#17121F;--rim:#2E7F74}
-html{background:#1A1238}
-body,.bar,.signoff,.reel .cell,.frame{background:var(--paper);color:var(--cream)}
-::selection{background:var(--lime);color:var(--well)}
-a:focus-visible,button:focus-visible{outline-color:var(--lime)}
+/* Owner direction, 2026-10-08: the studio page is made of the same sheet as the game page.
+   Pale lime-cream field with printed grain, ink type, lime pill buttons with hard ink shadows,
+   media as stickers with an ink edge and ink shadow, pigment washes at the edges. No dark page:
+   dark lives only in the captures and the ink. Tokens match index.html. */
+:root{--paper:#F0EFD8;--paper-2:#E6ECC9;--ink:#17121F;--navy:#17121F;--cream:#F0EFD8;--teal:#3FBFAD;--lime:#B7E561;--purple:#6A3FA0;--rule:rgba(23,18,31,.22);--rim:#2E7F74;--moss:#8DC46E}
+html{background:var(--paper)}
+body{position:relative}
+body::before{content:'';position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.12 0 0 0 .9 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
+body,.bar,.signoff,.reel .cell,.frame{background:var(--paper);color:var(--ink)}
+::selection{background:var(--lime);color:var(--ink)}
+a:focus-visible,button:focus-visible{outline-color:var(--rim)}
 .bar{border:0}
-.bar nav a{font-family:'Titan One',system-ui,sans-serif;font-weight:400;letter-spacing:0;text-shadow:2px 2px 0 var(--well)}
-.bar nav a:hover{color:var(--lime);text-decoration:none}
-.bar .logo-wide,.bar .logo-mark{filter:drop-shadow(3px 3px 0 var(--well))}
-.statement h1{text-shadow:4px 4px 0 var(--well)}
+.bar nav a{font-family:'Titan One',system-ui,sans-serif;font-weight:400;letter-spacing:0}
+.bar nav a:hover{color:var(--rim);text-decoration:none}
+.statement{position:relative;overflow:hidden}
+.statement .hold{position:relative;z-index:1}
+.statement::before{content:'';position:absolute;left:-6%;top:-10%;width:min(56vw,620px);height:min(40vw,460px);z-index:0;
+  background:linear-gradient(135deg,var(--lime),var(--moss) 46%,var(--teal));border-radius:58% 42% 61% 39% / 44% 62% 38% 56%;
+  transform:rotate(-8deg);mix-blend-mode:multiply;opacity:.5}
 .reel{border:0;background:transparent}
-.reel .cell,.frame{border:3px solid var(--well);border-radius:14px;box-shadow:10px 10px 0 var(--rim);background:#000}
+.reel .cell,.frame{border:3px solid var(--ink);border-radius:14px;box-shadow:10px 10px 0 var(--ink);background:#000}
 .reel .cell:nth-child(2){transform:rotate(-1.1deg)}
 .job:nth-child(even) .frame{transform:rotate(.8deg)}
 .job:nth-child(odd) .frame{transform:rotate(-.7deg)}
-.job.nocap .frame{background:var(--well);box-shadow:10px 10px 0 var(--rim)}
-.job h2,.ours h3{text-shadow:2px 2px 0 var(--well)}
-.btn,.close .btn{background:var(--lime);color:var(--well);border:3px solid var(--well);border-radius:999px;
-  padding:1rem 2rem .95rem;box-shadow:7px 7px 0 var(--teal);transition:transform .12s ease,box-shadow .12s ease}
-.btn.ghost{background:var(--cream)}
-.btn:hover,.btn:focus-visible{transform:translate(3px,3px);box-shadow:4px 4px 0 var(--teal)}
-.btn:active{transform:translate(7px,7px);box-shadow:0 0 0 var(--teal)}
-.tl{border-top:3px solid var(--cream)}
+.job.nocap .frame{background:var(--ink);box-shadow:10px 10px 0 var(--ink)}
+.job.nocap .frame p{color:var(--paper)}
+.btn,.close .btn{background:var(--lime);color:var(--ink);border:3px solid var(--ink);border-radius:999px;
+  padding:1rem 2rem .95rem;box-shadow:7px 7px 0 var(--ink);transition:transform .12s ease,box-shadow .12s ease}
+.btn.ghost{background:var(--paper-2)}
+.btn:hover,.btn:focus-visible,.close .btn:hover,.close .btn:focus-visible{transform:translate(3px,3px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active,.close .btn:active{transform:translate(7px,7px);box-shadow:0 0 0 var(--ink)}
+.tl{border-top:3px solid var(--ink)}
 .tl-row{border-bottom:1px solid var(--rule)}
 .ours a{border-bottom:3px solid var(--teal)}
-.ours a:hover{border-bottom-color:var(--lime)}
-.close{background:var(--cream);color:var(--well);border:0;position:relative;z-index:2;
-  clip-path:polygon(0 3.4vw,100% 0,100% 100%,0 100%);margin-top:-3.4vw;padding-top:calc(3.4vw + clamp(2.8rem,7vh,4.6rem))}
-.close h2,.close p,.close .proof{color:var(--well)}
-.close .proof b{color:var(--well)}
-.close .btn{box-shadow:7px 7px 0 var(--well)}
-.close .btn:hover,.close .btn:focus-visible{box-shadow:4px 4px 0 var(--well)}
-.close .btn:active{box-shadow:0 0 0 var(--well)}
-.close .links a{color:var(--well);border-bottom:3px solid var(--teal)}
-.close .links a:hover{border-bottom-color:var(--lime)}
+.ours a:hover{border-bottom-color:var(--rim)}
+.close{background:var(--paper);color:var(--ink);border:0;position:relative;overflow:hidden}
+.close .hold{position:relative;z-index:1}
+.close::before{content:'';position:absolute;right:-10%;top:-20%;width:min(50vw,620px);height:min(44vw,520px);z-index:0;
+  background:linear-gradient(135deg,var(--lime),var(--moss) 46%,var(--teal));border-radius:52% 48% 40% 60% / 58% 36% 64% 42%;
+  transform:rotate(12deg);mix-blend-mode:multiply;opacity:.45}
+.close h2,.close p,.close .proof{color:var(--ink)}
+.close .proof b{color:var(--rim)}
+.close .links a{color:var(--ink);border-bottom:3px solid var(--teal)}
+.close .links a:hover{border-bottom-color:var(--rim)}
 .signoff{border:0}
-.signoff img{filter:drop-shadow(5px 5px 0 var(--well))}
+.signoff img{filter:drop-shadow(5px 5px 0 var(--ink))}
 footer{border:0}
-footer a{color:var(--cream);border-bottom:3px solid var(--teal)}
-footer a:hover{border-bottom-color:var(--lime);color:var(--cream)}
-@media (max-width:720px){.reel .cell,.frame{box-shadow:7px 7px 0 var(--rim)}.close{clip-path:polygon(0 5vw,100% 0,100% 100%,0 100%);margin-top:-5vw;padding-top:calc(5vw + 2.8rem)}}
+footer a{color:var(--ink);border-bottom:3px solid var(--teal)}
+footer a:hover{border-bottom-color:var(--rim);color:var(--ink)}
+@media (max-width:720px){.reel .cell,.frame{box-shadow:7px 7px 0 var(--ink)}}
 @media (prefers-reduced-motion: reduce){.reel .cell,.frame{transform:none}}
 
 </style>
@@ -226,7 +233,7 @@ footer a:hover{border-bottom-color:var(--lime);color:var(--cream)}
       <a href="index.html">Bad Shrooms</a>
     </nav>
     <a class="who" href="#top" aria-label="Crunchrock Games">
-      <img class="logo-wide" src="img/logo_crunchrock_wide_white.svg" alt="Crunchrock Games">
+      <img class="logo-wide" src="img/logo_crunchrock_wide.svg" alt="Crunchrock Games">
       <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
     </a>
     <nav class="mono right">
@@ -385,7 +392,7 @@ footer a:hover{border-bottom-color:var(--lime);color:var(--cream)}
 
 <section class="signoff">
   <div class="hold">
-    <a class="mark" href="#top"><img src="img/logo_crunchrock_stacked_white.svg" alt="Crunchrock Games"></a>
+    <a class="mark" href="#top"><img src="img/logo_crunchrock_stacked.svg" alt="Crunchrock Games"></a>
   </div>
 </section>
 
