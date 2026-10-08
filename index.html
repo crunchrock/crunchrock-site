@@ -98,7 +98,7 @@
   .poster .hold{width:100%}
   .wordmark{width:min(78vw,560px)}
   .say{margin-top:1.3rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;
-       font-size:clamp(1.5rem,3.6vw,2.5rem);line-height:1.08;max-width:17ch;text-shadow:0 3px 22px rgba(0,0,0,.9)}
+       font-size:clamp(1.5rem,3.6vw,2.5rem);line-height:1.08;max-width:20ch;text-wrap:balance;text-shadow:0 3px 22px rgba(0,0,0,.9)}
   .poster .btn{margin-top:1.8rem}
   .poster .fact{margin-top:1.4rem;max-width:44ch;text-shadow:0 2px 12px rgba(0,0,0,.9)}
 
@@ -171,7 +171,7 @@
   /* ---------------- 7. the close ---------------- */
   .close{text-align:center;padding-block:clamp(3.4rem,10vh,6rem);
          background:linear-gradient(180deg,var(--teal-deep) 0%,#000 100%)}
-  .close h2{font-size:clamp(1.9rem,4.6vw,3.2rem);max-width:18ch;margin-inline:auto}
+  .close h2{font-size:clamp(1.9rem,4.6vw,3.2rem);max-width:18ch;margin-inline:auto;text-wrap:balance}
   .close .btn{margin-top:1.8rem}
   .close .note{margin-top:1.2rem;max-width:46ch;margin-inline:auto}
   .close .note a{color:var(--fg)}
@@ -211,13 +211,12 @@
   <div class="poster-lift" aria-hidden="true"></div>
   <div class="hold">
     <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
-    <p class="say">Your <span class="loose"><i>friends</i></span> are the difficulty setting.</p>
+    <p class="say">Make your <span class="loose"><i>friends'</i></span> night worse than yours.</p>
     <div class="ctas">
       <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
-      <a class="btn ghost" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
     </div>
     <p class="fact mono">Out now on Steam. 2–4 players, local split-screen or online.</p>
-    <p class="fact mono">Demo Update 2 is out: rejoin your party after a drop, join friends from your Steam list. <a class="link" href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Patch notes</a></p>
+    <p class="fact mono">Early Access is next, targeting October 19. <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Wishlist the full game</a>.</p>
   </div>
 </header>
 
@@ -267,11 +266,11 @@
       </div>
       <div class="words">
         <h3 class="display">The<br>Bathrooms</h3>
-        <p>Get lost in an aesthetically cohesive but ultimately hollow and terrifying minigame. Make money on the run from Crazy Randy in a generated nightmare hell maze from hell with extra hell.</p>
+        <p>Get lost in an aesthetically cohesive but ultimately hollow and terrifying minigame. Make money on the run from Crazy Randy in a randomly built nightmare hell maze from hell with extra hell.</p>
       </div>
     </article>
 
-    <p class="after">Every minigame and round is what you make it. Play it straight, strategic or only grief your opponent. Randy gets his juices whether anybody wins or loses.</p>
+    <p class="after">Every minigame and round is what you make it. Play it straight, or spend the whole round griefing your opponent. Randy gets his juices whether anybody wins or loses.</p>
   </div>
 </section>
 
@@ -317,10 +316,9 @@
     <h2 class="display">Bring somebody.</h2>
     <div class="grid">
       <div>
-        <p>Bad Shrooms is for 2–4 players. Play in local split-screen or over Steam. It is not a single-player demo.</p>
-        <p>Controller recommended. Local split-screen supports 2–4 players using keyboard and mouse plus compatible controllers. Online play needs an internet connection.</p>
-        <p>The demo gives you Monkey Bowls, Hot Boys and The Bathrooms. Early Access opens with seven minigames and a much worse Rumble With Randy. <a class="link" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Wishlist the full game</a>.</p>
-        <p>Something went wrong? Send the build number, player count and what happened to <a class="link" href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>.</p>
+        <p>Bad Shrooms needs at least two of you and takes up to four, on one couch or over Steam. There is no single-player mode.</p>
+        <p>Controller recommended. Local split-screen takes keyboard and mouse plus compatible controllers. Online, everyone installs the free demo, and Steam keeps it updated on its own.</p>
+        <p>Something went wrong? Send the build number from the pause screen, the player count and what happened to <a class="link" href="mailto:hello@crunchrock.games">hello@crunchrock.games</a>. What has changed so far is in the <a class="link" href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">patch notes</a>.</p>
       </div>
       <div class="shot"><img src="img/demo/still_four_players.jpg" loading="lazy" alt="Four named players in Monkey Bowls, a ball halfway down the lane, WARNING SHOT on the board"></div>
     </div>
@@ -330,12 +328,13 @@
 <!-- 7 -->
 <section class="close">
   <div class="hold">
-    <h2 class="display">The free demo is out now.</h2>
+    <h2 class="display">Early Access is next.</h2>
+    <p class="note">Seven minigames at launch, and a much worse Rumble With Randy. Five already run in the development build: the demo three plus Randy's Gig Work and Schizo Sniper. Mecha Chameleon and Déjà Room are being built.</p>
+    <p class="mono note">Target: October 19, 2026. Wishlist it and Steam tells you the day it actually lands.</p>
     <div class="ctas">
       <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
       <a class="btn ghost" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
     </div>
-    <p class="mono note">Early Access opens with seven minigames. Wishlist it and Steam tells you the day it lands.</p>
     <p class="mono note follow">New clips on
       <a class="link" href="https://www.tiktok.com/@crunch_rock" rel="noopener">TikTok</a>
       <a class="link" href="https://www.youtube.com/@crunchrock" rel="noopener">YouTube</a>
