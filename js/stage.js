@@ -466,6 +466,29 @@ addEventListener('pointerup', (e) => {
   }
 });
 
+// Mouse wheel and trackpad: one gesture, one node. Touch gets this from CSS snapping and the native fling.
+let wheelSum = 0; let wheelLock = 0; let wheelStep = 0; let wheelLast = 0;
+addEventListener('wheel', (e) => {
+  if (e.ctrlKey || document.querySelector('dialog[open]')) return;
+  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  e.preventDefault();
+  const now = performance.now();
+  const gap = now - wheelLast; wheelLast = now;
+  if (now < wheelLock) {
+    // A trackpad's inertia keeps sending events after the fingers lift; that is not a second request.
+    if (gap < 80 && now - wheelStep < 1400) wheelLock = now + 80;
+    return;
+  }
+  if (gap > 220) wheelSum = 0;
+  wheelSum += e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+  if (Math.abs(wheelSum) < 30) return;
+  const dir = Math.sign(wheelSum); wheelSum = 0;
+  const here = sections.reduce((b, sec, i) => (Math.abs(sec.offsetTop - scrollY) < Math.abs(sections[b].offsetTop - scrollY) ? i : b), 0);
+  const to = Math.max(0, Math.min(sections.length - 1, here + dir));
+  wheelStep = now; wheelLock = now + 600;
+  if (to !== here) scrollTo({ top: sections[to].offsetTop, behavior: reduced ? 'auto' : 'smooth' });
+}, { passive: false });
+
 const cards = sections.map((s) => s.querySelector('.card'));
 const cue = document.querySelector('.cue');
 let lowPower = false; let closeUp = 0; let p = 0; let phase = 0; let last = performance.now(); let frames = 0; let slow = 0; let tick = 0;
@@ -486,7 +509,8 @@ function frame(now) {
     if (slow > 45 && dpr > 1) { dpr = Math.max(1, dpr - 0.25); renderer.setPixelRatio(dpr); renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); } frames = 0; slow = 0; }
 
   const goal = targetP();
-  const k = 1 - Math.exp(-dt * (reduced ? 60 : 5.2));
+  // The page snaps fast; the camera takes its time, so the flight between nodes is still the show.
+  const k = 1 - Math.exp(-dt * (reduced ? 60 : 3.4));
   const prev = p; p += (goal - p) * k;
   phase += (p - prev) * 2.2;
   const lastI = sections.length - 1;
