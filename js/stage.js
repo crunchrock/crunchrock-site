@@ -130,6 +130,7 @@ void main(){
 
 const sections = [...document.querySelectorAll('[data-stop]')];
 const orbSections = sections.filter((s) => s.dataset.clip !== undefined);
+const scaleIdx = sections.findIndex((s) => s.dataset.scale !== undefined);
 const texLoader = new THREE.TextureLoader();
 const sphereGeo = new THREE.IcosahedronGeometry(1, coarse ? 16 : 26);
 const world = new THREE.Group();
@@ -181,6 +182,10 @@ function makeVideo(orb) {
   t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter; t.generateMipmaps = false;
   orb.tex = t;
   v.addEventListener('playing', () => { orb.videoLive = true; t.needsUpdate = true; orb.u.uMap.value = t; });
+  if (v.requestVideoFrameCallback) {
+    const onFrame = () => { orb.fresh = true; v.requestVideoFrameCallback(onFrame); };
+    v.requestVideoFrameCallback(onFrame);
+  } else orb.fresh = true;
 }
 
 // Floating spores and tiny mushrooms, drawn as flat ink-edged toys.
@@ -215,6 +220,56 @@ const spores = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 2), toyM
 shrooms.frustumCulled = spores.frustumCulled = false;
 world.add(shrooms, spores);
 
+// Mystery planets: the games nobody has seen yet. Not clickable, no names, just the size of the plan.
+// Two for Early Access (seven in all), eight more for 1.0 (fifteen in all).
+const qCanvas = document.createElement('canvas'); qCanvas.width = qCanvas.height = 256;
+const qTex = new THREE.CanvasTexture(qCanvas);
+const drawQ = () => {
+  const c = qCanvas.getContext('2d'); c.clearRect(0, 0, 256, 256);
+  c.font = '400 190px "Titan One", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = '#fff';
+  c.fillText('?', 128, 138); qTex.needsUpdate = true;
+};
+drawQ();
+if (document.fonts) document.fonts.load('400 190px "Titan One"', '?').then(drawQ);
+const planetGeo = new THREE.IcosahedronGeometry(1, coarse ? 8 : 12);
+const planetFrag = /* glsl */`precision highp float;varying vec3 vN,vV;uniform sampler2D uQ;uniform float uTime,uSeed,uTier;
+void main(){
+  vec3 N=normalize(vN);float nv=clamp(dot(N,normalize(vV)),0.,1.);
+  float a=sin(uTime*.3+uSeed)*.14;float c=cos(a),s=sin(a);vec2 q=mat2(c,-s,s,c)*N.xy;
+  float m=sin(q.y*7.+sin(q.x*3.5+uTime*.25+uSeed)*1.5+uSeed);
+  vec3 c1=uTier<.5?vec3(.72,.9,.38):vec3(.97,.95,.85);
+  vec3 c2=uTier<.5?vec3(.18,.72,.64):vec3(.84,.8,.95);
+  vec3 col=mix(c1,c2,smoothstep(-.05,.05,m));
+  float g=texture2D(uQ,q*.72+.5).a;
+  col=mix(col,vec3(.09,.07,.12),g);
+  col+=vec3(1.)*pow(max(dot(N,normalize(vec3(-.45,.62,.64))),0.),60.)*.7;
+  col=mix(col,vec3(.09,.07,.12),smoothstep(.76,.82,1.-nv));
+  gl_FragColor=vec4(col,1.);
+}`;
+const planetVert = `varying vec3 vN,vV;void main(){vec4 mv=modelViewMatrix*vec4(position,1.);vN=normalize(normalMatrix*normalize(position));vV=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}`;
+const ringMat = new THREE.MeshBasicMaterial({ color: 0x17121f, side: THREE.DoubleSide });
+const planetSpots = {
+  // tier, x and y as a fraction of depth seen from the pull-back camera, depth, size
+  land: [[0, 0.015, 0.25, -6, 1.5], [0, -0.03, -0.265, -13, 1.55],
+    [1, -0.49, 0.2, -5, 1.1], [1, -0.27, 0.285, -17, 1.35], [1, 0.22, 0.29, -9, 1.05], [1, 0.47, 0.235, -22, 1.5],
+    [1, -0.46, -0.24, -19, 1.45], [1, -0.235, -0.3, -4, 1], [1, 0.25, -0.285, -24, 1.4], [1, 0.5, -0.2, -8, 1.15]],
+  port: [[0, 0.01, 0.17, -5, 0.85], [0, 0, -0.19, -11, 0.85],
+    [1, -0.125, 0.135, -8, 0.62], [1, 0.128, 0.155, -16, 0.8], [1, -0.135, 0.008, -20, 0.8], [1, 0.135, -0.03, -4, 0.58],
+    [1, -0.122, -0.135, -12, 0.68], [1, 0.126, -0.12, -22, 0.85], [1, -0.065, -0.205, -18, 0.75], [1, 0.07, -0.2, -7, 0.6]],
+};
+const planets = planetSpots.land.map(([tier], i) => {
+  const u = { uQ: { value: qTex }, uTime: { value: 0 }, uSeed: { value: i * 2.3 + 0.7 }, uTier: { value: tier } };
+  const group = new THREE.Group();
+  group.add(new THREE.Mesh(planetGeo, new THREE.ShaderMaterial({ uniforms: u, vertexShader: planetVert, fragmentShader: planetFrag })));
+  if (i % 3 === 1) {
+    const ring = new THREE.Mesh(new THREE.RingGeometry(1.42, 1.58, 56), ringMat);
+    ring.rotation.set(1.2, 0.35 * (i % 2 ? 1 : -1), 0.4);
+    group.add(ring);
+  }
+  world.add(group);
+  return { group, u, tier, size: 1, base: new THREE.Vector3(), i };
+});
+
 let threads = new THREE.Group();
 world.add(threads);
 const threadMat = new THREE.ShaderMaterial({
@@ -229,7 +284,7 @@ let layoutPortrait = null;
 let extent = 0;
 const keysEye = []; const keysTarget = []; let curveEye; let curveTarget;
 const shiftKeys = [];
-const R = 1.7; const HERO_BACK_L = 16; const HERO_BACK_P = 22;
+const R = 1.7; const HERO_BACK_L = 16; const HERO_BACK_P = 22; const SCALE_BACK_L = 23; const SCALE_BACK_P = 34;
 
 function layout() {
   const vw = canvas.clientWidth; const vh = canvas.clientHeight;
@@ -248,13 +303,24 @@ function layout() {
       o.base.set(Math.cos(a) * rx * grow, Math.sin(a) * ry * grow, z);
     });
     extent = (n - 1) * step;
+    const sb = portrait ? SCALE_BACK_P : SCALE_BACK_L;
+    const wideX = portrait ? 0.9 : Math.max(0.8, Math.min(1.35, (vw / vh) / 1.6));
+    (portrait ? planetSpots.port : planetSpots.land).forEach(([, x, y, z, size], i) => {
+      planets[i].base.set(x * wideX * (sb - z), y * (sb - z), z); planets[i].size = size;
+    });
     // Mycelium threads between neighbours plus two long links, so it reads as a network and not a chain.
     threads.traverse((c) => c.geometry && c.geometry.dispose());
     world.remove(threads); threads = new THREE.Group(); world.add(threads);
     const links = orbs.slice(0, -1).map((o, i) => [i, i + 1]);
     links.push([0, 3], [1, 4], [2, 5]);
-    links.forEach(([a, b], k) => {
-      const A = orbs[a].base; const B = orbs[b].base;
+    // Each mystery planet hangs off the nearest thing already in the network.
+    const nodes = [...orbs.map((o) => o.base), ...planets.filter((m) => m.tier === 0).map((m) => m.base)];
+    const links3 = links.map(([a, b]) => [orbs[a].base, orbs[b].base]);
+    planets.forEach((m) => {
+      const near = nodes.filter((v) => v !== m.base).reduce((x, v) => (v.distanceTo(m.base) < x.distanceTo(m.base) ? v : x));
+      links3.push([near, m.base]);
+    });
+    links3.forEach(([A, B], k) => {
       const M = A.clone().lerp(B, 0.5).add(new THREE.Vector3(Math.sin(k * 2.1) * 1.8, Math.cos(k * 1.3) * 1.8, Math.sin(k) * 1.4));
       const M2 = A.clone().lerp(B, 0.25).add(new THREE.Vector3(Math.cos(k * 3.1), Math.sin(k * 2.3), 0).multiplyScalar(0.9));
       const curve = new THREE.CatmullRomCurve3([A, M2, M, B]);
@@ -291,9 +357,13 @@ function layout() {
     keysTarget.push(o.base.clone());
     shiftKeys.push(portrait ? new THREE.Vector2(0, 0.235) : new THREE.Vector2(0.235 * o.side, 0));
   });
-  keysEye.push(portrait ? new THREE.Vector3(4, 3, 33) : new THREE.Vector3(-9, 3, 47));
+  if (scaleIdx > 0) { // straight down the axis, far enough back to see everything planned
+    keysEye.push(new THREE.Vector3(0, 0, portrait ? SCALE_BACK_P : SCALE_BACK_L)); keysTarget.push(new THREE.Vector3(0, 0, 0));
+    shiftKeys.push(portrait ? new THREE.Vector2(0, 0.2) : new THREE.Vector2(0, 0));
+  }
+  keysEye.push(portrait ? new THREE.Vector3(4, 3, 33) : new THREE.Vector3(-3, 3, 47));
   keysTarget.push(center.clone());
-  shiftKeys.push(portrait ? new THREE.Vector2(0, 0.25) : new THREE.Vector2(0.27, 0));
+  shiftKeys.push(portrait ? new THREE.Vector2(0, 0.25) : new THREE.Vector2(0.3, 0));
   curveEye = new THREE.CatmullRomCurve3(keysEye, false, 'catmullrom', 0.5);
   curveTarget = new THREE.CatmullRomCurve3(keysTarget, false, 'catmullrom', 0.5);
 }
@@ -355,11 +425,12 @@ addEventListener('pointerup', (e) => {
 
 const cards = sections.map((s) => s.querySelector('.card'));
 const cue = document.querySelector('.cue');
-let closeUp = 0; let p = 0; let phase = 0; let last = performance.now(); let frames = 0; let slow = 0; let tick = 0;
+let lowPower = false; let closeUp = 0; let p = 0; let phase = 0; let last = performance.now(); let frames = 0; let slow = 0; let tick = 0;
 const tintA = new THREE.Color(); const eye = new THREE.Vector3(); const look = new THREE.Vector3(); const shift = new THREE.Vector2();
 const tmpV = new THREE.Vector3(); const scr = new THREE.Vector3();
 const heroTint = new THREE.Color('#d6eb9c');
-const tintFor = (i) => (i <= 0 || i >= sections.length - 1 ? heroTint : orbs[i - 1].tint);
+const sectionTints = sections.map((s) => (s.dataset.tint ? new THREE.Color(s.dataset.tint) : heroTint));
+const tintFor = (i) => sectionTints[Math.max(0, Math.min(i, sections.length - 1))];
 
 function frame(now) {
   requestAnimationFrame(frame);
@@ -368,7 +439,8 @@ function frame(now) {
   tick++;
   // adaptive sharpness: drop resolution rather than framerate
   frames++; if (dt > 0.03) slow++;
-  if (frames >= 90) { if (slow > 45 && dpr > 1) { dpr = Math.max(1, dpr - 0.25); renderer.setPixelRatio(dpr); renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); } frames = 0; slow = 0; }
+  if (frames >= 90) { if (slow > 45 && dpr <= 1) lowPower = true; // weak machine: ring shows stills, the focused orb still plays
+    if (slow > 45 && dpr > 1) { dpr = Math.max(1, dpr - 0.25); renderer.setPixelRatio(dpr); renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); } frames = 0; slow = 0; }
 
   const goal = targetP();
   const k = 1 - Math.exp(-dt * (reduced ? 60 : 5.2));
@@ -397,7 +469,7 @@ function frame(now) {
   let hovered = null;
   if (!coarse) hovered = hitAt(pointer.x, pointer.y);
   canvas.style.cursor = hovered ? 'pointer' : '';
-  const heroish = 1 - Math.min(1, Math.min(p, lastI - p) * 1.8);
+  const heroish = 1 - Math.min(1, Math.min(p, lastI - p, scaleIdx > 0 ? Math.abs(p - scaleIdx) : 1e9) * 1.8);
   orbs.forEach((o) => {
     const dist = Math.abs(p - o.stopIndex);
     const f = Math.max(0, 1 - dist / 0.62); const fs = f * f * (3 - 2 * f);
@@ -423,11 +495,16 @@ function frame(now) {
 
     // Clip control: hero and close show motion on a desk machine; phones only decode the orb in focus.
     const nearNext = dist < 1.15;
-    const wanted = o.clip && (coarse ? dist < 0.8 : (dist < 1.3 || heroish > 0.25));
+    // The wide ring takes turns, half the clips at a time, so nothing has to fight for the decoder.
+    const wanted = o.clip && (dist < 0.8 || (!coarse && !lowPower && heroish > 0.25 && (o.i + Math.floor(time / 3.5)) % 2 === 0));
     if (o.clip && nearNext) makeVideo(o);
     if (wanted && !reduced) { makeVideo(o); if (o.video.paused) o.video.play().catch(() => {}); } else if (o.video && !o.video.paused) o.video.pause();
     if (o.tex && o.videoLive && o.video.readyState >= 2 && !o.video.paused) {
-      if (fs > 0.05 || (tick + o.i) % 3 === 0) o.tex.needsUpdate = true;
+      // Close-up gets every decoded frame; the wide ring shares uploads so the page keeps its rate.
+      if (o.fresh && (fs > 0.05 || (tick + o.i) % 2 === 0)) {
+        o.tex.needsUpdate = true;
+        if (o.video.requestVideoFrameCallback) o.fresh = false;
+      }
     }
     // name tags while you are looking at the whole constellation
     const la = heroish;
@@ -440,12 +517,26 @@ function frame(now) {
     } else o.label.style.display = 'none';
   });
   threadMat.uniforms.uOpacity.value = 0.1 + 0.9 * Math.max(heroish, 1 - Math.max(...orbs.map((o) => o.focus)));
+  const endish = Math.max(0, 1 - Math.abs(p - lastI) * 1.6);
+  planets.forEach((m) => {
+    m.u.uTime.value = time;
+    m.group.position.set(m.base.x, m.base.y + (reduced ? 0 : Math.sin(time * 0.4 + m.i * 2.1) * 0.22), m.base.z);
+    scr.copy(m.base).project(camera);
+    const zx = Math.abs(scr.x - toyZone.value.x) - toyZone.value.z; const zy = Math.abs(scr.y - toyZone.value.y) - toyZone.value.w;
+    const zt = Math.min(1, Math.max(0, Math.max(zx, zy) / 0.3)); const inZone = 1 - zt * zt * (3 - 2 * zt);
+    const clearing = Math.max(closeUp, endish);
+    // The phone's opening frame has no room: the planets arrive as the camera pulls back.
+    const phoneHero = layoutPortrait ? Math.max(0, 1 - p * 1.8) : 0;
+    m.group.scale.setScalar(Math.max(0.001, m.size * (1 - inZone * clearing) * (1 - phoneHero)));
+    m.group.rotation.y = time * 0.15 + m.i;
+  });
   // Words win: nothing floats through the text column.
   const focusOrb = orbs.reduce((a, b) => (b.focus > a.focus ? b : a));
-  const endish = Math.max(0, 1 - Math.abs(p - lastI) * 1.6);
   closeUp = focusOrb.focus;
-  toyMask.value = Math.max(focusOrb.focus, endish);
+  const scaleish = scaleIdx > 0 ? Math.max(0, 1 - Math.abs(p - scaleIdx) * 1.6) : 0;
+  toyMask.value = Math.max(focusOrb.focus, endish, scaleish);
   if (layoutPortrait) toyZone.value.set(0, -0.55, 1.1, 0.5);
+  else if (scaleish > focusOrb.focus) toyZone.value.set(0, 0, 0.3, 0.26);
   else if (endish > focusOrb.focus) toyZone.value.set(-0.62, 0, 0.4, 0.9);
   else toyZone.value.set(-focusOrb.side * 0.56, -0.05, 0.42, 0.8);
   // The tunnel of bands radiates from the orb you are closest to.

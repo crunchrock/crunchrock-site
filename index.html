@@ -70,6 +70,11 @@
   .big { font-size:clamp(26px,2.5vw,50px); line-height:1.1; font-weight:800; }
   .small { margin-top:14px; font-size:clamp(20px,1.5vw,30px); line-height:1.22; font-weight:700; }
   .tag { display:inline-block; margin-top:20px; font:700 15px/1 'JetBrains Mono',monospace; padding:8px 12px 7px; background:var(--ink); color:var(--paper2); border-radius:7px; }
+  .stop.scale { justify-content:center; text-align:center; }
+  .scale .card { width:auto; }
+  .huge { font:400 clamp(24px,2.3vw,50px)/1.08 'Titan One',system-ui,sans-serif; paint-order:stroke fill; -webkit-text-stroke:7px var(--paper); margin-bottom:8px; white-space:nowrap; }
+  .q { display:inline-block; width:1.15em; height:1.15em; line-height:1.15em; text-align:center; border-radius:50%; border:3px solid var(--ink); background:#f8f5dc; font-size:.8em; vertical-align:.08em; -webkit-text-stroke:0; }
+  .q.ea { background:var(--lime); }
   .fallback { display:none; }
   html:not(.gl) .fallback { display:block; width:min(80vw,380px); aspect-ratio:1; object-fit:cover; border-radius:50%; border:4px solid var(--ink); margin-bottom:22px; }
 
@@ -108,6 +113,9 @@
     .fine { font-size:15px; }
     .stop h2 { font-size:clamp(38px,11vw,58px); margin-bottom:10px; }
     .big { font-size:clamp(23px,6.2vw,29px); }
+    .scale .card { text-align:left; }
+    .stop.scale { justify-content:flex-start; }
+    .huge { font-size:clamp(24px,6.7vw,32px); white-space:normal; }
     .small { font-size:19px; margin-top:9px; }
     .tag { margin-top:13px; font-size:14px; }
     .pill { padding:15px 22px 14px; }
@@ -146,9 +154,9 @@
     <span class="cue" aria-hidden="true"></span>
   </section>
 
-  <section class="stop" data-stop data-side="1" data-name="Monkey Bowls" data-clip="vid/orbs/bowls.mp4" data-poster="img/orbs/bowls.webp" data-tint="#f6df73" data-halo="#ffcf33" data-halo2="#ff7fc4">
+  <section class="stop" data-stop data-side="1" data-name="Monkey Bowls" data-clip="vid/orbs/bowls.mp4?v=2" data-poster="img/orbs/bowls.webp?v=2" data-tint="#f6df73" data-halo="#ffcf33" data-halo2="#ff7fc4">
     <div class="card">
-      <img class="fallback" src="img/orbs/bowls.webp" alt="" loading="lazy">
+      <img class="fallback" src="img/orbs/bowls.webp?v=2" alt="" loading="lazy">
       <h2><img src="img/orbs/logo_MonkeyBowls.webp" alt="Monkey Bowls" loading="lazy"></h2>
       <p class="big">There are zero actual monkeys in this minigame, stop asking about them!</p>
       <p class="small">Tricks before the throw build your combo. The Radical 360 is a good one. So is the Crouch Nugget.</p>
@@ -156,9 +164,9 @@
     </div>
   </section>
 
-  <section class="stop" data-stop data-side="-1" data-name="Hot Boys" data-clip="vid/orbs/hotboys.mp4" data-poster="img/orbs/hotboys.webp" data-tint="#fbbf94" data-halo="#ff6a2b" data-halo2="#ffc53d">
+  <section class="stop" data-stop data-side="-1" data-name="Hot Boys" data-clip="vid/orbs/hotboys.mp4?v=2" data-poster="img/orbs/hotboys.webp?v=2" data-tint="#fbbf94" data-halo="#ff6a2b" data-halo2="#ffc53d">
     <div class="card">
-      <img class="fallback" src="img/orbs/hotboys.webp" alt="" loading="lazy">
+      <img class="fallback" src="img/orbs/hotboys.webp?v=2" alt="" loading="lazy">
       <h2><img src="img/orbs/logo_HotBoys.webp" alt="Hot Boys" loading="lazy"></h2>
       <p class="big">The house fills with lava and turns you all into tiny Hot Boys.</p>
       <p class="small">We've given you guns for some reason.</p>
@@ -166,9 +174,9 @@
     </div>
   </section>
 
-  <section class="stop" data-stop data-side="1" data-name="The Bathrooms" data-clip="vid/orbs/bathrooms.mp4" data-poster="img/orbs/bathrooms.webp" data-tint="#a9e6cf" data-halo="#35bfa0" data-halo2="#d8f06b">
+  <section class="stop" data-stop data-side="1" data-name="The Bathrooms" data-clip="vid/orbs/bathrooms.mp4?v=2" data-poster="img/orbs/bathrooms.webp?v=2" data-tint="#a9e6cf" data-halo="#35bfa0" data-halo2="#d8f06b">
     <div class="card">
-      <img class="fallback" src="img/orbs/bathrooms.webp" alt="" loading="lazy">
+      <img class="fallback" src="img/orbs/bathrooms.webp?v=2" alt="" loading="lazy">
       <h2><img src="img/orbs/logo_TheBathrooms.webp" alt="The Bathrooms" loading="lazy"></h2>
       <p class="big">On the run from Crazy Randy in a randomly built nightmare hell maze from hell with extra hell.</p>
       <p class="small">Get caught and you float in Astral Jail until the round ends.</p>
@@ -176,9 +184,9 @@
     </div>
   </section>
 
-  <section class="stop" data-stop data-side="-1" data-name="Randy's Gig Work" data-clip="vid/orbs/gig.mp4" data-poster="img/orbs/gig.webp" data-tint="#d3c2ff" data-halo="#9a6bff" data-halo2="#ffc53d">
+  <section class="stop" data-stop data-side="-1" data-name="Randy's Gig Work" data-clip="vid/orbs/gig.mp4?v=2" data-poster="img/orbs/gig.webp?v=2" data-tint="#d3c2ff" data-halo="#9a6bff" data-halo2="#ffc53d">
     <div class="card">
-      <img class="fallback" src="img/orbs/gig.webp" alt="" loading="lazy">
+      <img class="fallback" src="img/orbs/gig.webp?v=2" alt="" loading="lazy">
       <h2>Randy's Gig Work</h2>
       <p class="big">This alien is literally running a delivery service out of your house with your stuff.</p>
       <p class="small">You ship the orders through the microwave.</p>
@@ -195,13 +203,21 @@
     </div>
   </section>
 
-  <section class="stop" data-stop data-side="-1" data-name="Rumble With Randy" data-clip="vid/orbs/rumble.mp4" data-poster="img/orbs/rumble.webp" data-tint="#fbb6e2" data-halo="#ff4fc3" data-halo2="#b7e561">
+  <section class="stop" data-stop data-side="-1" data-name="Rumble With Randy" data-clip="vid/orbs/rumble.mp4?v=2" data-poster="img/orbs/rumble.webp?v=2" data-tint="#fbb6e2" data-halo="#ff4fc3" data-halo2="#b7e561">
     <div class="card">
-      <img class="fallback" src="img/orbs/rumble.webp" alt="" loading="lazy">
+      <img class="fallback" src="img/orbs/rumble.webp?v=2" alt="" loading="lazy">
       <h2>Rumble With Randy</h2>
       <p class="big">When the jar is full, you fight the alien. There will be eggs.</p>
       <p class="small">"Heads up, this fight is lowkey broken."</p>
       <span class="tag">In the free demo, short</span>
+    </div>
+  </section>
+
+  <section class="stop scale" data-stop data-scale data-tint="#d6cdf6">
+    <div class="card">
+      <p class="huge"><span class="q ea" aria-hidden="true">?</span> Early Access starts with 7 minigames.</p>
+      <p class="huge"><span class="q" aria-hidden="true">?</span> It grows to 15 by 1.0.</p>
+      <span class="tag">The plan</span>
     </div>
   </section>
 

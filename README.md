@@ -78,8 +78,12 @@ stay real page content.
   `data-side` (which side of the screen), `data-tint`, `data-halo`, `data-halo2`. Add a section and
   the stage adds the orb; update the angle list `turn` in `layout()` to match. `data-dark` is the
   sealed scope orb, used while a game has no footage worth showing.
+- **Mystery planets** are the unannounced games, listed in `planetSpots` in `js/stage.js`: two for the
+  7 minigames Early Access starts with, eight more for the 15 at 1.0. They are not clickable and have
+  no names. The `data-scale` section is the pull-back that shows them all. When a game is revealed,
+  remove its planet and add its section.
 - **Clips** come from the demo trailer and the owner's recordings, cropped by the orb, so pick a shot
-  whose centre carries the idea. Keep recordings free of the desktop. A click on the focused orb
+  whose centre carries the idea and whose source really runs near 60 fps; some of the recordings do not, so measure before using one. Keep recordings free of the desktop. A click on the focused orb
   opens its clip at full frame.
 - **Words win.** Floating toys shrink away from the text column and threads fade near a close-up.
 - **Copy** is one line and one fact per game, from approved Steam text or shipped game strings. No
