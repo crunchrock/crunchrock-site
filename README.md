@@ -10,28 +10,26 @@ lines behind this design, and updating it changed nothing about the live site.
 If you came here from the game repo, that pointer is `marketing/website/README.md` and it is
 correct — this is the place.
 
-## Current state — 2026-09-29, demo live
+## Current state
 
-The game page says the free demo is out now and sends people to the demo's Steam page
-(`store.steampowered.com/app/5163790`). The full game (`app/4995150`) is the wishlist link. The page
-was rebuilt on the 2026-09-26 owner direction (below) and replaces the rejected September 25
-batch entirely; `img/launch-20260925/` and `vid/launch-20260925/` are no longer referenced and can
-be deleted once this version is approved.
-
-**Before pushing:** confirm the demo's Steam page really shows a download button. No claim on
-this page may be stronger than the store. Release truth lives in `marketing/00_START_HERE.md` in
-the game repo.
+The game page is one scroll through a 3D constellation of six minigame orbs. The free demo is out
+(`store.steampowered.com/app/5163790`); the full game (`app/4995150`) is the wishlist link. Early
+Access has no date on this page. No claim here may be stronger than the store. Release truth lives
+in `marketing/00_START_HERE.md` in the game repo.
 
 ## Layout
 
 ```
-index.html      the game page      privacy.html   eula.html
+index.html      the game page: words and orb data   privacy.html   eula.html
+js/stage.js     the WebGL constellation             js/three.module.min.js  three r160, vendored
 work.html       the studio page    CNAME          crunchrock.games
 img/            logos, OG cards, older stills
 img/demo/       2026-09-29 stills, loop posters, the Randy hero plate
 img/work/       contract-work stills
 vid/            older trailer + work clips
-vid/demo/       2026-09-29 gameplay loops + the demo trailer encode
+vid/demo/       the demo trailer encode + older loops
+vid/orbs/       one 960x540 silent clip per orb, 3 to 6 seconds; also what the orb's lightbox plays
+img/orbs/       one poster per orb and the selected minigame title logos
 ```
 
 ## Deploying
@@ -67,87 +65,37 @@ chrome --headless=new --hide-scrollbars --window-size=600,7200 --screenshot=phon
 del _phone.html
 ```
 
-## The design — owner direction 2026-10-08
+## The design
 
-**The site is made of the game's new UI material.** The game is moving toward authored, handmade
-surfaces in the Psychonauts 2 and Double Fine register, with its own mushrooms and alien
-elements. The concepts are C1 Alien Chromatophore Ink and C2 Mycelial Cut-Paper
-(`docs/art/ui-concepts/` in the game repo, `UI-BRAND-GUIDE.md` there): a pale mottled reading
-field, teal-to-lime pigment at the edges, printed grain, near-black ink for type and wells. The
-dark purple behind those concept boards is the board's backdrop, not the material. The owner does
-not want purple as the site's main colour, and **there is no dark page**. Dark lives only in the
-key art, the captures and the ink wells.
+**Less is more. Light page, dark type, and the footage does the talking.** A fixed WebGL canvas sits
+behind ordinary HTML sections; native scroll flies the camera, so the words, links and fallbacks
+stay real page content.
 
-- **The sheet** is one continuous pale lime-cream field (`#F0EFD8`) with printed grain over
-  everything (an SVG noise tile, multiply, low opacity) and ink type at full strength.
-- **Pigment** is C1's chromatophore patch: an irregular lime-to-moss-to-teal shape, multiplied
-  onto the sheet with a defined edge, placed at section edges and behind media. Never under body
-  copy. One per section at most, sized and rotated differently each time.
-- **Media are stickers.** Every capture has a 3px ink edge, a 14px radius and a hard offset ink
-  shadow. Some sit a degree off level.
-- **One slab per page.** The Randy line sits in the C1 reading field: a greener paper
-  (`#E6ECC9`), lime-to-teal rim, ink shadow, Randy's name in an ink well. It is the one quote
-  device and it ties the site to the game's dialogue UI. Do not add more.
-- **One button.** Lime (`#B7E561`) pill, 3px ink border, hard offset ink shadow, pressed on hover.
-  The wishlist button is the same pill in the greener paper.
-- **Motifs** are the C1 vocabulary only: pore dots fading from one corner in deep teal, a ring or
-  double ring in RandyBlue, one small spiral in the slab's cap.
-- **Copy is short.** One or two sentences per game, one line under each big heading, the premise
-  in one paragraph. Aggro Crab is the register: flat, uneven, no filler. If a line can go, it goes.
+- **The sheet** is pale paper (`#f3f1dc`) with hard-edged pigment bands radiating from the orb in
+  focus. The band tint comes from that section's `data-tint` and must stay pale, because ink type
+  sits on it. No dark page.
+- **An orb** is one `<section data-stop>` in `index.html`: `data-name`, `data-clip`, `data-poster`,
+  `data-side` (which side of the screen), `data-tint`, `data-halo`, `data-halo2`. Add a section and
+  the stage adds the orb; update the angle list `turn` in `layout()` to match. `data-dark` is the
+  sealed scope orb, used while a game has no footage worth showing.
+- **Clips** come from the demo trailer and the owner's recordings, cropped by the orb, so pick a shot
+  whose centre carries the idea. Keep recordings free of the desktop. A click on the focused orb
+  opens its clip at full frame.
+- **Words win.** Floating toys shrink away from the text column and threads fade near a close-up.
+- **Copy** is one line and one fact per game, from approved Steam text or shipped game strings. No
+  taglines. If a line can go, it goes.
+- **Phones** decode only the orb in focus. Desktop plays every clip while the whole ring is on screen.
+  Resolution drops before framerate does. No WebGL2 means plain sections with round stills.
 
-The skeleton is after [aggrocrab.com](https://aggrocrab.com): full-bleed key art with the wordmark
-and one button, cut at an angle into the sheet; a huge statement in display type; one game per row
-in alternating layout; lots of air; a short close. The hero plate is positioned at 40% so Randy
-stands right of the wordmark; the phone crop sits at 12% for the same reason.
+The wordmark on this page is `img/logo_bad_shrooms_ink.webp`, the real logo gradient-mapped to ink
+with a magenta extrude, because the cream master disappears on the light sheet.
 
-**One three per page.** The demo really has three games, so the three game rows are this page's
-one three. Everything else runs at its natural uneven length.
+Titan One for display, Baloo 2 for body, JetBrains Mono for the tags. No serif.
 
-Titan One for display, Baloo 2 for body, JetBrains Mono for the technical voice. No serif.
+`work.html` keeps its own pale sticker-sheet style.
 
-`work.html` is the same sheet through the override block at the end of its stylesheet: grain,
-ink type, the lime pill, sticker media, two pigment patches.
-
-This supersedes the white-on-black teal-gradient direction of 2026-09-26, and before it the
-paper/ink sticker design of 2026-08-15. The flat, unframed, media-on-black page read as a generated
-landing page and carried none of the game's identity. A dusk-purple page was tried on 2026-10-08
-and rejected within the hour: giant purple fields with white text are the default, not the game.
-
-### The clanker tells — banned, all of them
-
-A design move that reads as machine-generated because it is what every model reaches for first.
-Owner-set 2026-08-15, permanent, no exceptions. Full table with reasons and replacements:
-`marketing/BRAND.md` §0.1 in the game repo.
-
-1. **A sans-serif paired with a serif.** Titan One, Baloo 2, JetBrains Mono. No serif on this site.
-2. **These • weird • dots • everywhere.** Write the sentence. Real punctuation, or a line break.
-3. **An icon in a rounded square, inside a box that is also a rounded square.** No icons at all;
-   images are real captures from the game.
-4. **ALL-CAPS EYEBROW TEXT THAT ENDS WITH AN EM DASH.** The headline is the headline. `.kicker`
-   is a plain sentence in mono and stays that way.
-5. **The generic skeleton:** stats in the hero in a box, a numbered "our process" section, service
-   cards. Structure follows what we actually have — the house, the three games, the jar, the
-   trailer, the invitation.
-6. **Small light-grey text.** The Grey Law, below.
-7. **Everything in patterns of three.** Budget: one three per page, and only when the world
-   actually has three of that thing. Subtraction test: delete one of the three. If nothing is
-   lost, it was rhythm — leave it deleted.
-8. **A skinny accent line on one edge of a card.** No hairline rules. The slab's rim goes all
-   the way round; the sticker shadow is a block on two edges, not a line.
-
-**Register reference: [aggrocrab.com](https://aggrocrab.com).** Flat, uneven, conversational game
-copy, one game per row in alternating layout, one CTA.
-
-**The test for anything not on the list: would a model produce this on its first try?** If yes, it
-needs a reason to exist beyond looking finished.
-
-### The Grey Law — binding
-
-**No dimmed text. Anywhere. Ever.** No `opacity` on a text element, no faded white, no "muted" or
-"secondary" role. Hierarchy comes from **size, weight, case and hue.** Low-alpha values are legal
-only on non-text chrome: the gradients and the image lift under the hero type.
-
-Source: `marketing/BRAND.md` §1 in the game repo, owner-directed 2026-08-15.
+To prove motion, capture frames across a real scroll and look at them in order; one still does not
+show the flight.
 
 ## Copy
 

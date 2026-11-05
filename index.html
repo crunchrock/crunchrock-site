@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bad Shrooms | Crunchrock Games</title>
-<meta name="description" content="A free 2–4 player demo of violent first-person party games inside Randy's hyper-interactive, very chill home. Local split-screen or over Steam. Out now.">
+<meta name="description" content="Violent first-person party games for 2 to 4 players. One couch or online. The free demo is on Steam.">
+<meta name="theme-color" content="#f3f1dc">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="Bad Shrooms | Free demo on Steam">
-<meta property="og:description" content="Violent first-person party games inside Randy's very chill home. 2–4 players, local split-screen or over Steam. The free demo is out now.">
+<meta property="og:description" content="Violent first-person party games for 2 to 4 players. One couch or online.">
 <meta property="og:image" content="https://crunchrock.games/img/og-game.jpg?v=20260929">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,491 +19,232 @@
 <meta property="og:url" content="https://crunchrock.games/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="Randy in the kitchen next to the Bad Shrooms wordmark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Baloo+2:wght@600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
-  /* Owner direction 2026-10-08: the site is made of the game's new UI material, C1 Alien
-     Chromatophore Ink and C2 Mycelial Cut-Paper (docs/art/ui-concepts in the game repo): a pale
-     mottled reading field with teal-to-lime pigment at its edges, printed grain, near-black ink
-     for type and wells, hard offset ink shadows. There is no dark page. Dark lives only in the
-     key art, the captures and the ink wells. Skeleton after aggrocrab.com: key art hero with one
-     button, a huge statement on paper, one game per row alternating, very little copy, air. */
-  :root{
-    --paper:#F0EFD8;     /* the field: cream pulled toward lime */
-    --paper-2:#E6ECC9;   /* the slab field, one step greener */
-    --ink:#17121F;       /* type, wells, every hard shadow */
-    --lime:#B7E561;      /* ToxicLime, the one button colour */
-    --teal:#3FBFAD;      /* RandyBlue */
-    --rim:#2E7F74;       /* deep teal rim and small labels */
-    --moss:#8DC46E;      /* the pigment between lime and teal */
+  /* Pale sheet, ink type, one WebGL stage behind it. js/stage.js flies the camera; native scroll drives it. */
+  :root { --ink:#17121f; --paper:#f3f1dc; --lime:#b7e561; --paper2:#fffdf0; }
+  * { box-sizing:border-box; margin:0; }
+  html { scroll-snap-type:y proximity; background:var(--paper); -webkit-text-size-adjust:100%; }
+  body { background:var(--paper); color:var(--ink); font:700 20px/1.3 'Baloo 2',system-ui,sans-serif; overflow-x:hidden; }
+  a { color:inherit; }
+  #stage { position:fixed; inset:0; width:100vw; height:100vh; height:100lvh; display:none; }
+  .gl #stage { display:block; }
+  #labels { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:1; display:none; }
+  .gl #labels { display:block; }
+  .orb-label { position:absolute; left:0; top:0; display:none; white-space:nowrap; font:400 clamp(14px,1.35vw,20px)/1 'Titan One',system-ui,sans-serif; color:var(--ink);
+    paint-order:stroke fill; -webkit-text-stroke:5px var(--paper); will-change:transform; }
+  .tex-video { position:fixed; width:2px; height:2px; left:0; top:0; opacity:0; pointer-events:none; }
+
+  header { position:fixed; z-index:5; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:16px clamp(16px,3vw,36px); pointer-events:none; }
+  header > * { pointer-events:auto; }
+  header img { display:block; height:30px; width:auto; }
+  header nav { display:flex; gap:clamp(14px,2vw,26px); align-items:center; font-size:18px; }
+  header nav a { text-decoration:none; }
+  header nav a:hover, header nav button:hover { text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:4px; }
+  button.link { all:unset; cursor:pointer; font:inherit; }
+
+  section { position:relative; z-index:2; min-height:100vh; min-height:100svh; scroll-snap-align:start; display:flex; pointer-events:none; }
+  section a, section button { pointer-events:auto; }
+
+  .pill { display:inline-block; font:400 clamp(19px,1.7vw,24px)/1 'Titan One',system-ui,sans-serif; color:var(--ink); text-decoration:none; padding:17px 28px 16px; border:3px solid var(--ink); border-radius:99px; background:var(--lime); box-shadow:4px 5px 0 var(--ink); transition:transform .1s, box-shadow .1s; cursor:pointer; white-space:nowrap; }
+  .pill:hover { transform:translate(2px,3px); box-shadow:2px 2px 0 var(--ink); }
+  .pill:active { transform:translate(4px,5px); box-shadow:0 0 0 var(--ink); }
+  .pill.alt { background:var(--paper2); }
+  .row { display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+
+  .hero { flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:72px 16px 28px; }
+  .hero .card { width:auto; display:flex; flex-direction:column; align-items:center; gap:clamp(12px,1.8vh,20px); }
+  .hero h1 { font-size:0; line-height:0; }
+  .hero h1 img { width:min(36vw,52vh,560px); height:auto; }
+  .hero p { font-size:clamp(21px,2.2vw,32px); line-height:1.12; font-weight:800; paint-order:stroke fill; -webkit-text-stroke:6px var(--paper); }
+  .cue { position:absolute; bottom:18px; left:50%; width:30px; height:30px; margin-left:-15px; border-right:5px solid var(--ink); border-bottom:5px solid var(--ink); transform:rotate(45deg); animation:cue 1.5s ease-in-out infinite; }
+  @keyframes cue { 50% { translate:0 9px; } }
+
+  .stop { align-items:center; padding:80px clamp(24px,6vw,96px); }
+  .stop[data-side="-1"] { justify-content:flex-end; }
+  .card { position:relative; width:min(40vw,560px); }
+  .stop h2 { font:400 clamp(44px,5vw,78px)/.98 'Titan One',system-ui,sans-serif; letter-spacing:.005em; margin-bottom:18px; }
+  .stop h2 img { display:block; height:auto; width:100%; max-width:min(100%,460px); max-height:230px; object-fit:contain; object-position:left center; }
+  .big { font-size:clamp(26px,2.5vw,38px); line-height:1.1; font-weight:800; }
+  .small { margin-top:14px; font-size:clamp(20px,1.5vw,24px); line-height:1.22; font-weight:700; }
+  .tag { display:inline-block; margin-top:20px; font:700 15px/1 'JetBrains Mono',monospace; padding:8px 12px 7px; background:var(--ink); color:var(--paper2); border-radius:7px; }
+  .fallback { display:none; }
+  html:not(.gl) .fallback { display:block; width:min(80vw,380px); aspect-ratio:1; object-fit:cover; border-radius:50%; border:4px solid var(--ink); margin-bottom:22px; }
+
+  .end { align-items:center; padding:80px clamp(24px,6vw,96px) 24px; }
+  .end .card { width:min(44vw,600px); display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .end .logo { width:min(100%,400px); height:auto; }
+  .end .big { paint-order:stroke fill; -webkit-text-stroke:6px var(--paper); }
+    .links { display:flex; flex-wrap:wrap; gap:6px 20px; font-size:19px; paint-order:stroke fill; -webkit-text-stroke:5px var(--paper); }
+  .links a:hover { text-decoration-thickness:3px; }
+  .fine { font-size:17px; }
+
+  dialog { border:0; padding:0; background:transparent; max-width:none; max-height:none; width:min(92vw,calc(88vh*16/9)); margin:auto; }
+  dialog::backdrop { background:rgba(243,241,220,.93); }
+  dialog video { display:block; width:100%; aspect-ratio:16/9; background:var(--ink); border:4px solid var(--ink); border-radius:18px; box-shadow:7px 8px 0 var(--ink); }
+  dialog button { position:fixed; top:18px; right:20px; font:400 22px/1 'Titan One',system-ui,sans-serif; padding:12px 18px; background:var(--lime); border:3px solid var(--ink); border-radius:99px; box-shadow:3px 4px 0 var(--ink); cursor:pointer; color:var(--ink); }
+
+  @media (max-aspect-ratio:1/1) {
+    body { font-size:19px; }
+    header img { height:19px; }
+    header nav { font-size:16px; }
+    header { padding:13px 16px; }
+    .hero { justify-content:space-between; padding:66px 16px 54px; }
+    .hero .card { display:contents; }
+    .hero h1 img { width:min(74vw,44vh); }
+    .hero p { font-size:22px; }
+    .hero .hg { margin-top:auto; margin-bottom:12px; }
+    .hero .row { justify-content:center; }
+    .stop, .stop[data-side="-1"] { align-items:flex-end; justify-content:flex-start; padding:60px 20px 30px; }
+    .card, .end .card { width:100%; }
+    .end { align-items:flex-end; padding:60px 20px 26px; }
+    .end .card { gap:13px; }
+    .end .logo { width:min(56vw,230px); }
+    .links { font-size:17px; gap:4px 14px; }
+    .fine { font-size:15px; }
+    .stop h2 { font-size:clamp(38px,11vw,58px); margin-bottom:10px; }
+    .stop h2 img { max-width:min(72%,300px); max-height:128px; }
+    .big { font-size:clamp(23px,6.2vw,29px); }
+    .small { font-size:19px; margin-top:9px; }
+    .tag { margin-top:13px; font-size:14px; }
+    .pill { padding:15px 22px 14px; }
+    .orb-label { font-size:14px; -webkit-text-stroke-width:4px; }
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{background:var(--paper);scroll-behavior:smooth}
-  body{
-    position:relative;background:var(--paper);color:var(--ink);
-    font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
-    font-size:clamp(1.12rem,.5vw + 1rem,1.3rem);line-height:1.45;
-    overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  }
-  /* printed grain over the whole sheet */
-  body::before{content:'';position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.12 0 0 0 .9 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
-  ::selection{background:var(--lime);color:var(--ink)}
-  img,video{max-width:100%;display:block}
-  a{color:inherit}
-  a:focus-visible{outline:4px solid var(--rim);outline-offset:4px}
-  p{max-width:40ch}
-
-  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.95rem;letter-spacing:-.01em;line-height:1.5}
-  .display{font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;line-height:.92}
-  .hold{max-width:1360px;margin:0 auto;padding-inline:clamp(1rem,4.5vw,4.5rem)}
-  section{position:relative;overflow:hidden}
-  section .hold{position:relative;z-index:1}
-
-  /* ---------- the button: lime, ink border, hard offset ink shadow ---------- */
-  .btn{display:inline-block;font-family:'Titan One',system-ui,sans-serif;font-weight:400;text-transform:uppercase;
-       text-decoration:none;font-size:clamp(1.1rem,1.7vw,1.4rem);line-height:1;padding:1.05rem 2.2rem 1rem;
-       background:var(--lime);color:var(--ink);border:3px solid var(--ink);border-radius:999px;
-       box-shadow:7px 7px 0 var(--ink);transition:transform .12s ease,box-shadow .12s ease}
-  .btn:hover,.btn:focus-visible{transform:translate(3px,3px);box-shadow:4px 4px 0 var(--ink)}
-  .btn:active{transform:translate(7px,7px);box-shadow:0 0 0 var(--ink)}
-  .btn.alt{background:var(--paper-2)}
-  .ctas{display:flex;flex-wrap:wrap;gap:1rem 1.2rem;margin-top:1.8rem}
-  .link{text-decoration:none;border-bottom:3px solid var(--teal);padding-bottom:1px;font-weight:700}
-  .link:hover{border-bottom-color:var(--rim)}
-
-  /* ---------- media: a sticker on the sheet, ink edge and hard offset ink shadow ---------- */
-  .shot{line-height:0;overflow:hidden;background:#000;border:3px solid var(--ink);border-radius:14px;
-        box-shadow:12px 12px 0 var(--ink)}
-  .shot img,.shot video{width:100%;height:100%;object-fit:cover}
-  .tilt-l{transform:rotate(-1.2deg)}
-  .tilt-r{transform:rotate(1.1deg)}
-
-  /* ---------- the slab: C1's reading field, a paler shape with a lime-to-teal rim ---------- */
-  .slab{position:relative;isolation:isolate;color:var(--ink);
-        padding:clamp(1.3rem,2.6vw,2.2rem) clamp(1.5rem,3vw,2.8rem);
-        border:4px solid var(--rim);
-        border-radius:2.4rem 3.8rem 2.6rem 4.2rem / 3.2rem 2.4rem 4rem 2.2rem}
-  .slab::before{content:'';position:absolute;inset:-12px;z-index:-1;border-radius:inherit;
-        background:linear-gradient(115deg,var(--lime) 0%,var(--moss) 40%,var(--teal) 72%,var(--rim) 100%);
-        box-shadow:12px 12px 0 var(--ink)}
-  .slab::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--paper-2)}
-  .slab p{max-width:none;font-size:clamp(1.2rem,1.6vw,1.55rem);line-height:1.35;font-weight:600}
-  .slab .who{display:inline-block;font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;
-        font-size:clamp(1rem,1.3vw,1.2rem);line-height:1;color:var(--paper);background:var(--ink);
-        padding:.55rem 1.1rem .5rem;margin-bottom:.8rem;transform:rotate(-2deg);
-        border-radius:1.4rem 2rem 1.2rem 1.8rem / 1.6rem 1.2rem 2rem 1.4rem}
-  .slab .spiral{position:absolute;right:1.2rem;top:.9rem;width:46px;height:46px;color:var(--rim);opacity:.5}
-
-  /* ---------- pigment: C1's chromatophore patches, soft lime-to-teal, at edges and behind media,
-       never under reading. Pore dots in a corner. One ring. ---------- */
-  .wash{position:absolute;pointer-events:none;z-index:0;mix-blend-mode:multiply;opacity:.62;
-        background:linear-gradient(135deg,var(--lime) 0%,var(--moss) 46%,var(--teal) 100%);
-        border-radius:58% 42% 61% 39% / 44% 62% 38% 56%}
-  .wash::after{content:'';position:absolute;inset:6%;border-radius:52% 48% 40% 60% / 58% 36% 64% 42%;
-        background:radial-gradient(closest-side,rgba(240,239,216,.9),rgba(240,239,216,0) 70%);mix-blend-mode:screen;opacity:.55}
-  .dots{position:absolute;pointer-events:none;z-index:0;width:min(44vw,520px);height:min(44vw,520px);color:var(--rim);opacity:.45;
-        background-image:radial-gradient(currentColor 1.4px,transparent 1.7px);background-size:14px 14px;
-        -webkit-mask-image:radial-gradient(circle at var(--mx,0) var(--my,0),#000 0,transparent 70%);
-                mask-image:radial-gradient(circle at var(--mx,0) var(--my,0),#000 0,transparent 70%)}
-  .ring{position:absolute;pointer-events:none;z-index:0;border-radius:50%;border:5px solid var(--teal)}
-  .ring.d{box-shadow:inset 0 0 0 7px var(--paper),inset 0 0 0 11px var(--teal)}
-
-  /* ---------- the top bar, over the key art ---------- */
-  .bar{position:absolute;top:0;left:0;right:0;z-index:10;padding-block:1rem}
-  .bar .hold{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-  .bar .who{line-height:0}
-  .bar .logo-wide{height:46px;width:auto;display:block;filter:drop-shadow(3px 3px 0 var(--ink))}
-  .bar .logo-mark{height:42px;width:auto;display:none;filter:drop-shadow(3px 3px 0 var(--ink))}
-  .bar nav{display:flex;gap:clamp(.9rem,2.2vw,1.8rem);align-items:center}
-  .bar nav a{font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;text-decoration:none;
-             font-size:clamp(.95rem,1.3vw,1.15rem);color:var(--paper);text-shadow:2px 2px 0 var(--ink)}
-  .bar nav a:hover{color:var(--lime)}
-  @media (max-width:560px){.bar .logo-wide{display:none}.bar .logo-mark{display:block;height:36px}.bar nav{gap:.7rem}.bar nav a{font-size:.85rem}}
-
-  /* ---------- 1. the key art, cut into the sheet ---------- */
-  .hero{position:relative;overflow:hidden;min-height:min(100svh,880px);display:flex;flex-direction:column;justify-content:flex-end;
-        padding:clamp(6rem,16vh,9rem) 0 clamp(5rem,12vh,8rem);color:var(--paper);
-        clip-path:polygon(0 0,100% 0,100% calc(100% - 3.4vw),0 100%)}
-  .hero-art{position:absolute;inset:0;z-index:0;background:url('img/demo/hero_randy_kitchen.jpg?v=20260929') 40% 50%/cover no-repeat}
-  @media (max-width:700px){.hero-art{background-image:url('img/demo/hero_randy_kitchen_phone.jpg?v=20260929');background-position:12% 20%}}
-  .hero-lift{position:absolute;inset:0;z-index:0;
-     background:linear-gradient(180deg,rgba(23,18,31,.5) 0%,rgba(23,18,31,0) 24%,rgba(23,18,31,0) 56%,rgba(23,18,31,.55) 100%)}
-  .hero .hold{position:relative;z-index:1;width:100%}
-  .wordmark{width:min(82vw,640px);height:auto;filter:drop-shadow(9px 9px 0 var(--ink))}
-  .say{margin-top:1.6rem;font-family:'Titan One',system-ui,sans-serif;font-weight:400;color:var(--paper);
-       font-size:clamp(1.7rem,3.8vw,2.8rem);line-height:1.04;max-width:18ch;text-wrap:balance;text-shadow:4px 4px 0 var(--ink)}
-  .hero .fact{margin-top:1.2rem;max-width:46ch;font-weight:700;text-shadow:2px 2px 0 var(--ink)}
-  .hero .ctas{margin-top:2rem}
-
-  /* the loose friend: grab and throw is the game's verb, so the one word you can grab is
-     "friends", pinned, crooked, flingable */
-  .loose{display:inline-block;position:relative}
-  .loose i{display:inline-block;font-style:normal;transform-origin:14% 6%;cursor:grab;touch-action:none;will-change:transform}
-  .loose i:active{cursor:grabbing}
-  .loose::before{content:'';position:absolute;left:calc(14% - 5px);top:-3px;width:11px;height:11px;border-radius:50%;
-                 background:var(--lime);border:2px solid var(--ink);z-index:2;pointer-events:none}
-  @media (prefers-reduced-motion: reduce){.loose i{cursor:auto;transform:rotate(6deg)}}
-
-  /* ---------- 2. the premise ---------- */
-  .premise{margin-top:-3.4vw;padding-block:clamp(5rem,12vh,9rem) clamp(4rem,10vh,8rem)}
-  .premise h2{position:relative;font-size:clamp(2.5rem,7vw,6.4rem);max-width:13ch;text-wrap:balance}
-  .premise h2 .wash{left:-9%;top:-24%;width:min(62vw,560px);height:min(52vw,440px);transform:rotate(-8deg);z-index:-1;opacity:.55}
-  .premise .lede{margin-top:1.6rem;font-size:clamp(1.25rem,1.8vw,1.6rem);line-height:1.38;max-width:38ch}
-  .meet{display:grid;gap:clamp(1.8rem,4vw,3.5rem);align-items:center;margin-top:clamp(3rem,7vh,5rem)}
-  @media (min-width:860px){.meet{grid-template-columns:1.1fr 1fr}}
-  .meet .slab{margin:12px 12px 12px 0}
-  .premise .dots{right:-4%;bottom:-6%;--mx:100%;--my:100%}
-  .premise .ring{width:120px;height:120px;right:8%;top:10%}
-
-  /* ---------- 3. the house ---------- */
-  .house{padding-block:clamp(2rem,5vh,3rem) clamp(2rem,5vh,3rem)}
-  .house h2{font-size:clamp(2.6rem,7vw,6rem);max-width:12ch;text-wrap:balance}
-  .house .lede{margin-top:1rem;font-size:clamp(1.2rem,1.6vw,1.5rem);max-width:34ch}
-  .house .shot{margin-top:clamp(1.8rem,4vh,2.8rem);aspect-ratio:16/9;max-height:78vh;transform:rotate(-.6deg)}
-  .house .wash{right:-12%;top:18%;width:min(60vw,760px);height:min(60vw,720px);transform:rotate(14deg)}
-  .house .dots{left:-6%;bottom:-8%;--mx:0;--my:100%}
-
-  /* ---------- 4. the games: one per row, alternating. The demo has three; that is this page's one three ---------- */
-  .games{padding-block:clamp(3rem,7vh,5rem) clamp(2rem,5vh,3rem)}
-  .games .count{font-family:'Titan One',system-ui,sans-serif;text-transform:uppercase;font-size:clamp(1.15rem,1.8vw,1.5rem);
-        color:var(--rim);display:inline-block;transform:rotate(-1.5deg);margin-bottom:1rem}
-  .row{position:relative;display:grid;gap:clamp(1.6rem,4vw,4.5rem);align-items:center;padding-block:clamp(2.6rem,7vh,5.5rem)}
-  @media (min-width:880px){
-    .row{grid-template-columns:1.25fr 1fr}
-    .row.flip .media{order:2}
-    .row.flip .words{text-align:right}
-    .row.flip .words p{margin-left:auto}
-  }
-  .row .media{position:relative}
-  .row .media .shot{aspect-ratio:16/9}
-  .row .media .wash{left:-10%;top:-14%;width:120%;height:130%;z-index:-1;opacity:.9}
-  .row.flip .media .wash{left:auto;right:-10%;transform:rotate(9deg)}
-  .row h3{font-size:clamp(2.8rem,6vw,5.4rem)}
-  .row .words p{margin-top:1rem;max-width:34ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
-  .row .words .rule{color:var(--rim)}
-  .games .dots{right:-8%;top:48%;--mx:100%;--my:50%}
-
-  /* ---------- 5. Randy and the jar ---------- */
-  .jar{padding-block:clamp(2rem,6vh,4rem) clamp(4rem,10vh,8rem)}
-  .jar .top{display:grid;gap:clamp(1.8rem,4vw,4rem);align-items:center}
-  @media (min-width:880px){.jar .top{grid-template-columns:1fr 1.2fr}}
-  .jar h2{font-size:clamp(2.6rem,6.4vw,5.6rem);max-width:10ch}
-  .jar .top p{margin-top:1rem;max-width:30ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
-  .jar .top .shot{aspect-ratio:16/9}
-  .jar .ring{width:220px;height:220px;left:-90px;bottom:4%}
-  .jar .wash{right:-6%;bottom:-10%;width:min(50vw,620px);height:min(40vw,480px);transform:rotate(-6deg)}
-
-  /* ---------- 6. the trailer ---------- */
-  .reel{padding-block:clamp(3rem,8vh,6rem) clamp(4rem,10vh,8rem)}
-  .reel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.4rem}
-  .reel h2{font-size:clamp(2.2rem,5.4vw,4.4rem)}
-  .reel .head p{max-width:none;font-weight:700;color:var(--rim)}
-  .screen{margin-top:clamp(1.6rem,3.5vh,2.4rem);max-width:1180px;transform:rotate(.5deg)}
-  .screen video{aspect-ratio:16/9;height:auto}
-  .reel .dots{left:-5%;top:-8%;--mx:0;--my:0}
-  .reel .wash{right:-10%;top:30%;width:min(56vw,700px);height:min(56vw,700px);transform:rotate(22deg)}
-
-  /* ---------- 7. the close ---------- */
-  .close{padding-block:clamp(3rem,8vh,6rem) clamp(2rem,5vh,3rem);text-align:center}
-  .close .hold{display:flex;flex-direction:column;align-items:center}
-  .close h2{font-size:clamp(2.4rem,6vw,5rem);max-width:14ch;text-wrap:balance}
-  .close .note{margin-top:1.2rem;max-width:36ch;font-size:clamp(1.15rem,1.5vw,1.4rem)}
-  .close .ctas{justify-content:center;margin-top:2.2rem}
-  .close .follow{margin-top:2.4rem;font-weight:700;max-width:none}
-  .close .follow a{margin-inline:.4rem}
-  .close .ring.d{width:150px;height:150px;left:6%;top:12%}
-  .close .wash{left:50%;top:-26%;width:min(60vw,760px);height:min(34vw,420px);transform:translateX(-50%) rotate(-4deg);opacity:.42}
-
-  .signoff .hold{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2rem;padding-block:clamp(2.6rem,7vh,4.6rem) 1.6rem}
-  .signoff img{width:min(56vw,320px);height:auto;display:block;filter:drop-shadow(5px 5px 0 var(--ink))}
-  .signoff a.mark{line-height:0}
-  .signoff p{max-width:none}
-  footer{padding-block:1rem 2.6rem}
-  footer .hold{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;align-items:baseline;justify-content:center}
-
-  @media (max-width:720px){
-    .shot{box-shadow:8px 8px 0 var(--ink)}
-    .slab::before{inset:-9px;box-shadow:8px 8px 0 var(--ink)}
-    .premise h2 .wash{left:-20%;top:-10%}
-    .hero{min-height:min(92svh,820px);clip-path:polygon(0 0,100% 0,100% calc(100% - 5vw),0 100%)}
-    .premise{margin-top:-5vw}
-    .row{padding-block:2rem}
-    .ring{display:none}
-  }
-  @media (prefers-reduced-motion: reduce){.btn{transition:none}.tilt-l,.tilt-r,.house .shot,.screen{transform:none}}
+  @media (prefers-reduced-motion:reduce) { .cue { animation:none; } html { scroll-behavior:auto; } }
 </style>
+<script>
+  // tells the stage to take over; without WebGL the sections stay plain and each gets its still
+  try { if (!document.createElement('canvas').getContext('webgl2')) throw 0; document.documentElement.classList.add('gl'); } catch (e) {}
+</script>
 </head>
 <body>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div id="labels" aria-hidden="true"></div>
 
-<!-- 1 -->
-<header class="hero" id="top">
-  <div class="bar">
-    <div class="hold">
-      <a class="who" href="#top" aria-label="Crunchrock Games">
-        <img class="logo-wide" src="img/logo_crunchrock_wide_white.svg" alt="Crunchrock Games">
-        <img class="logo-mark" src="img/crunchrock_mark.png" alt="Crunchrock Games">
-      </a>
-      <nav>
-        <a href="#games">Games</a>
-        <a href="#trailer">Trailer</a>
-        <a href="work.html">Studio</a>
-        <a href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Steam</a>
-      </nav>
-    </div>
-  </div>
-  <div class="hero-art" role="img" aria-label="Randy, a green alien with a cigarette, in a purple kitchen"></div>
-  <div class="hero-lift" aria-hidden="true"></div>
-  <div class="hold">
-    <h1 style="font-size:0"><img class="wordmark" src="img/logo_bad_shrooms.png" alt="Bad Shrooms"></h1>
-    <p class="say">Make your <span class="loose"><i>friends'</i></span> night worse than yours.</p>
-    <div class="ctas">
-      <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
-    </div>
-    <p class="fact mono">Free on Steam. 2 to 4 players, one couch or online.</p>
-  </div>
+<header>
+  <a href="#top" aria-label="Crunchrock Games"><img src="img/logo_crunchrock_wide.svg" alt="Crunchrock Games"></a>
+  <nav>
+    <button class="link" type="button" onclick="openClip('vid/demo/badshrooms_demo_trailer.mp4?v=20260929','Trailer',true)">Trailer</button>
+    <a href="work.html">Studio</a>
+  </nav>
 </header>
 
-<!-- 2 -->
-<section class="premise">
-  <div class="dots" aria-hidden="true"></div>
-  <div class="ring d" aria-hidden="true"></div>
-  <div class="hold">
-    <h2 class="display"><span class="wash" aria-hidden="true"></span>You bought mushrooms from a guy in a trenchcoat.</h2>
-    <p class="lede">Nothing happened, so you went home. Now an alien named Randy is in your apartment holding a big jar and talking about your juices. He is not a monster about it. He simply has quotas.</p>
-    <div class="meet">
-      <div class="shot tilt-l"><img src="img/demo/still_meet_randy.jpg" loading="lazy" alt="Randy, a tall green alien, fills the kitchen doorway and introduces himself"></div>
-      <div class="slab">
-        <svg class="spiral" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 24c0-3 3-5 6-4s4 5 2 8-7 4-11 2-6-8-3-13 10-7 16-4 8 11 4 17-13 9-20 5-10-15-5-22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <span class="who">Randy</span>
-        <p>I'm Randy. I live here. At your best, you leak loosh. I jar it.</p>
+<main id="top">
+  <section class="hero" data-stop>
+    <div class="card">
+      <h1><img src="img/logo_bad_shrooms_ink.webp" width="1024" height="577" alt="Bad Shrooms"></h1>
+      <div class="hg">
+        <p>Violent first-person party games for 2 to 4 players.</p>
+      </div>
+      <div class="row">
+        <a class="pill" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week">Play the free demo</a>
       </div>
     </div>
-  </div>
-</section>
+    <span class="cue" aria-hidden="true"></span>
+  </section>
 
-<!-- 3 -->
-<section class="house">
-  <div class="wash" aria-hidden="true"></div>
-  <div class="dots" aria-hidden="true"></div>
-  <div class="hold">
-    <h2 class="display">The house becomes the game.</h2>
-    <p class="lede">Every round, Randy rebuilds the apartment.</p>
-    <div class="shot">
-      <video src="vid/demo/loop_lanes.mp4" poster="img/demo/loop_lanes.jpg" muted loop playsinline preload="none" aria-label="The living room grows bowling lanes through a purple ring"></video>
+  <section class="stop" data-stop data-side="1" data-name="Monkey Bowls" data-clip="vid/orbs/bowls.mp4" data-poster="img/orbs/bowls.webp" data-tint="#f6df73" data-halo="#ffcf33" data-halo2="#ff7fc4">
+    <div class="card">
+      <img class="fallback" src="img/orbs/bowls.webp" alt="" loading="lazy">
+      <h2><img src="img/orbs/logo_MonkeyBowls.webp" alt="Monkey Bowls" loading="lazy"></h2>
+      <p class="big">There are zero actual monkeys in this minigame, stop asking about them!</p>
+      <p class="small">Tricks before the throw build your combo. The Radical 360 is a good one. So is the Crouch Nugget.</p>
+      <span class="tag">In the free demo</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 4 -->
-<section class="games" id="games">
-  <div class="dots" aria-hidden="true"></div>
-  <div class="hold">
-    <p class="count">Three games in the free demo.</p>
-
-    <article class="row">
-      <div class="media">
-        <div class="wash" aria-hidden="true"></div>
-        <div class="shot tilt-l"><video src="vid/demo/loop_combo.mp4" poster="img/demo/loop_combo.jpg" muted loop playsinline preload="none" aria-label="A lane, a release, pins falling and the combo chain banking"></video></div>
-      </div>
-      <div class="words">
-        <h3 class="display">Monkey Bowls</h3>
-        <p>Trippy bowling with a combo chain.</p>
-        <p class="rule">There are zero actual monkeys in this minigame, stop asking about them!</p>
-      </div>
-    </article>
-
-    <article class="row flip">
-      <div class="media">
-        <div class="wash" aria-hidden="true"></div>
-        <div class="shot tilt-r"><video src="vid/demo/loop_lava.mp4" poster="img/demo/loop_lava.jpg" muted loop playsinline preload="none" aria-label="Randy says LAVA and the floor floods"></video></div>
-      </div>
-      <div class="words">
-        <h3 class="display">Hot Boys</h3>
-        <p>The house fills with lava and turns you all into tiny Hot Boys.</p>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="media">
-        <div class="wash" aria-hidden="true"></div>
-        <div class="shot tilt-l"><video src="vid/demo/loop_stall.mp4" poster="img/demo/loop_stall.jpg" muted loop playsinline preload="none" aria-label="RUN, a tiled corridor, a stall door"></video></div>
-      </div>
-      <div class="words">
-        <h3 class="display">The Bathrooms</h3>
-        <p>On the run from Crazy Randy in a randomly built nightmare hell maze from hell with extra hell.</p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- 5 -->
-<section class="jar">
-  <div class="ring" aria-hidden="true"></div>
-  <div class="wash" aria-hidden="true"></div>
-  <div class="hold">
-    <div class="top">
-      <div>
-        <h2 class="display">Randy has quotas.</h2>
-        <p>When the jar is full, it all ends in a Rumble With Randy. There will be eggs.</p>
-      </div>
-      <div class="shot tilt-r"><video src="vid/demo/loop_eggs.mp4" poster="img/demo/loop_eggs.jpg" muted loop playsinline preload="none" aria-label="Randy at the stove after the fight: You lost. I'm still making eggs."></video></div>
+  <section class="stop" data-stop data-side="-1" data-name="Hot Boys" data-clip="vid/orbs/hotboys.mp4" data-poster="img/orbs/hotboys.webp" data-tint="#fbbf94" data-halo="#ff6a2b" data-halo2="#ffc53d">
+    <div class="card">
+      <img class="fallback" src="img/orbs/hotboys.webp" alt="" loading="lazy">
+      <h2><img src="img/orbs/logo_HotBoys.webp" alt="Hot Boys" loading="lazy"></h2>
+      <p class="big">The house fills with lava and turns you all into tiny Hot Boys.</p>
+      <p class="small">We've given you guns for some reason.</p>
+      <span class="tag">In the free demo</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 6 -->
-<section class="reel" id="trailer">
-  <div class="dots" aria-hidden="true"></div>
-  <div class="wash" aria-hidden="true"></div>
-  <div class="hold">
-    <div class="head">
-      <h2 class="display">The demo trailer</h2>
-      <p class="mono">One night in the house, start to eggs.</p>
+  <section class="stop" data-stop data-side="1" data-name="The Bathrooms" data-clip="vid/orbs/bathrooms.mp4" data-poster="img/orbs/bathrooms.webp" data-tint="#a9e6cf" data-halo="#35bfa0" data-halo2="#d8f06b">
+    <div class="card">
+      <img class="fallback" src="img/orbs/bathrooms.webp" alt="" loading="lazy">
+      <h2><img src="img/orbs/logo_TheBathrooms.webp" alt="The Bathrooms" loading="lazy"></h2>
+      <p class="big">On the run from Crazy Randy in a randomly built nightmare hell maze from hell with extra hell.</p>
+      <p class="small">Get caught and you float in Astral Jail until the round ends.</p>
+      <span class="tag">In the free demo</span>
     </div>
-    <div class="shot screen">
-      <video controls preload="none" playsinline poster="img/demo/still_bowls_throw.jpg" aria-label="Bad Shrooms demo trailer">
-        <source src="vid/demo/badshrooms_demo_trailer.mp4?v=20260929" type="video/mp4">
-        Your browser can't play this video.
-        <a href="vid/demo/badshrooms_demo_trailer.mp4">Download it instead.</a>
-      </video>
+  </section>
+
+  <section class="stop" data-stop data-side="-1" data-name="Randy's Gig Work" data-clip="vid/orbs/gig.mp4" data-poster="img/orbs/gig.webp" data-tint="#d3c2ff" data-halo="#9a6bff" data-halo2="#ffc53d">
+    <div class="card">
+      <img class="fallback" src="img/orbs/gig.webp" alt="" loading="lazy">
+      <h2>Randy's Gig Work</h2>
+      <p class="big">This alien is literally running a delivery service out of your house with your stuff.</p>
+      <p class="small">You ship the orders through the microwave.</p>
+      <span class="tag">Early Access</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 7 -->
-<section class="close">
-  <div class="wash" aria-hidden="true"></div>
-  <div class="ring d" aria-hidden="true"></div>
-  <div class="hold">
-    <h2 class="display">Early Access is next.</h2>
-    <p class="note">Seven minigames, a bigger house and a much worse Rumble With Randy. Target: October 19.</p>
-    <div class="ctas">
-      <a class="btn" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Play the free demo</a>
-      <a class="btn alt" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week" rel="noopener">Wishlist on Steam</a>
+  <section class="stop" data-stop data-side="1" data-dark data-name="Schizo Sniper" data-clip="" data-tint="#f4b9ad" data-halo="#ee3d2a" data-halo2="#17121f">
+    <div class="card">
+      <h2>Schizo Sniper</h2>
+      <p class="big">Take turns at the window, convinced people are coming to get you, with one bullet for each of your friends.</p>
+      <p class="small">They disappear into the crowd. The guy in the hot dog costume is in it.</p>
+      <span class="tag">Early Access</span>
     </div>
-    <p class="mono follow">New clips on
-      <a class="link" href="https://www.tiktok.com/@crunch_rock" rel="noopener">TikTok</a>
-      <a class="link" href="https://www.youtube.com/@crunchrock" rel="noopener">YouTube</a>
-      <a class="link" href="https://www.instagram.com/crunch_rock/" rel="noopener">Instagram</a>
-      <a class="link" href="https://x.com/crunch_rock" rel="noopener">X</a></p>
-  </div>
-</section>
+  </section>
 
-<section class="signoff">
-  <div class="hold">
-    <a class="mark" href="work.html"><img src="img/logo_crunchrock_stacked_white.svg" alt="Crunchrock Games"></a>
-    <p class="mono">Crunchrock Games is a Unity studio. <a class="link" href="work.html">See the studio</a></p>
-  </div>
-</section>
+  <section class="stop" data-stop data-side="-1" data-name="Rumble With Randy" data-clip="vid/orbs/rumble.mp4" data-poster="img/orbs/rumble.webp" data-tint="#fbb6e2" data-halo="#ff4fc3" data-halo2="#b7e561">
+    <div class="card">
+      <img class="fallback" src="img/orbs/rumble.webp" alt="" loading="lazy">
+      <h2>Rumble With Randy</h2>
+      <p class="big">When the jar is full, you fight the alien. There will be eggs.</p>
+      <p class="small">"Heads up, this fight is lowkey broken."</p>
+      <span class="tag">In the free demo, short</span>
+    </div>
+  </section>
 
-<footer class="mono">
-  <div class="hold">
-    <a class="link" href="mailto:hello@crunchrock.games">Contact</a>
-    <a class="link" href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week" rel="noopener">Patch notes</a>
-    <a class="link" href="privacy.html">Privacy</a>
-    <a class="link" href="eula.html">EULA</a>
-  </div>
-</footer>
+  <section class="end" data-stop>
+    <div class="card">
+      <img class="logo" src="img/logo_bad_shrooms_ink.webp" width="1024" height="577" alt="Bad Shrooms" loading="lazy">
+      <p class="big">Free on Steam. One couch or online.</p>
+      <div class="row">
+        <a class="pill" href="https://store.steampowered.com/app/5163790/Bad_Shrooms_Demo/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week">Play the free demo</a>
+        <a class="pill alt" href="https://store.steampowered.com/app/4995150/Bad_Shrooms/?utm_source=crunchrock_site&amp;utm_medium=button&amp;utm_campaign=demo_week">Wishlist</a>
+      </div>
+      <p class="links">
+        <a href="https://www.tiktok.com/@crunch_rock">TikTok</a>
+        <a href="https://www.youtube.com/@crunchrock">YouTube</a>
+        <a href="https://www.instagram.com/crunch_rock/">Instagram</a>
+        <a href="https://x.com/crunch_rock">X</a>
+      </p>
+      <p class="links fine">
+        <a href="work.html">Crunchrock Games is a Unity studio</a>
+        <a href="mailto:hello@crunchrock.games">Contact</a>
+        <a href="https://store.steampowered.com/news/app/4995150/view/719043624313028688?utm_source=crunchrock_site&amp;utm_medium=link&amp;utm_campaign=demo_week">Patch notes</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="eula.html">EULA</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<dialog id="clip">
+  <button type="button" onclick="this.parentNode.close()">Close</button>
+  <video playsinline></video>
+</dialog>
 
 <script>
-// Loops play only while on screen, never under reduced-motion, never on a
-// metered connection. The posters already carry the content.
-(function () {
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var conn = navigator.connection || {};
-  var saveData = conn.saveData === true || /^([23]g|slow-2g)$/.test(conn.effectiveType || '');
-  var vids = document.querySelectorAll('video[muted]');
-  if (reduce || saveData || !('IntersectionObserver' in window)) return;
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      var v = e.target;
-      if (e.isIntersecting) { if (v.preload === 'none') v.preload = 'auto'; v.play().catch(function () {}); }
-      else { v.pause(); }
-    });
-  }, { rootMargin: '200px 0px', threshold: 0.15 });
-  vids.forEach(function (v) { io.observe(v); });
-})();
-
-// The loose friend. Torsional spring about a rest angle that is deliberately
-// not zero, plus grab-and-throw, because that is the game's verb.
-(function () {
-  var host = document.querySelector('.loose');
-  if (!host) return;
-  var word = host.querySelector('i');
-  if (!word || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var REST = 6 * Math.PI / 180;
-  var K = 26, C = 4.0, MAX = 0.95, VMAX = 7;
-  var angle = REST, vel = 0, grabbed = false, grabOffset = 0;
-  var pointerAngle = 0, lastT = 0, raf = null, idle = 0;
-
-  function pivot() {
-    var r = word.getBoundingClientRect();
-    return { x: r.left + r.width * 0.14, y: r.top + r.height * 0.06 };
-  }
-  function angleTo(e, p) { return Math.atan2(e.clientY - p.y, e.clientX - p.x); }
-
-  function frame(t) {
-    var dt = lastT ? Math.min((t - lastT) / 1000, 1 / 30) : 1 / 60;
-    lastT = t;
-    if (grabbed) {
-      var target = pointerAngle - grabOffset;
-      if (target > MAX) target = MAX;
-      if (target < -MAX) target = -MAX;
-      var raw = (target - angle) / Math.max(dt, 0.001);
-      if (raw > VMAX) raw = VMAX;
-      if (raw < -VMAX) raw = -VMAX;
-      vel = vel * 0.55 + raw * 0.45;
-      angle = target;
-    } else {
-      var acc = -K * (angle - REST) - C * vel;
-      vel += acc * dt;
-      angle += vel * dt;
-      if (angle > MAX) { angle = MAX; vel *= -0.4; }
-      if (angle < -MAX) { angle = -MAX; vel *= -0.4; }
-    }
-    word.style.transform = 'rotate(' + angle.toFixed(4) + 'rad)';
-    var settled = !grabbed && Math.abs(vel) < 0.004 && Math.abs(angle - REST) < 0.004;
-    if (settled) { idle++; } else { idle = 0; }
-    if (idle > 20) { word.style.transform = 'rotate(' + REST.toFixed(4) + 'rad)'; raf = null; lastT = 0; return; }
-    raf = requestAnimationFrame(frame);
-  }
-  function run() { if (raf === null) { lastT = 0; idle = 0; raf = requestAnimationFrame(frame); } }
-
-  word.addEventListener('pointerdown', function (e) {
-    e.preventDefault();
-    grabbed = true;
-    var p = pivot();
-    grabOffset = angleTo(e, p) - angle;
-    pointerAngle = angleTo(e, p);
-    run();
-    try { word.setPointerCapture(e.pointerId); } catch (err) {}
-  });
-  word.addEventListener('pointermove', function (e) {
-    if (!grabbed) return;
-    pointerAngle = angleTo(e, pivot());
-  });
-  function release(e) {
-    if (!grabbed) return;
-    grabbed = false;
-    try { word.releasePointerCapture(e.pointerId); } catch (err) {}
-    run();
-  }
-  word.addEventListener('pointerup', release);
-  word.addEventListener('pointercancel', release);
-
-  function nudge() { vel = -2.2; run(); }
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) { setTimeout(nudge, 550); io.disconnect(); } });
-    }, { threshold: 0.9 });
-    io.observe(host);
-  } else { setTimeout(nudge, 700); }
-})();
+  (function () {
+    var d = document.getElementById('clip'), v = d.querySelector('video');
+    window.openClip = function (src, name, sound) {
+      v.src = src; v.loop = !sound; v.muted = !sound; v.controls = !!sound; v.setAttribute('aria-label', name);
+      d.showModal(); v.play().catch(function () { v.controls = true; });
+    };
+    d.addEventListener('close', function () { v.pause(); v.removeAttribute('src'); v.load(); });
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+  })();
 </script>
-
+<script type="module" src="js/stage.js"></script>
 </body>
 </html>
