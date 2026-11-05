@@ -280,18 +280,65 @@ const threadMat = new THREE.ShaderMaterial({
     vec3 c=mix(vec3(.09,.07,.12),vec3(.72,.9,.38),dash);gl_FragColor=vec4(c,uOpacity);}`,
 });
 
-let layoutPortrait = null;
+let layoutPortrait = null; let layoutKey = '';
 let extent = 0;
 const keysEye = []; const keysTarget = []; let curveEye; let curveTarget;
 const shiftKeys = [];
 const R = 1.7; const HERO_BACK_L = 16; const HERO_BACK_P = 22; const SCALE_BACK_L = 23; const SCALE_BACK_P = 34;
 
+// The closing shot: find the nearest camera that holds every orb and planet, name tags included, in the
+// space the words leave free, on whatever screen this is. Measured, so it cannot run off an edge.
+function fitClose(portrait, center, vw, vh) {
+  const card = document.querySelector('.end .card');
+  let textRight = 0; let textTop = vh;
+  card.querySelectorAll('img, a, .big').forEach((el) => {
+    let box = el.getBoundingClientRect();
+    if (el.classList.contains('big')) { const r = document.createRange(); r.selectNodeContents(el); box = r.getBoundingClientRect(); }
+    // measured against its own section, so the answer does not depend on where the page is scrolled
+    const secBox = card.parentElement.getBoundingClientRect();
+    textRight = Math.max(textRight, box.right); textTop = Math.min(textTop, vh - (secBox.bottom - box.top));
+  });
+  const headerNdc = 1 - (64 / vh) * 2;
+  const pad = 0.03;
+  const region = portrait
+    ? { x0: -1 + pad, x1: 1 - pad, y0: 1 - (textTop / vh) * 2 + 0.03, y1: headerNdc }
+    : { x0: (textRight / vw) * 2 - 1 + 0.05, x1: 1 - pad, y0: -1 + 0.06, y1: headerNdc };
+  const cam = new THREE.PerspectiveCamera(camera.fov, vw / vh, 0.1, 400);
+  const dir = (portrait ? new THREE.Vector3(0.11, 0.09, 1) : new THREE.Vector3(-0.07, 0.07, 1)).normalize();
+  const tanY = Math.tan(camera.fov * Math.PI / 360);
+  const nodes = [
+    ...orbs.map((o) => ({ p: o.base, r: R * (portrait ? 0.56 + o.i * 0.09 : 1 + o.i * 0.13), tag: true })),
+    ...planets.map((m) => ({ p: m.base, r: m.size * 1.6, tag: false })),
+  ];
+  const v = new THREE.Vector3();
+  const measureAt = (d) => {
+    cam.position.copy(center).addScaledVector(dir, d); cam.lookAt(center); cam.updateMatrixWorld(); cam.updateProjectionMatrix();
+    const b = { x0: 9, x1: -9, y0: 9, y1: -9 };
+    nodes.forEach((n) => {
+      v.copy(n.p).project(cam);
+      const dist = cam.position.distanceTo(n.p);
+      const ry = n.r / (dist * tanY); const rx = ry / cam.aspect;
+      const tagX = n.tag ? (90 / vw) * 2 : 0; const tagY = n.tag ? (30 / vh) * 2 : 0;
+      b.x0 = Math.min(b.x0, v.x - Math.max(rx, tagX)); b.x1 = Math.max(b.x1, v.x + Math.max(rx, tagX));
+      b.y0 = Math.min(b.y0, v.y - ry - tagY); b.y1 = Math.max(b.y1, v.y + ry);
+    });
+    return b;
+  };
+  let d = 18; let box = measureAt(d);
+  while (d < 260 && (box.x1 - box.x0 > region.x1 - region.x0 || box.y1 - box.y0 > region.y1 - region.y0)) { d += 1.5; box = measureAt(d); }
+  const eye = center.clone().addScaledVector(dir, d);
+  const midX = (region.x0 + region.x1) / 2 - (box.x0 + box.x1) / 2;
+  const midY = (region.y0 + region.y1) / 2 - (box.y0 + box.y1) / 2;
+  return { eye, shift: new THREE.Vector2(midX / 2, midY / 2) };
+}
+
 function layout() {
   const vw = canvas.clientWidth; const vh = canvas.clientHeight;
   const portrait = vh > vw;
-  if (layoutPortrait !== portrait) {
-    layoutPortrait = portrait;
-    const rx = portrait ? 2.25 : 7.3;
+  const shapeKey = `${portrait}${Math.round((vw / vh) * 10)}`;
+  if (layoutKey !== shapeKey) {
+    layoutKey = shapeKey; layoutPortrait = portrait;
+    const rx = portrait ? 2.25 * Math.min(1.25, (vw / vh) / 0.46) : 7.3 * Math.max(0.7, Math.min(1.3, (vw / vh) / 1.6));
     const ry = portrait ? 2.75 : 3.75;
     const step = 4;
     const n = orbs.length;
@@ -361,9 +408,10 @@ function layout() {
     keysEye.push(new THREE.Vector3(0, 0, portrait ? SCALE_BACK_P : SCALE_BACK_L)); keysTarget.push(new THREE.Vector3(0, 0, 0));
     shiftKeys.push(portrait ? new THREE.Vector2(0, 0.2) : new THREE.Vector2(0, 0));
   }
-  keysEye.push(portrait ? new THREE.Vector3(4, 3, 33) : new THREE.Vector3(-3, 3, 47));
+  const close = fitClose(portrait, center, vw, vh);
+  keysEye.push(close.eye);
   keysTarget.push(center.clone());
-  shiftKeys.push(portrait ? new THREE.Vector2(0, 0.25) : new THREE.Vector2(0.3, 0));
+  shiftKeys.push(close.shift);
   curveEye = new THREE.CatmullRomCurve3(keysEye, false, 'catmullrom', 0.5);
   curveTarget = new THREE.CatmullRomCurve3(keysTarget, false, 'catmullrom', 0.5);
 }
@@ -507,7 +555,8 @@ function frame(now) {
       }
     }
     // name tags while you are looking at the whole constellation
-    const la = heroish;
+    // the phone's closing shot is too small for name tags
+    const la = layoutPortrait ? heroish * Math.min(1, Math.abs(p - lastI) * 1.6) : heroish;
     if (la > 0.01) {
       scr.copy(o.group.position); scr.y -= o.scale * 1.32; scr.project(camera);
       const lx = (scr.x * 0.5 + 0.5) * w; const ly = (-scr.y * 0.5 + 0.5) * h;
@@ -524,7 +573,7 @@ function frame(now) {
     scr.copy(m.base).project(camera);
     const zx = Math.abs(scr.x - toyZone.value.x) - toyZone.value.z; const zy = Math.abs(scr.y - toyZone.value.y) - toyZone.value.w;
     const zt = Math.min(1, Math.max(0, Math.max(zx, zy) / 0.3)); const inZone = 1 - zt * zt * (3 - 2 * zt);
-    const clearing = Math.max(closeUp, endish);
+    const clearing = closeUp;
     // The phone's opening frame has no room: the planets arrive as the camera pulls back.
     const phoneHero = layoutPortrait ? Math.max(0, 1 - p * 1.8) : 0;
     m.group.scale.setScalar(Math.max(0.001, m.size * (1 - inZone * clearing) * (1 - phoneHero)));
@@ -560,5 +609,5 @@ function frame(now) {
 resize();
 p = targetP();
 requestAnimationFrame(frame);
-document.fonts && document.fonts.ready.then(measure);
-addEventListener('load', measure);
+document.fonts && document.fonts.ready.then(resize);
+addEventListener('load', resize);
