@@ -79,7 +79,7 @@ void main(){
 }`;
 const orbFrag = /* glsl */`
 precision highp float;varying vec3 vN,vV,vS;
-uniform sampler2D uMap;uniform float uTime,uFocus,uHover,uHue,uDark,uAspect,uSeed;
+uniform sampler2D uMap;uniform float uTime,uFocus,uHover,uHue,uAspect,uSeed;
 vec3 pal(float t){return .5+.5*cos(6.283*(vec3(1.,1.,1.)*t+vec3(.0,.33,.67)));}
 vec2 lens(vec2 q,float zoom){
   float r=length(q);float ang=(1.-uFocus*.8)*(.2*sin(uTime*.22+uSeed)+.1)*r*r*r;
@@ -94,13 +94,6 @@ void main(){
   float ca=.006+fres*fres*.05;
   vec3 col=vec3(texture2D(uMap,lens(q,1.+ca)).r,texture2D(uMap,lens(q,1.)).g,texture2D(uMap,lens(q,1.-ca)).b);
   float sat=dot(col,vec3(.299,.587,.114));col=mix(vec3(sat),col,1.12);
-  if(uDark>.5){ // the sealed orb: nothing to see yet but a scope
-    float r=length(q);vec3 k=vec3(.05,.035,.075);
-    float ring=smoothstep(.012,.0,abs(r-.46))+smoothstep(.008,.0,abs(r-.14));
-    float cross_=(smoothstep(.007,.0,abs(q.x))+smoothstep(.007,.0,abs(q.y)))*step(.14,r)*step(r,.72);
-    float breathe=.6+.4*sin(uTime*1.3);
-    col=k+vec3(1.,.2,.14)*(ring+cross_)*(.65+.35*breathe)+vec3(.9,.14,.1)*smoothstep(.04,.0,r)*breathe;
-  }
   vec3 film=pal(fres*1.7+uHue+uTime*.035+q.x*.15);
   col=mix(col,film*1.08,smoothstep(.58,.95,fres)*.92);
   vec3 L=normalize(vec3(-.45,.62,.64));
@@ -141,10 +134,9 @@ blackTex.needsUpdate = true;
 
 const orbs = orbSections.map((sec, i) => {
   const d = sec.dataset;
-  const dark = d.dark !== undefined;
   const u = {
     uMap: { value: blackTex }, uTime: { value: 0 }, uFocus: { value: 0 }, uHover: { value: 0 },
-    uHue: { value: i * 0.17 }, uDark: { value: dark ? 1 : 0 }, uAspect: { value: 16 / 9 },
+    uHue: { value: i * 0.17 }, uAspect: { value: 16 / 9 },
     uSeed: { value: i * 3.7 + 1.3 }, uWobble: { value: 0.04 },
   };
   const mesh = new THREE.Mesh(sphereGeo, new THREE.ShaderMaterial({ uniforms: u, vertexShader: orbVert, fragmentShader: orbFrag }));
@@ -175,7 +167,9 @@ function makeVideo(orb) {
   const v = document.createElement('video');
   v.src = orb.clip; v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
   v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
-  v.width = 960; v.height = 540; // three sizes its texture storage from these attributes
+  // three sizes its texture storage from these attributes, so they must match the file
+  const [vidW, vidH] = (orb.sec.dataset.size || '960x540').split('x').map(Number);
+  v.width = vidW; v.height = vidH; orb.u.uAspect.value = vidW / vidH;
   v.className = 'tex-video'; document.body.appendChild(v);
   orb.video = v;
   const t = new THREE.Texture(v);
@@ -189,7 +183,7 @@ function makeVideo(orb) {
 }
 
 // Floating spores and tiny mushrooms, drawn as flat ink-edged toys.
-const toyVert = /* glsl */`uniform float uTime,uMask;uniform vec4 uZone;varying vec3 vC,vN,vV;varying float vY;
+const toyVert = /* glsl */`uniform float uTime,uMask;uniform vec4 uZone;uniform vec4 uFace;varying vec3 vC,vN,vV;varying float vY;
 void main(){
   vec4 ip=instanceMatrix[3];float h=fract(ip.x*7.13+ip.z*3.1);float sp=(h-.5)*1.2;
   float c=cos(uTime*sp),s=sin(uTime*sp);vec3 p=vec3(c*position.x+s*position.z,position.y,-s*position.x+c*position.z);
@@ -197,6 +191,7 @@ void main(){
   mat3 im=mat3(instanceMatrix);
   vec4 cc=projectionMatrix*modelViewMatrix*vec4(instanceMatrix[3].xyz,1.);vec2 nd=cc.xy/max(cc.w,.01);
   vec2 zd=abs(nd-uZone.xy)-uZone.zw;float inside=1.-smoothstep(0.,.12,max(zd.x,zd.y));p*=1.-inside*uMask;
+  float fd=length((nd-uFace.xy)*vec2(uFace.w,1.));p*=1.-(1.-smoothstep(uFace.z,uFace.z+.1,fd))*step(.001,uFace.z);
   vec4 mv=modelViewMatrix*instanceMatrix*vec4(p,1.);
   vC=instanceColor;vY=position.y;vN=normalize(normalMatrix*im*n);vV=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;
 }`;
@@ -208,8 +203,8 @@ void main(){
   c=mix(vec3(.09,.07,.12),c,smoothstep(.28,.36,nv));
   gl_FragColor=vec4(c,1.);
 }`;
-const toyTime = { value: 0 }; const toyMask = { value: 0 }; const toyZone = { value: new THREE.Vector4(0, 0, 1, 1) };
-const toyMat = (stem) => new THREE.ShaderMaterial({ uniforms: { uTime: toyTime, uMask: toyMask, uZone: toyZone, uStem: { value: stem } }, vertexShader: toyVert, fragmentShader: toyFrag });
+const toyTime = { value: 0 }; const toyMask = { value: 0 }; const toyZone = { value: new THREE.Vector4(0, 0, 1, 1) }; const toyFace = { value: new THREE.Vector4(0, 0, 0, 1) };
+const toyMat = (stem) => new THREE.ShaderMaterial({ uniforms: { uTime: toyTime, uMask: toyMask, uZone: toyZone, uFace: toyFace, uStem: { value: stem } }, vertexShader: toyVert, fragmentShader: toyFrag });
 const prof = [[0, -.55], [.13, -.55], [.1, -.05], [.12, .02], [.52, .0], [.56, .1], [.44, .36], [.2, .52], [0, .56]].map(([x, y]) => new THREE.Vector2(x, y));
 const shroomGeo = new THREE.LatheGeometry(new THREE.SplineCurve(prof).getPoints(26), 18);
 const POP = ['#b7e561', '#2fb7a3', '#ff5fb7', '#ffc53d', '#ff7a33', '#8f6bff'].map((c) => new THREE.Color(c));
@@ -588,6 +583,10 @@ function frame(now) {
   else if (scaleish > focusOrb.focus) toyZone.value.set(0, 0, 0.3, 0.26);
   else if (endish > focusOrb.focus) toyZone.value.set(-0.62, 0, 0.4, 0.9);
   else toyZone.value.set(-focusOrb.side * 0.56, -0.05, 0.42, 0.8);
+  // Nothing floats in front of the clip you came to see.
+  scr.copy(focusOrb.group.position).project(camera);
+  const faceR = focusOrb.scale / (camera.position.distanceTo(focusOrb.group.position) * Math.tan(camera.fov * Math.PI / 360)) * 1.08;
+  toyFace.value.set(scr.x, scr.y, focusOrb.focus > 0.5 ? faceR : 0, camera.aspect);
   // The tunnel of bands radiates from the orb you are closest to.
   const fo = orbs.reduce((a, b) => (b.focus > a.focus ? b : a));
   scr.copy(fo.group.position).project(camera);

@@ -75,9 +75,9 @@ stay real page content.
   focus. The band tint comes from that section's `data-tint` and must stay pale, because ink type
   sits on it. No dark page.
 - **An orb** is one `<section data-stop>` in `index.html`: `data-name`, `data-clip`, `data-poster`,
-  `data-side` (which side of the screen), `data-tint`, `data-halo`, `data-halo2`. Add a section and
-  the stage adds the orb; update the angle list `turn` in `layout()` to match. `data-dark` is the
-  sealed scope orb, used while a game has no footage worth showing.
+  `data-side` (which side of the screen), `data-tint`, `data-halo`, `data-halo2`, and `data-size` when
+  the clip is not 960x540. Add a section and
+  the stage adds the orb; update the angle list `turn` in `layout()` to match.
 - **Mystery planets** are the unannounced games, listed in `planetSpots` in `js/stage.js`: two for the
   7 minigames Early Access starts with, eight more for the 15 at 1.0. They are not clickable and have
   no names. The `data-scale` section is the pull-back that shows them all. When a game is revealed,
