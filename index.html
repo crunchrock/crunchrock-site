@@ -48,7 +48,7 @@
   section { position:relative; z-index:2; min-height:100vh; min-height:100svh; scroll-snap-align:start; display:flex; pointer-events:none; }
   section a, section button { pointer-events:auto; }
 
-  .pill { display:inline-block; font:400 clamp(19px,1.7vw,24px)/1 'Titan One',system-ui,sans-serif; color:var(--ink); text-decoration:none; padding:17px 28px 16px; border:3px solid var(--ink); border-radius:99px; background:var(--lime); box-shadow:4px 5px 0 var(--ink); transition:transform .1s, box-shadow .1s; cursor:pointer; white-space:nowrap; }
+  .pill { display:inline-block; font:400 clamp(19px,1.7vw,30px)/1 'Titan One',system-ui,sans-serif; color:var(--ink); text-decoration:none; padding:17px 28px 16px; border:3px solid var(--ink); border-radius:99px; background:var(--lime); box-shadow:4px 5px 0 var(--ink); transition:transform .1s, box-shadow .1s; cursor:pointer; white-space:nowrap; }
   .pill:hover { transform:translate(2px,3px); box-shadow:2px 2px 0 var(--ink); }
   .pill:active { transform:translate(4px,5px); box-shadow:0 0 0 var(--ink); }
   .pill.alt { background:var(--paper2); }
@@ -64,22 +64,22 @@
 
   .stop { align-items:center; padding:80px clamp(24px,6vw,96px); }
   .stop[data-side="-1"] { justify-content:flex-end; }
-  .card { position:relative; width:min(40vw,560px); }
-  .stop h2 { font:400 clamp(44px,5vw,78px)/.98 'Titan One',system-ui,sans-serif; letter-spacing:.005em; margin-bottom:18px; }
-  .stop h2 img { display:block; height:auto; width:100%; max-width:min(100%,460px); max-height:230px; object-fit:contain; object-position:left center; }
-  .big { font-size:clamp(26px,2.5vw,38px); line-height:1.1; font-weight:800; }
-  .small { margin-top:14px; font-size:clamp(20px,1.5vw,24px); line-height:1.22; font-weight:700; }
+  .card { position:relative; width:min(40vw,780px); }
+  .stop h2 { font:400 clamp(44px,5vw,104px)/.98 'Titan One',system-ui,sans-serif; letter-spacing:.005em; margin-bottom:18px; }
+  .stop h2 img { display:block; height:auto; width:100%; max-width:min(100%,32vw); max-height:30vh; object-fit:contain; object-position:left center; }
+  .big { font-size:clamp(26px,2.5vw,50px); line-height:1.1; font-weight:800; }
+  .small { margin-top:14px; font-size:clamp(20px,1.5vw,30px); line-height:1.22; font-weight:700; }
   .tag { display:inline-block; margin-top:20px; font:700 15px/1 'JetBrains Mono',monospace; padding:8px 12px 7px; background:var(--ink); color:var(--paper2); border-radius:7px; }
   .fallback { display:none; }
   html:not(.gl) .fallback { display:block; width:min(80vw,380px); aspect-ratio:1; object-fit:cover; border-radius:50%; border:4px solid var(--ink); margin-bottom:22px; }
 
   .end { align-items:center; padding:80px clamp(24px,6vw,96px) 24px; }
-  .end .card { width:min(44vw,600px); display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
-  .end .logo { width:min(100%,400px); height:auto; }
+  .end .card { width:min(44vw,860px); display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .end .logo { width:min(100%,28vw); height:auto; }
   .end .big { paint-order:stroke fill; -webkit-text-stroke:6px var(--paper); }
-    .links { display:flex; flex-wrap:wrap; gap:6px 20px; font-size:19px; paint-order:stroke fill; -webkit-text-stroke:5px var(--paper); }
+    .links { display:flex; flex-wrap:wrap; gap:6px 20px; font-size:clamp(19px,1.3vw,25px); paint-order:stroke fill; -webkit-text-stroke:5px var(--paper); }
   .links a:hover { text-decoration-thickness:3px; }
-  .fine { font-size:17px; }
+  .fine { font-size:clamp(17px,1.1vw,21px); }
 
   dialog { border:0; padding:0; background:transparent; max-width:none; max-height:none; width:min(92vw,calc(88vh*16/9)); margin:auto; }
   dialog::backdrop { background:rgba(243,241,220,.93); }
@@ -102,10 +102,11 @@
     .end { align-items:flex-end; padding:60px 20px 26px; }
     .end .card { gap:13px; }
     .end .logo { width:min(56vw,230px); }
+    .stop h2 img { max-width:min(72%,300px); max-height:128px; }
+    .links, .fine { font-size:17px; }
     .links { font-size:17px; gap:4px 14px; }
     .fine { font-size:15px; }
     .stop h2 { font-size:clamp(38px,11vw,58px); margin-bottom:10px; }
-    .stop h2 img { max-width:min(72%,300px); max-height:128px; }
     .big { font-size:clamp(23px,6.2vw,29px); }
     .small { font-size:19px; margin-top:9px; }
     .tag { margin-top:13px; font-size:14px; }

@@ -291,9 +291,9 @@ function layout() {
     keysTarget.push(o.base.clone());
     shiftKeys.push(portrait ? new THREE.Vector2(0, 0.235) : new THREE.Vector2(0.235 * o.side, 0));
   });
-  keysEye.push(portrait ? new THREE.Vector3(4, 3, 33) : new THREE.Vector3(-9, 3, 41));
+  keysEye.push(portrait ? new THREE.Vector3(4, 3, 33) : new THREE.Vector3(-9, 3, 47));
   keysTarget.push(center.clone());
-  shiftKeys.push(portrait ? new THREE.Vector2(0, 0.25) : new THREE.Vector2(0.285, 0));
+  shiftKeys.push(portrait ? new THREE.Vector2(0, 0.25) : new THREE.Vector2(0.27, 0));
   curveEye = new THREE.CatmullRomCurve3(keysEye, false, 'catmullrom', 0.5);
   curveTarget = new THREE.CatmullRomCurve3(keysTarget, false, 'catmullrom', 0.5);
 }
@@ -355,7 +355,7 @@ addEventListener('pointerup', (e) => {
 
 const cards = sections.map((s) => s.querySelector('.card'));
 const cue = document.querySelector('.cue');
-let p = 0; let phase = 0; let last = performance.now(); let frames = 0; let slow = 0; let tick = 0;
+let closeUp = 0; let p = 0; let phase = 0; let last = performance.now(); let frames = 0; let slow = 0; let tick = 0;
 const tintA = new THREE.Color(); const eye = new THREE.Vector3(); const look = new THREE.Vector3(); const shift = new THREE.Vector2();
 const tmpV = new THREE.Vector3(); const scr = new THREE.Vector3();
 const heroTint = new THREE.Color('#d6eb9c');
@@ -410,6 +410,11 @@ function frame(now) {
     // hero: far orbs swell so the ring reads as one family; phones have less room. Close-up: the rest step back.
     const far = (layoutPortrait ? 0.56 + o.i * 0.09 : 1 + o.i * 0.13) * heroish + (1 - heroish);
     o.scale = (far - (1 - fs) * anyFocus * (layoutPortrait ? 0.84 : 0.6) + o.hover * (1 - fs) * 0.08) * R;
+    // Close-up: any other orb that drifts behind the words shrinks away.
+    scr.copy(o.base).project(camera);
+    const zx = Math.abs(scr.x - toyZone.value.x) - toyZone.value.z; const zy = Math.abs(scr.y - toyZone.value.y) - toyZone.value.w;
+    const zt = Math.min(1, Math.max(0, Math.max(zx, zy) / 0.4)); const inZone = 1 - zt * zt * (3 - 2 * zt);
+    o.scale *= Math.max(0.001, 1 - inZone * closeUp * (1 - fs));
     o.mesh.scale.setScalar(o.scale);
     o.halo.scale.setScalar(o.scale * (3.1 + fs * 0.25));
     o.halo.quaternion.copy(camera.quaternion);
@@ -438,6 +443,7 @@ function frame(now) {
   // Words win: nothing floats through the text column.
   const focusOrb = orbs.reduce((a, b) => (b.focus > a.focus ? b : a));
   const endish = Math.max(0, 1 - Math.abs(p - lastI) * 1.6);
+  closeUp = focusOrb.focus;
   toyMask.value = Math.max(focusOrb.focus, endish);
   if (layoutPortrait) toyZone.value.set(0, -0.55, 1.1, 0.5);
   else if (endish > focusOrb.focus) toyZone.value.set(-0.62, 0, 0.4, 0.9);
